@@ -18,8 +18,21 @@ Tech Stack :
 - **Deployment**: [Vercel](https://vercel.com)
 
 Getting Started: 
+## 🛠 Project Setup
 
-1. Clone the repository:
+We are using **pnpm** as the package manager for this project. Make sure to install pnpm globally if it's not already installed:
+
+```bash
+npm install -g pnpm
+
+ Clone the repository:
    ```bash
    git clone https://github.com/Sneha-Pal1/Bloom.git
+ Setup the project:
    cd bloom
+   pnpm install
+   cp .env.example .env
+Make sure to fill all the values in the .env file, then run the project in development mode:
+pnpm dev
+
+
