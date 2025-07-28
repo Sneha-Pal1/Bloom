@@ -1,32 +1,49 @@
-"use client"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Play, CheckCircle, Star, Instagram, Twitter, Youtube, User, LogOut } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useAuth } from "@/components/auth-context"
-import { AuthModal } from "@/components/auth-modal"
+"use client";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Heart,
+  Play,
+  CheckCircle,
+  Star,
+  X,
+  Linkedin,
+  User,
+  LogOut,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useAuth } from "@/components/auth-context";
+import { AuthModal } from "@/components/auth-modal";
 
 export default function WellnessLanding() {
-  const router = useRouter()
-  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab, login } = useAuth()
+  const router = useRouter();
+  const {
+    isAuthenticated,
+    user,
+    logout,
+    showAuthModal,
+    setShowAuthModal,
+    authModalTab,
+    login,
+  } = useAuth();
 
   const handleStartToday = () => {
     if (isAuthenticated) {
-      router.push("/dashboard")
+      router.push("/dashboard");
     } else {
-      setShowAuthModal(true)
+      setShowAuthModal(true);
     }
-  }
+  };
 
   const handleSetRoutine = () => {
     if (isAuthenticated) {
-      router.push("/routine-builder")
+      router.push("/routine-builder");
     } else {
-      setShowAuthModal(true)
+      setShowAuthModal(true);
     }
-  }
+  };
 
   const handleAuthSuccess = () => {
     // Simulate successful login
@@ -34,9 +51,9 @@ export default function WellnessLanding() {
       id: "1",
       email: "user@example.com",
       name: "Wellness User",
-    }
-    login(mockUser)
-  }
+    };
+    login(mockUser);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-green-50">
@@ -44,22 +61,39 @@ export default function WellnessLanding() {
       <header className="px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-white/70 sticky top-0 z-50">
         <Link href="/" className="flex items-center justify-center">
           <Heart className="h-8 w-8 text-purple-400" />
-          <span className="ml-2 text-xl font-semibold text-gray-800">Bloom</span>
+          <span className="ml-2 text-xl font-semibold text-gray-800">
+            Bloom
+          </span>
         </Link>
         <nav className="ml-auto flex items-center gap-6">
-          <Link href="/" className="text-sm font-medium text-purple-600 border-b-2 border-purple-400">
+          <Link
+            href="/"
+            className="text-sm font-medium text-purple-600 border-b-2 border-purple-400"
+          >
             Home
           </Link>
-          <Link href="/explore" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/explore"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Explore
           </Link>
-          <Link href="/tips" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/tips"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Tips
           </Link>
-          <Link href="/routines" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/routines"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Routines
           </Link>
-          <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/about"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             About
           </Link>
 
@@ -68,7 +102,11 @@ export default function WellnessLanding() {
               <div className="w-8 h-8 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full flex items-center justify-center">
                 <User className="h-4 w-4 text-purple-600" />
               </div>
-              <button onClick={logout} className="text-gray-600 hover:text-red-500 transition-colors" title="Logout">
+              <button
+                onClick={logout}
+                className="text-gray-600 hover:text-red-500 transition-colors"
+                title="Logout"
+              >
                 <LogOut className="h-4 w-4" />
               </button>
             </div>
@@ -92,11 +130,14 @@ export default function WellnessLanding() {
               <div className="flex flex-col justify-center space-y-6">
                 <div className="space-y-4">
                   <h1 className="text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl text-gray-800 leading-tight">
-                    Your Space to <span className="text-purple-400">Reset,</span>{" "}
-                    <span className="text-pink-400">Reflect</span> & <span className="text-green-400">Rise.</span>
+                    Your Space to{" "}
+                    <span className="text-purple-400">Reset,</span>{" "}
+                    <span className="text-pink-400">Reflect</span> &{" "}
+                    <span className="text-emerald-400">Rise.</span>
                   </h1>
                   <p className="max-w-[600px] text-gray-600 md:text-xl leading-relaxed">
-                    Track your mood, follow gentle workouts, and grow through self-care routines—designed just for you.
+                    Track your mood, follow gentle workouts, and grow through
+                    self-care routines—designed just for you.
                   </p>
                 </div>
                 <div className="flex flex-col gap-3 min-[400px]:flex-row">
@@ -141,7 +182,9 @@ export default function WellnessLanding() {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl blur-2xl opacity-50"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-8">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-semibold text-gray-800">Morning Flow</h3>
+                    <h3 className="text-xl font-semibold text-gray-800">
+                      Morning Flow
+                    </h3>
                     <div className="flex items-center gap-2">
                       <Play className="h-5 w-5 text-purple-500" />
                       <span className="text-sm text-gray-600">15 min</span>
@@ -161,15 +204,22 @@ export default function WellnessLanding() {
               </div>
 
               <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-gray-800">Simple Steps to Better Wellness</h2>
+                <h2 className="text-3xl font-bold text-gray-800">
+                  Simple Steps to Better Wellness
+                </h2>
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
                     <div className="w-8 h-8 bg-purple-200 rounded-full flex items-center justify-center flex-shrink-0">
                       <span className="text-purple-600 font-semibold">1</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Choose Your Goal</h3>
-                      <p className="text-gray-600">Select from yoga, strength, or mindfulness based on how you feel</p>
+                      <h3 className="font-semibold text-gray-800 mb-1">
+                        Choose Your Goal
+                      </h3>
+                      <p className="text-gray-600">
+                        Select from yoga, strength, or mindfulness based on how
+                        you feel
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -177,8 +227,13 @@ export default function WellnessLanding() {
                       <span className="text-pink-600 font-semibold">2</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Follow the Workout</h3>
-                      <p className="text-gray-600">Gentle guidance with timers and modifications for every level</p>
+                      <h3 className="font-semibold text-gray-800 mb-1">
+                        Follow the Workout
+                      </h3>
+                      <p className="text-gray-600">
+                        Gentle guidance with timers and modifications for every
+                        level
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -186,8 +241,12 @@ export default function WellnessLanding() {
                       <CheckCircle className="h-4 w-4 text-green-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Feel Better</h3>
-                      <p className="text-gray-600">Track your progress and celebrate small wins every day</p>
+                      <h3 className="font-semibold text-gray-800 mb-1">
+                        Feel Better
+                      </h3>
+                      <p className="text-gray-600">
+                        Track your progress and celebrate small wins every day
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -200,7 +259,9 @@ export default function WellnessLanding() {
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-50 to-pink-50">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-gray-800">Stories of Transformation</h2>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-gray-800">
+                Stories of Transformation
+              </h2>
               <p className="max-w-[600px] text-gray-600 md:text-lg">
                 Real experiences from women on their wellness journey
               </p>
@@ -210,12 +271,15 @@ export default function WellnessLanding() {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                      />
                     ))}
                   </div>
                   <p className="text-gray-600 mb-4 italic">
-                    "The cycle-friendly workouts have been a game-changer. Finally, fitness that works with my body, not
-                    against it."
+                    "The cycle-friendly workouts have been a game-changer.
+                    Finally, fitness that works with my body, not against it."
                   </p>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center">
@@ -233,12 +297,15 @@ export default function WellnessLanding() {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                      />
                     ))}
                   </div>
                   <p className="text-gray-600 mb-4 italic">
-                    "The mood tracking feature helped me understand my patterns. I feel more in tune with myself than
-                    ever."
+                    "The mood tracking feature helped me understand my patterns.
+                    I feel more in tune with myself than ever."
                   </p>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-pink-200 rounded-full flex items-center justify-center">
@@ -246,7 +313,9 @@ export default function WellnessLanding() {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-800">Maya L.</p>
-                      <p className="text-sm text-gray-500">Mindfulness practitioner</p>
+                      <p className="text-sm text-gray-500">
+                        Mindfulness practitioner
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -256,11 +325,15 @@ export default function WellnessLanding() {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                      />
                     ))}
                   </div>
                   <p className="text-gray-600 mb-4 italic">
-                    "Simple, gentle, and effective. This app meets me exactly where I am each day."
+                    "Simple, gentle, and effective. This app meets me exactly
+                    where I am each day."
                   </p>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center">
@@ -285,7 +358,8 @@ export default function WellnessLanding() {
                 Your Mind and Body Deserve This Care
               </h2>
               <p className="max-w-[600px] text-gray-600 md:text-lg">
-                Start your wellness journey today with gentle guidance every step of the way
+                Start your wellness journey today with gentle guidance every
+                step of the way
               </p>
               <div className="flex flex-col gap-4 items-center">
                 <Button
@@ -312,10 +386,13 @@ export default function WellnessLanding() {
                 <div className="w-10 h-10 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full flex items-center justify-center mr-3 shadow-sm">
                   <Heart className="h-6 w-6 text-purple-600" />
                 </div>
-                <span className="text-2xl font-semibold text-gray-800">Bloom</span>
+                <span className="text-2xl font-semibold text-gray-800">
+                  Bloom
+                </span>
               </div>
               <p className="text-gray-600 leading-relaxed max-w-xs mx-auto md:mx-0">
-                "You are worthy of the love you keep trying to give everyone else."
+                "You are worthy of the love you keep trying to give everyone
+                else."
               </p>
             </div>
 
@@ -327,20 +404,20 @@ export default function WellnessLanding() {
                   href="#"
                   className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
                 >
-                  <Instagram className="h-5 w-5" />
+                  <Linkedin className="h-5 w-5" />
                 </Link>
                 <Link
                   href="#"
                   className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
                 >
-                  <Twitter className="h-5 w-5" />
+                  <X className="h-5 w-5" />
                 </Link>
-                <Link
+                {/* <Link
                   href="#"
                   className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
                 >
                   <Youtube className="h-5 w-5" />
-                </Link>
+                </Link> */}
               </div>
             </div>
 
@@ -387,5 +464,5 @@ export default function WellnessLanding() {
         defaultTab={authModalTab}
       />
     </div>
-  )
+  );
 }

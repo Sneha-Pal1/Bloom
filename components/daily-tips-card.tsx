@@ -1,22 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Sparkles, Heart, Bell, ExternalLink, Lightbulb } from "lucide-react"
-import Link from "next/link"
-import { ProtectedAction } from "@/components/protected-action"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Sparkles, Heart, Bell, ExternalLink, Lightbulb } from "lucide-react";
+import Link from "next/link";
+import { ProtectedAction } from "@/components/protected-action";
 
 interface WellnessTip {
-  id: string
-  title: string
-  content: string
-  icon: string
-  category: string
-  tags: string[]
-  moodTrigger?: string[]
+  id: string;
+  title: string;
+  content: string;
+  icon: string;
+  category: string;
+  tags: string[];
+  moodTrigger?: string[];
 }
 
 const wellnessTips: WellnessTip[] = [
@@ -70,40 +75,46 @@ const wellnessTips: WellnessTip[] = [
     tags: ["movement", "morning", "flexibility", "energy"],
     moodTrigger: ["stiff", "low energy"],
   },
-]
+];
 
 // Mock function to get tip based on mood (this would connect to actual mood data)
 const getTipBasedOnMood = (mood?: string): WellnessTip => {
   if (mood === "anxious" || mood === "stressed") {
-    return wellnessTips.find((tip) => tip.moodTrigger?.includes("anxious")) || wellnessTips[1]
+    return (
+      wellnessTips.find((tip) => tip.moodTrigger?.includes("anxious")) ||
+      wellnessTips[1]
+    );
   }
   if (mood === "tired" || mood === "low energy") {
-    return wellnessTips.find((tip) => tip.moodTrigger?.includes("tired")) || wellnessTips[0]
+    return (
+      wellnessTips.find((tip) => tip.moodTrigger?.includes("tired")) ||
+      wellnessTips[0]
+    );
   }
   // Default to a random tip
-  return wellnessTips[Math.floor(Math.random() * wellnessTips.length)]
-}
+  return wellnessTips[Math.floor(Math.random() * wellnessTips.length)];
+};
 
 export function DailyTipsCard() {
-  const [showModal, setShowModal] = useState(false)
-  const [dailyReminder, setDailyReminder] = useState(false)
-  const [savedTip, setSavedTip] = useState(false)
-  const [currentUserMood] = useState<string>("anxious") // This would come from mood tracking
+  const [showModal, setShowModal] = useState(false);
+  const [dailyReminder, setDailyReminder] = useState(false);
+  const [savedTip, setSavedTip] = useState(false);
+  const [currentUserMood] = useState<string>("anxious"); // This would come from mood tracking
 
   const handleCardClick = () => {
-    setShowModal(true)
-  }
+    setShowModal(true);
+  };
 
   const toggleReminder = () => {
-    setDailyReminder(!dailyReminder)
-  }
+    setDailyReminder(!dailyReminder);
+  };
 
   const toggleSaveTip = () => {
-    setSavedTip(!savedTip)
-  }
+    setSavedTip(!savedTip);
+  };
 
   // Get today's tip (could be based on date, mood, etc.)
-  const todaysTip = getTipBasedOnMood(currentUserMood)
+  const todaysTip = getTipBasedOnMood(currentUserMood);
 
   const getCategoryColor = (category: string) => {
     const colors = {
@@ -112,9 +123,12 @@ export function DailyTipsCard() {
       Nutrition: "bg-green-100 text-green-700 border-green-200",
       Sleep: "bg-indigo-100 text-indigo-700 border-indigo-200",
       Movement: "bg-yellow-100 text-yellow-700 border-yellow-200",
-    }
-    return colors[category as keyof typeof colors] || "bg-gray-100 text-gray-700 border-gray-200"
-  }
+    };
+    return (
+      colors[category as keyof typeof colors] ||
+      "bg-gray-100 text-gray-700 border-gray-200"
+    );
+  };
 
   const FloatingSparkles = () => (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -132,7 +146,7 @@ export function DailyTipsCard() {
         />
       ))}
     </div>
-  )
+  );
 
   return (
     <>
@@ -148,7 +162,8 @@ export function DailyTipsCard() {
             </div>
             <h3 className="text-xl font-bold mb-4 text-gray-800">Daily Tips</h3>
             <p className="text-gray-600 text-sm leading-relaxed mb-6">
-              Get personalized hydration, mindfulness, and nutrition reminders daily
+              Get personalized hydration, mindfulness, and nutrition reminders
+              daily
             </p>
           </div>
           <ProtectedAction>
@@ -167,7 +182,9 @@ export function DailyTipsCard() {
             <FloatingSparkles />
 
             <DialogHeader className="relative z-10">
-              <DialogTitle className="text-center text-3xl text-gray-800 mb-4">Daily Wellness Tips ✨</DialogTitle>
+              <DialogTitle className="text-center text-3xl text-gray-800 mb-4">
+                Daily Wellness Tips ✨
+              </DialogTitle>
               <p className="text-center text-gray-600 mb-8">
                 Your personalized wellness guidance for a healthier, happier you
               </p>
@@ -181,8 +198,10 @@ export function DailyTipsCard() {
                     <div className="flex items-center gap-3">
                       <div className="text-4xl">{todaysTip.icon}</div>
                       <div>
-                        <h3 className="text-2xl font-bold text-gray-800 mb-1">Tip of the Day</h3>
-                        <Badge className={getCategoryColor(todaysTip.category)} size="sm">
+                        <h3 className="text-2xl font-bold text-gray-800 mb-1">
+                          Tip of the Day
+                        </h3>
+                        <Badge className={getCategoryColor(todaysTip.category)}>
                           {todaysTip.category}
                         </Badge>
                       </div>
@@ -195,14 +214,20 @@ export function DailyTipsCard() {
                           : "bg-gray-100 text-gray-400 hover:bg-red-50 hover:text-red-400"
                       }`}
                     >
-                      <Heart className={`h-6 w-6 ${savedTip ? "fill-current" : ""}`} />
+                      <Heart
+                        className={`h-6 w-6 ${savedTip ? "fill-current" : ""}`}
+                      />
                     </button>
                   </div>
 
-                  <h4 className="text-xl font-semibold text-gray-800 mb-4">{todaysTip.title}</h4>
+                  <h4 className="text-xl font-semibold text-gray-800 mb-4">
+                    {todaysTip.title}
+                  </h4>
 
                   <div className="bg-gradient-to-r from-mint-50 to-purple-50 rounded-2xl p-6 mb-6">
-                    <p className="text-gray-700 leading-relaxed text-lg font-medium">{todaysTip.content}</p>
+                    <p className="text-gray-700 leading-relaxed text-lg font-medium">
+                      {todaysTip.content}
+                    </p>
                   </div>
 
                   {/* Tags */}
@@ -223,10 +248,13 @@ export function DailyTipsCard() {
                     <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 mb-6">
                       <div className="flex items-center gap-2 mb-2">
                         <Lightbulb className="h-5 w-5 text-purple-600" />
-                        <span className="text-sm font-medium text-purple-700">Suggested for you</span>
+                        <span className="text-sm font-medium text-purple-700">
+                          Suggested for you
+                        </span>
                       </div>
                       <p className="text-sm text-gray-600">
-                        Based on your recent mood, this tip can help you feel more balanced and centered today.
+                        Based on your recent mood, this tip can help you feel
+                        more balanced and centered today.
                       </p>
                     </div>
                   )}
@@ -236,8 +264,12 @@ export function DailyTipsCard() {
                     <div className="flex items-center gap-3">
                       <Bell className="h-5 w-5 text-green-600" />
                       <div>
-                        <p className="font-medium text-gray-800">Daily Reminder</p>
-                        <p className="text-sm text-gray-600">Get your wellness tip at 8:00 AM</p>
+                        <p className="font-medium text-gray-800">
+                          Daily Reminder
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Get your wellness tip at 8:00 AM
+                        </p>
                       </div>
                     </div>
                     <button
@@ -267,8 +299,8 @@ export function DailyTipsCard() {
                       className="flex-1 border-purple-200 text-purple-600 hover:bg-purple-50 rounded-full py-3 transition-all duration-300 bg-white/70"
                       onClick={() => {
                         // This would refresh with a new tip
-                        setShowModal(false)
-                        setTimeout(() => setShowModal(true), 100)
+                        setShowModal(false);
+                        setTimeout(() => setShowModal(true), 100);
                       }}
                     >
                       Get Another Tip
@@ -280,7 +312,9 @@ export function DailyTipsCard() {
               {/* Quick Tips Preview */}
               <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">More Wellness Tips</h3>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+                    More Wellness Tips
+                  </h3>
                   <div className="grid gap-3 md:grid-cols-2">
                     {wellnessTips.slice(0, 4).map((tip) => (
                       <div
@@ -289,8 +323,12 @@ export function DailyTipsCard() {
                       >
                         <div className="text-2xl">{tip.icon}</div>
                         <div className="flex-1">
-                          <p className="font-medium text-gray-800 text-sm">{tip.title}</p>
-                          <p className="text-xs text-gray-600">{tip.category}</p>
+                          <p className="font-medium text-gray-800 text-sm">
+                            {tip.title}
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            {tip.category}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -313,5 +351,5 @@ export function DailyTipsCard() {
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }
