@@ -1,30 +1,47 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Play, CheckCircle, User, LogOut, Instagram, Twitter, Youtube } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useAuth } from "@/components/auth-context"
-import { AuthModal } from "@/components/auth-modal"
-import { GuidedYogaCard } from "@/components/guided-yoga-card"
-import { MoodTrackingCard } from "@/components/mood-tracking-card"
-import { DailyTipsCard } from "@/components/daily-tips-card"
-import { WellnessInsightsCard } from "@/components/wellness-insights-card"
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Heart,
+  Play,
+  CheckCircle,
+  User,
+  LogOut,
+  Instagram,
+  Twitter,
+  Youtube,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useAuth } from "@/components/auth-context";
+import { AuthModal } from "@/components/auth-modal";
+import { GuidedYogaCard } from "@/components/guided-yoga-card";
+import { MoodTrackingCard } from "@/components/mood-tracking-card";
+import { DailyTipsCard } from "@/components/daily-tips-card";
+import { WellnessInsightsCard } from "@/components/wellness-insights-card";
 
 export default function ExplorePage() {
-  const router = useRouter()
-  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab, login } = useAuth()
+  const router = useRouter();
+  const {
+    isAuthenticated,
+    user,
+    logout,
+    showAuthModal,
+    setShowAuthModal,
+    authModalTab,
+    login,
+  } = useAuth();
 
   const handleAuthSuccess = () => {
     const mockUser = {
       id: "1",
       email: "user@example.com",
       name: "Wellness User",
-    }
-    login(mockUser)
-  }
+    };
+    login(mockUser);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
@@ -32,22 +49,39 @@ export default function ExplorePage() {
       <header className="px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-white/80 sticky top-0 z-50 border-b border-pink-100">
         <Link href="/" className="flex items-center justify-center">
           <Heart className="h-8 w-8 text-purple-400" />
-          <span className="ml-2 text-xl font-semibold text-gray-800">Bloom</span>
+          <span className="ml-2 text-xl font-semibold text-gray-800">
+            Bloom
+          </span>
         </Link>
         <nav className="ml-auto flex items-center gap-6">
-          <Link href="/" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Home
           </Link>
-          <Link href="/explore" className="text-sm font-medium text-purple-600 border-b-2 border-purple-400">
+          <Link
+            href="/explore"
+            className="text-sm font-medium text-purple-600 border-b-2 border-purple-400"
+          >
             Explore
           </Link>
-          <Link href="/tips" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/tips"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Tips
           </Link>
-          <Link href="/routines" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/routines"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Routines
           </Link>
-          <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/about"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             About
           </Link>
 
@@ -56,7 +90,11 @@ export default function ExplorePage() {
               <div className="w-8 h-8 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full flex items-center justify-center">
                 <User className="h-4 w-4 text-purple-600" />
               </div>
-              <button onClick={logout} className="text-gray-600 hover:text-red-500 transition-colors" title="Logout">
+              <button
+                onClick={logout}
+                className="text-gray-600 hover:text-red-500 transition-colors"
+                title="Logout"
+              >
                 <LogOut className="h-4 w-4" />
               </button>
             </div>
@@ -75,9 +113,12 @@ export default function ExplorePage() {
       <main className="container mx-auto px-4 py-12">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Everything You Need for Wellness</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Everything You Need for Wellness
+          </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Gentle tools designed to support your journey through every phase of life
+            Gentle tools designed to support your journey through every phase of
+            life
           </p>
         </div>
 
@@ -112,10 +153,14 @@ export default function ExplorePage() {
             <Card className="relative bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border-0 overflow-hidden">
               <CardContent className="p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-bold text-gray-800">Morning Flow</h3>
+                  <h3 className="text-2xl font-bold text-gray-800">
+                    Morning Flow
+                  </h3>
                   <div className="flex items-center gap-2 bg-purple-100 px-4 py-2 rounded-full">
                     <Play className="h-5 w-5 text-purple-600" />
-                    <span className="text-sm font-medium text-purple-700">15 min</span>
+                    <span className="text-sm font-medium text-purple-700">
+                      15 min
+                    </span>
                   </div>
                 </div>
 
@@ -149,9 +194,12 @@ export default function ExplorePage() {
           {/* Simple Steps Section */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">Simple Steps to Better Wellness</h2>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Simple Steps to Better Wellness
+              </h2>
               <p className="text-gray-600 leading-relaxed">
-                Follow our gentle approach to building lasting wellness habits that fit your lifestyle
+                Follow our gentle approach to building lasting wellness habits
+                that fit your lifestyle
               </p>
             </div>
 
@@ -162,10 +210,12 @@ export default function ExplorePage() {
                   <span className="text-purple-700 font-bold text-lg">1</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">Choose Your Goal</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    Choose Your Goal
+                  </h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Select from yoga, strength, or mindfulness practices based on how you feel and what your body needs
-                    today
+                    Select from yoga, strength, or mindfulness practices based
+                    on how you feel and what your body needs today
                   </p>
                 </div>
               </div>
@@ -176,9 +226,12 @@ export default function ExplorePage() {
                   <span className="text-pink-700 font-bold text-lg">2</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">Follow the Workout</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    Follow the Workout
+                  </h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Enjoy gentle guidance with built-in timers and modifications for every fitness level and ability
+                    Enjoy gentle guidance with built-in timers and modifications
+                    for every fitness level and ability
                   </p>
                 </div>
               </div>
@@ -189,9 +242,12 @@ export default function ExplorePage() {
                   <CheckCircle className="h-6 w-6 text-green-700" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">Feel Better</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    Feel Better
+                  </h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Track your progress, celebrate small wins, and build confidence in your wellness journey every day
+                    Track your progress, celebrate small wins, and build
+                    confidence in your wellness journey every day
                   </p>
                 </div>
               </div>
@@ -210,9 +266,12 @@ export default function ExplorePage() {
         <div className="mt-20 text-center">
           <Card className="border-0 bg-gradient-to-r from-purple-100 via-pink-100 to-orange-100 rounded-3xl shadow-lg overflow-hidden">
             <CardContent className="p-12">
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">Ready to Transform Your Wellness?</h2>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Ready to Transform Your Wellness?
+              </h2>
               <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                Join thousands of women discovering a gentler, more sustainable approach to health and happiness
+                Join thousands of women discovering a gentler, more sustainable
+                approach to health and happiness
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/dashboard">
@@ -235,81 +294,6 @@ export default function ExplorePage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full py-16 bg-gradient-to-r from-purple-100 via-pink-100 to-rose-100 mt-20">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="grid gap-12 md:grid-cols-3 max-w-4xl mx-auto">
-            {/* About Bloom */}
-            <div className="space-y-6 text-center md:text-left">
-              <div className="flex items-center justify-center md:justify-start">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full flex items-center justify-center mr-3 shadow-sm">
-                  <Heart className="h-6 w-6 text-purple-600" />
-                </div>
-                <span className="text-2xl font-semibold text-gray-800">Bloom</span>
-              </div>
-              <p className="text-gray-600 leading-relaxed max-w-xs mx-auto md:mx-0">
-                "You are worthy of the love you keep trying to give everyone else."
-              </p>
-            </div>
-
-            {/* Connect */}
-            <div className="space-y-6 text-center">
-              <h3 className="text-lg font-semibold text-gray-800">Connect</h3>
-              <div className="flex justify-center space-x-4">
-                <Link
-                  href="#"
-                  className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
-                >
-                  <Instagram className="h-5 w-5" />
-                </Link>
-                <Link
-                  href="#"
-                  className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
-                >
-                  <Twitter className="h-5 w-5" />
-                </Link>
-                <Link
-                  href="#"
-                  className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
-                >
-                  <Youtube className="h-5 w-5" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Support */}
-            <div className="space-y-6 text-center md:text-right">
-              <h3 className="text-lg font-semibold text-gray-800">Support</h3>
-              <nav className="flex flex-col space-y-3">
-                <Link
-                  href="#"
-                  className="text-gray-600 hover:text-purple-600 transition-colors duration-200 text-sm font-medium"
-                >
-                  Help Center
-                </Link>
-                <Link
-                  href="#"
-                  className="text-gray-600 hover:text-purple-600 transition-colors duration-200 text-sm font-medium"
-                >
-                  Privacy Policy
-                </Link>
-                <Link
-                  href="#"
-                  className="text-gray-600 hover:text-purple-600 transition-colors duration-200 text-sm font-medium"
-                >
-                  Terms & Conditions
-                </Link>
-              </nav>
-            </div>
-          </div>
-
-          {/* Bottom Text */}
-          <div className="mt-12 pt-8 border-t border-white/30">
-            <p className="text-center text-sm text-gray-600 font-medium">
-              © 2025 Bloom. Made with love for your wellness journey.
-            </p>
-          </div>
-        </div>
-      </footer>
 
       {/* Auth Modal */}
       <AuthModal
@@ -319,5 +303,5 @@ export default function ExplorePage() {
         defaultTab={authModalTab}
       />
     </div>
-  )
+  );
 }

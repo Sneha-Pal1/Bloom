@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, User, LogOut, Target, Users, Shield, Sparkles, Instagram, Twitter, Youtube } from "lucide-react"
+import { Heart, User, LogOut, Target, Users, Shield, Sparkles } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useAuth } from "@/components/auth-context"
@@ -281,24 +281,19 @@ export default function AboutPage() {
             <div className="space-y-6 text-center">
               <h3 className="text-lg font-semibold text-gray-800">Connect</h3>
               <div className="flex justify-center space-x-4">
-                <Link
-                  href="#"
-                  className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
-                >
-                  <Instagram className="h-5 w-5" />
-                </Link>
-                <Link
+                
+                {/* <Link
                   href="#"
                   className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
                 >
                   <Twitter className="h-5 w-5" />
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   href="#"
                   className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
                 >
                   <Youtube className="h-5 w-5" />
-                </Link>
+                </Link> */}
               </div>
             </div>
 
