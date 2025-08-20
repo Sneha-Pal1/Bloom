@@ -1,40 +1,57 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Heart, Calendar, Flower2, Waves, Sun, Play, Clock, CheckCircle, Plus, Filter } from "lucide-react"
-import { ProtectedAction } from "@/components/protected-action"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Heart,
+  Calendar,
+  Flower2,
+  Waves,
+  Sun,
+  Play,
+  Clock,
+  CheckCircle,
+  Plus,
+  Filter,
+} from "lucide-react";
+import { ProtectedAction } from "@/components/protected-action";
 
 interface Pose {
-  id: string
-  name: string
-  benefit: string
-  duration: string
-  difficulty: "Beginner" | "Intermediate" | "Advanced"
-  selected?: boolean
+  id: string;
+  name: string;
+  benefit: string;
+  duration: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  selected?: boolean;
 }
 
 interface Category {
-  id: string
-  title: string
-  description: string
-  icon: React.ReactNode
-  color: string
-  bgGradient: string
-  yoga: Pose[]
-  exercises: Pose[]
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  color: string;
+  bgGradient: string;
+  yoga: Pose[];
+  exercises: Pose[];
 }
 
 const categories: Category[] = [
   {
     id: "overall-health",
     title: "Overall Women's Health",
-    description: "Holistic practices to support your body's natural balance and vitality",
+    description:
+      "Holistic practices to support your body's natural balance and vitality",
     icon: <Heart className="h-6 w-6" />,
     color: "text-pink-600",
     bgGradient: "from-pink-50 to-rose-100",
@@ -95,7 +112,8 @@ const categories: Category[] = [
   {
     id: "irregular-periods",
     title: "Late & Irregular Periods",
-    description: "Gentle movements to support hormonal balance and cycle regulation",
+    description:
+      "Gentle movements to support hormonal balance and cycle regulation",
     icon: <Calendar className="h-6 w-6" />,
     color: "text-purple-600",
     bgGradient: "from-purple-50 to-lavender-100",
@@ -149,7 +167,8 @@ const categories: Category[] = [
   {
     id: "pcos",
     title: "PCOS Support",
-    description: "Targeted practices to manage PCOS symptoms and support metabolic health",
+    description:
+      "Targeted practices to manage PCOS symptoms and support metabolic health",
     icon: <Flower2 className="h-6 w-6" />,
     color: "text-green-600",
     bgGradient: "from-green-50 to-mint-100",
@@ -210,7 +229,8 @@ const categories: Category[] = [
   {
     id: "period-cramps",
     title: "Period Cramps Relief",
-    description: "Soothing poses and gentle movements to ease menstrual discomfort",
+    description:
+      "Soothing poses and gentle movements to ease menstrual discomfort",
     icon: <Waves className="h-6 w-6" />,
     color: "text-orange-600",
     bgGradient: "from-orange-50 to-peach-100",
@@ -329,54 +349,68 @@ const categories: Category[] = [
       },
     ],
   },
-]
+];
 
 export function GuidedYogaCard() {
-  const [showModal, setShowModal] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
-  const [activeTab, setActiveTab] = useState<"yoga" | "exercises">("yoga")
-  const [selectedPoses, setSelectedPoses] = useState<string[]>([])
-  const [difficultyFilter, setDifficultyFilter] = useState<"All" | "Beginner" | "Intermediate" | "Advanced">("All")
-  const [durationFilter, setDurationFilter] = useState<"All" | "Short" | "Medium" | "Long">("All")
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
+  const [activeTab, setActiveTab] = useState<"yoga" | "exercises">("yoga");
+  const [selectedPoses, setSelectedPoses] = useState<string[]>([]);
+  const [difficultyFilter, setDifficultyFilter] = useState<
+    "All" | "Beginner" | "Intermediate" | "Advanced"
+  >("All");
+  const [durationFilter, setDurationFilter] = useState<
+    "All" | "Short" | "Medium" | "Long"
+  >("All");
 
   const handleCardClick = () => {
-    setShowModal(true)
-  }
+    setShowModal(true);
+  };
 
   const handleCategorySelect = (category: Category) => {
-    setSelectedCategory(category)
-    setSelectedPoses([])
-    setActiveTab("yoga")
-  }
+    setSelectedCategory(category);
+    setSelectedPoses([]);
+    setActiveTab("yoga");
+  };
 
   const togglePoseSelection = (poseId: string) => {
-    setSelectedPoses((prev) => (prev.includes(poseId) ? prev.filter((id) => id !== poseId) : [...prev, poseId]))
-  }
+    setSelectedPoses((prev) =>
+      prev.includes(poseId)
+        ? prev.filter((id) => id !== poseId)
+        : [...prev, poseId]
+    );
+  };
 
   const filterPoses = (poses: Pose[]) => {
     return poses.filter((pose) => {
-      const matchesDifficulty = difficultyFilter === "All" || pose.difficulty === difficultyFilter
+      const matchesDifficulty =
+        difficultyFilter === "All" || pose.difficulty === difficultyFilter;
 
-      let matchesDuration = true
+      let matchesDuration = true;
       if (durationFilter !== "All") {
-        const duration = Number.parseInt(pose.duration)
-        if (durationFilter === "Short") matchesDuration = duration <= 5
-        else if (durationFilter === "Medium") matchesDuration = duration > 5 && duration <= 10
-        else if (durationFilter === "Long") matchesDuration = duration > 10
+        const duration = Number.parseInt(pose.duration);
+        if (durationFilter === "Short") matchesDuration = duration <= 5;
+        else if (durationFilter === "Medium")
+          matchesDuration = duration > 5 && duration <= 10;
+        else if (durationFilter === "Long") matchesDuration = duration > 10;
       }
 
-      return matchesDifficulty && matchesDuration
-    })
-  }
+      return matchesDifficulty && matchesDuration;
+    });
+  };
 
   const getDifficultyColor = (difficulty: string) => {
     const colors = {
       Beginner: "bg-green-100 text-green-700",
       Intermediate: "bg-yellow-100 text-yellow-700",
       Advanced: "bg-red-100 text-red-700",
-    }
-    return colors[difficulty as keyof typeof colors] || "bg-gray-100 text-gray-700"
-  }
+    };
+    return (
+      colors[difficulty as keyof typeof colors] || "bg-gray-100 text-gray-700"
+    );
+  };
 
   return (
     <>
@@ -390,9 +424,12 @@ export function GuidedYogaCard() {
             <div className="w-20 h-20 mx-auto mb-6 bg-white/80 rounded-full flex items-center justify-center group-hover:bg-white transition-colors shadow-lg">
               <Heart className="h-10 w-10 text-purple-600" />
             </div>
-            <h3 className="text-xl font-bold mb-4 text-gray-800">Guided Yoga & Workouts</h3>
+            <h3 className="text-xl font-bold mb-4 text-gray-800">
+              Guided Yoga & Workouts
+            </h3>
             <p className="text-gray-600 text-sm leading-relaxed mb-6">
-              Cycle-specific routines with demos and timers tailored for your wellness journey
+              Cycle-specific routines with demos and timers tailored for your
+              wellness journey
             </p>
           </div>
           <ProtectedAction>
@@ -408,9 +445,12 @@ export function GuidedYogaCard() {
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-purple-50/95 via-pink-50/95 to-orange-50/95 backdrop-blur-xl border-0 rounded-3xl">
           <DialogHeader>
-            <DialogTitle className="text-center text-3xl text-gray-800 mb-4">Guided Yoga & Workouts 🧘‍♀️</DialogTitle>
+            <DialogTitle className="text-center text-3xl text-gray-800 mb-4">
+              Guided Yoga & Workouts 🧘‍♀️
+            </DialogTitle>
             <p className="text-center text-gray-600 mb-8">
-              Choose your wellness focus and discover gentle practices designed for women's health
+              Choose your wellness focus and discover gentle practices designed
+              for women's health
             </p>
           </DialogHeader>
 
@@ -429,8 +469,12 @@ export function GuidedYogaCard() {
                     >
                       {category.icon}
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-800">{category.title}</h3>
-                    <p className="text-sm text-gray-600 mb-4 leading-relaxed">{category.description}</p>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-800">
+                      {category.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                      {category.description}
+                    </p>
                     <Button
                       variant="outline"
                       size="sm"
@@ -473,21 +517,25 @@ export function GuidedYogaCard() {
                     <Filter className="h-4 w-4 mr-1" />
                     Level:
                   </span>
-                  {["All", "Beginner", "Intermediate", "Advanced"].map((level) => (
-                    <Button
-                      key={level}
-                      variant={difficultyFilter === level ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setDifficultyFilter(level as any)}
-                      className={`rounded-full text-xs ${
-                        difficultyFilter === level
-                          ? "bg-purple-400 hover:bg-purple-500"
-                          : "border-purple-200 text-purple-600 hover:bg-purple-50 bg-white/70"
-                      }`}
-                    >
-                      {level}
-                    </Button>
-                  ))}
+                  {["All", "Beginner", "Intermediate", "Advanced"].map(
+                    (level) => (
+                      <Button
+                        key={level}
+                        variant={
+                          difficultyFilter === level ? "default" : "outline"
+                        }
+                        size="sm"
+                        onClick={() => setDifficultyFilter(level as any)}
+                        className={`rounded-full text-xs ${
+                          difficultyFilter === level
+                            ? "bg-purple-400 hover:bg-purple-500"
+                            : "border-purple-200 text-purple-600 hover:bg-purple-50 bg-white/70"
+                        }`}
+                      >
+                        {level}
+                      </Button>
+                    )
+                  )}
                 </div>
 
                 <div className="flex gap-2">
@@ -498,7 +546,9 @@ export function GuidedYogaCard() {
                   {["All", "Short", "Medium", "Long"].map((duration) => (
                     <Button
                       key={duration}
-                      variant={durationFilter === duration ? "default" : "outline"}
+                      variant={
+                        durationFilter === duration ? "default" : "outline"
+                      }
                       size="sm"
                       onClick={() => setDurationFilter(duration as any)}
                       className={`rounded-full text-xs ${
@@ -518,7 +568,9 @@ export function GuidedYogaCard() {
                 <button
                   onClick={() => setActiveTab("yoga")}
                   className={`flex-1 py-3 px-6 rounded-xl text-sm font-medium transition-all duration-200 ${
-                    activeTab === "yoga" ? "bg-white text-purple-600 shadow-sm" : "text-gray-600 hover:text-purple-500"
+                    activeTab === "yoga"
+                      ? "bg-white text-purple-600 shadow-sm"
+                      : "text-gray-600 hover:text-purple-500"
                   }`}
                 >
                   🧘‍♀️ Yoga Poses ({selectedCategory.yoga.length})
@@ -537,7 +589,11 @@ export function GuidedYogaCard() {
 
               {/* Content */}
               <div className="grid gap-4 md:grid-cols-2">
-                {filterPoses(activeTab === "yoga" ? selectedCategory.yoga : selectedCategory.exercises).map((pose) => (
+                {filterPoses(
+                  activeTab === "yoga"
+                    ? selectedCategory.yoga
+                    : selectedCategory.exercises
+                ).map((pose) => (
                   <Card
                     key={pose.id}
                     className={`border-2 transition-all duration-200 rounded-2xl cursor-pointer ${
@@ -550,29 +606,46 @@ export function GuidedYogaCard() {
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-semibold text-gray-800 mb-1">{pose.name}</h4>
-                          <p className="text-sm text-gray-600 mb-2">{pose.benefit}</p>
+                          <h4 className="font-semibold text-gray-800 mb-1">
+                            {pose.name}
+                          </h4>
+                          <p className="text-sm text-gray-600 mb-2">
+                            {pose.benefit}
+                          </p>
                         </div>
                         <div
                           className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                            selectedPoses.includes(pose.id) ? "border-purple-400 bg-purple-400" : "border-gray-300"
+                            selectedPoses.includes(pose.id)
+                              ? "border-purple-400 bg-purple-400"
+                              : "border-gray-300"
                           }`}
                         >
-                          {selectedPoses.includes(pose.id) && <CheckCircle className="h-4 w-4 text-white" />}
+                          {selectedPoses.includes(pose.id) && (
+                            <CheckCircle className="h-4 w-4 text-white" />
+                          )}
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
                         <div className="flex gap-2">
-                          <Badge className={getDifficultyColor(pose.difficulty)} size="sm">
+                          <Badge
+                            className={getDifficultyColor(pose.difficulty)}
+                          >
                             {pose.difficulty}
                           </Badge>
-                          <Badge variant="outline" className="bg-gray-50 text-gray-600" size="sm">
+                          <Badge
+                            variant="outline"
+                            className="bg-gray-50 text-gray-600"
+                          >
                             <Clock className="h-3 w-3 mr-1" />
                             {pose.duration}
                           </Badge>
                         </div>
-                        <Button variant="ghost" size="sm" className="text-purple-600 hover:text-purple-700 p-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-purple-600 hover:text-purple-700 p-1"
+                        >
                           <Play className="h-4 w-4 mr-1" />
                           Demo
                         </Button>
@@ -585,9 +658,12 @@ export function GuidedYogaCard() {
               {/* Start Routine CTA */}
               {selectedPoses.length > 0 && (
                 <div className="mt-8 p-6 bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl text-center">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Ready to start your custom routine?</h3>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    Ready to start your custom routine?
+                  </h3>
                   <p className="text-gray-600 mb-4">
-                    You've selected {selectedPoses.length} {selectedPoses.length === 1 ? "pose" : "poses"} for your
+                    You've selected {selectedPoses.length}{" "}
+                    {selectedPoses.length === 1 ? "pose" : "poses"} for your
                     personalized flow
                   </p>
                   <Button className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
@@ -601,5 +677,5 @@ export function GuidedYogaCard() {
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }

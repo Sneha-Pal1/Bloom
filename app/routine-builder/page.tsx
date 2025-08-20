@@ -41,7 +41,7 @@ const quickAddItems = [
 ]
 
 export default function RoutineBuilder() {
-  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab, login } = useAuth()
+  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab } = useAuth()
   const [tasks, setTasks] = useState<Task[]>([])
   const [newTaskText, setNewTaskText] = useState("")
   const [editingTask, setEditingTask] = useState<string | null>(null)
@@ -454,14 +454,7 @@ export default function RoutineBuilder() {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={() => {
-          const mockUser = {
-            id: "1",
-            email: "user@example.com",
-            name: "Wellness User",
-          }
-          login(mockUser)
-        }}
+        onSuccess={() => {}}
         defaultTab={authModalTab}
       />
     </div>

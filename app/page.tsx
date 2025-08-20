@@ -26,7 +26,6 @@ export default function WellnessLanding() {
     showAuthModal,
     setShowAuthModal,
     authModalTab,
-    login,
   } = useAuth();
 
   const handleStartToday = () => {
@@ -45,15 +44,7 @@ export default function WellnessLanding() {
     }
   };
 
-  const handleAuthSuccess = () => {
-    // Simulate successful login
-    const mockUser = {
-      id: "1",
-      email: "user@example.com",
-      name: "Wellness User",
-    };
-    login(mockUser);
-  };
+  const handleAuthSuccess = () => {};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-green-50">
@@ -162,7 +153,7 @@ export default function WellnessLanding() {
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
                   <Image
-                    src="/placeholder.svg?height=500&width=500"
+                    src="/images/hero-meditation.svg"
                     width={500}
                     height={500}
                     alt="Woman meditating peacefully"
@@ -191,7 +182,7 @@ export default function WellnessLanding() {
                     </div>
                   </div>
                   <Image
-                    src="/placeholder.svg?height=300&width=400"
+                    src="/images/morning-flow.svg"
                     width={400}
                     height={300}
                     alt="Workout demo interface"

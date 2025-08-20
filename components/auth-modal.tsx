@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Heart, Mail, Lock, Eye, EyeOff, Sparkles } from "lucide-react"
 import { FcGoogle } from "react-icons/fc"
+import { useAuth } from "./auth-context"
 
 interface AuthModalProps {
   isOpen: boolean
@@ -40,15 +41,21 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultTab = "login" }: 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = useState(false)
+  const { login, signup } = useAuth()
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
+
+    if (activeTab === "signup" && !formData.name) {
+      newErrors.name = "Name is required"
+    }
 
     if (!formData.email) {
       newErrors.email = "Email is required"
@@ -79,17 +86,22 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultTab = "login" }: 
     if (!validateForm()) return
 
     setIsLoading(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    setIsLoading(false)
-    onSuccess()
-    onClose()
-
-    // Reset form
-    setFormData({ email: "", password: "", confirmPassword: "" })
-    setErrors({})
+    try {
+      if (activeTab === "login") {
+        await login(formData.email, formData.password)
+      } else {
+        await signup({ name: formData.name, email: formData.email, password: formData.password })
+      }
+      onSuccess()
+      onClose()
+      setFormData({ name: "", email: "", password: "", confirmPassword: "" })
+      setErrors({})
+    } catch (err: any) {
+      const message = err?.message || "Authentication failed"
+      setErrors((prev) => ({ ...prev, form: message }))
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleGoogleAuth = async () => {
@@ -152,6 +164,25 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultTab = "login" }: 
 
             <CardContent className="px-6 pb-6 relative z-10">
               <form onSubmit={handleSubmit} className="space-y-4">
+                {errors.form && <p className="text-red-500 text-xs ml-1">{errors.form}</p>}
+
+                {/* Name Input (Sign Up only) */}
+                {activeTab === "signup" && (
+                  <div>
+                    <div className="relative">
+                      <Input
+                        type="text"
+                        placeholder="Enter your name"
+                        value={formData.name}
+                        onChange={(e) => handleInputChange("name", e.target.value)}
+                        className={`border-2 rounded-2xl bg-white/70 backdrop-blur-sm transition-all duration-200 ${
+                          errors.name ? "border-red-300 focus:border-red-400" : "border-purple-200 focus:border-purple-400"
+                        }`}
+                      />
+                    </div>
+                    {errors.name && <p className="text-red-500 text-xs mt-1 ml-1">{errors.name}</p>}
+                  </div>
+                )}
                 {/* Email Input */}
                 <div>
                   <div className="relative">

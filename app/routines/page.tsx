@@ -36,7 +36,7 @@ const routines: Routine[] = [
     exercises: ["Cat-Cow Stretch", "Child's Pose", "Gentle Twists", "Mountain Pose", "Deep Breathing"],
     rating: 4.8,
     completions: 1247,
-    image: "/placeholder.svg?height=200&width=300&text=Morning+Flow",
+    image: "/images/morning-flow.svg",
   },
   {
     id: "2",
@@ -48,7 +48,7 @@ const routines: Routine[] = [
     exercises: ["Bodyweight Squats", "Modified Push-ups", "Glute Bridges", "Wall Sits", "Core Breathing"],
     rating: 4.9,
     completions: 892,
-    image: "/placeholder.svg?height=200&width=300&text=Cycle+Strength",
+    image: "/images/cycle-strength.svg",
   },
   {
     id: "3",
@@ -61,7 +61,7 @@ const routines: Routine[] = [
     exercises: ["Legs Up Wall", "Gentle Hip Circles", "Seated Meditation", "Gratitude Practice", "Savasana"],
     rating: 4.7,
     completions: 1456,
-    image: "/placeholder.svg?height=200&width=300&text=Evening+Wind+Down",
+    image: "/images/evening-wind-down.svg",
   },
   {
     id: "4",
@@ -73,7 +73,7 @@ const routines: Routine[] = [
     exercises: ["Tai Chi Flow", "Walking Meditation", "Breath Awareness", "Body Scan", "Gentle Stretching"],
     rating: 4.6,
     completions: 734,
-    image: "/placeholder.svg?height=200&width=300&text=Mindful+Movement",
+    image: "/images/mindful-movement.svg",
   },
   {
     id: "5",
@@ -86,7 +86,7 @@ const routines: Routine[] = [
     exercises: ["Hip Openers", "Gentle Twists", "Supported Child's Pose", "Legs Up Wall", "Breathing Exercises"],
     rating: 4.9,
     completions: 1123,
-    image: "/placeholder.svg?height=200&width=300&text=PMS+Relief",
+    image: "/images/pms-relief.svg",
   },
   {
     id: "6",
@@ -98,7 +98,7 @@ const routines: Routine[] = [
     exercises: ["Sun Salutations", "Warrior Poses", "Backbends", "Twists", "Energizing Breath"],
     rating: 4.5,
     completions: 567,
-    image: "/placeholder.svg?height=200&width=300&text=Energy+Boost",
+    image: "/images/energy-boost.svg",
   },
 ]
 
@@ -126,7 +126,7 @@ const FloatingSparkles = () => (
 export default function Routines() {
   const router = useRouter()
 
-  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab, login } = useAuth()
+  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab } = useAuth()
 
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedDifficulty, setSelectedDifficulty] = useState("All")
@@ -277,7 +277,7 @@ export default function Routines() {
             >
               <div className="relative">
                 <img
-                  src={routine.image || "/placeholder.svg"}
+                  src={routine.image || "/images/morning-flow.svg"}
                   alt={routine.name}
                   className="w-full h-48 object-cover"
                 />
@@ -355,14 +355,7 @@ export default function Routines() {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={() => {
-          const mockUser = {
-            id: "1",
-            email: "user@example.com",
-            name: "Wellness User",
-          }
-          login(mockUser)
-        }}
+        onSuccess={() => {}}
         defaultTab={authModalTab}
       />
     </div>

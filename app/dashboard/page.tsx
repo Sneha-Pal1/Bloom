@@ -70,7 +70,7 @@ const moodEmojis = [
 ]
 
 export default function Dashboard() {
-  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab, login } = useAuth()
+  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab } = useAuth()
 
   const [currentTime, setCurrentTime] = useState(new Date())
   const [todayAffirmation] = useState(affirmations[new Date().getDate() % affirmations.length])
@@ -399,14 +399,7 @@ export default function Dashboard() {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={() => {
-          const mockUser = {
-            id: "1",
-            email: "user@example.com",
-            name: "Wellness User",
-          }
-          login(mockUser)
-        }}
+        onSuccess={() => {}}
         defaultTab={authModalTab}
       />
     </div>

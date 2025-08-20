@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="eg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#86EFAC"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" rx="24" fill="url(#eg2)"/>
+  <g transform="translate(200 150)" fill="#065F46">
+    <polygon points="0,-60 15,-10 60,-10 25,15 40,60 0,30 -40,60 -25,15 -60,-10 -15,-10" opacity="0.45"/>
+  </g>
+  <text x="200" y="260" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" fill="#166534">Energy Boost Flow</text>
+</svg>
+

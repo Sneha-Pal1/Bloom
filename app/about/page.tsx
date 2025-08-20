@@ -8,17 +8,9 @@ import { useAuth } from "@/components/auth-context"
 import { AuthModal } from "@/components/auth-modal"
 
 export default function AboutPage() {
-  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab, login } = useAuth()
+  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab } = useAuth()
 
-  const handleAuthSuccess = () => {
-    // Simulate successful login
-    const mockUser = {
-      id: "1",
-      email: "user@example.com",
-      name: "Wellness User",
-    }
-    login(mockUser)
-  }
+  const handleAuthSuccess = () => {}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-green-50">
@@ -101,7 +93,7 @@ export default function AboutPage() {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl blur-2xl opacity-50"></div>
                 <Image
-                  src="/placeholder.svg?height=400&width=500&text=Our+Mission"
+                  src="/images/hero-meditation.svg"
                   width={500}
                   height={400}
                   alt="Women supporting each other"

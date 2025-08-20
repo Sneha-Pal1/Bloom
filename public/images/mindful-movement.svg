@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="mg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#A7F3D0"/>
+      <stop offset="100%" stop-color="#BFDBFE"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" rx="24" fill="url(#mg2)"/>
+  <g transform="translate(200 150)" fill="#065F46">
+    <path d="M-80 40q40-80 80 0t80 0" opacity="0.35"/>
+    <circle r="28" opacity="0.4"/>
+  </g>
+  <text x="200" y="260" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" fill="#064E3B">Mindful Movement</text>
+</svg>
+

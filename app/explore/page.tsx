@@ -31,17 +31,9 @@ export default function ExplorePage() {
     showAuthModal,
     setShowAuthModal,
     authModalTab,
-    login,
   } = useAuth();
 
-  const handleAuthSuccess = () => {
-    const mockUser = {
-      id: "1",
-      email: "user@example.com",
-      name: "Wellness User",
-    };
-    login(mockUser);
-  };
+  const handleAuthSuccess = () => {};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
@@ -166,7 +158,7 @@ export default function ExplorePage() {
 
                 <div className="relative mb-6">
                   <Image
-                    src="/placeholder.svg?height=300&width=400&text=Morning+Flow+Preview"
+                    src="/images/morning-flow.svg"
                     width={400}
                     height={300}
                     alt="Morning Flow workout preview"

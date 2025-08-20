@@ -336,7 +336,7 @@ const yogaRoutines = [
     duration: "20 min",
     level: "Beginner",
     participants: 1247,
-    image: "/placeholder.svg?height=200&width=300&text=Morning+Flow",
+    image: "/images/morning-flow.svg",
     tags: ["energizing", "flexibility", "mindfulness"],
   },
   {
@@ -346,7 +346,7 @@ const yogaRoutines = [
     duration: "15 min",
     level: "All Levels",
     participants: 892,
-    image: "/placeholder.svg?height=200&width=300&text=Cycle+Sync",
+    image: "/images/cycle-strength.svg",
     tags: ["gentle", "hormones", "adaptive"],
   },
   {
@@ -356,7 +356,7 @@ const yogaRoutines = [
     duration: "25 min",
     level: "Beginner",
     participants: 1534,
-    image: "/placeholder.svg?height=200&width=300&text=Evening+Yoga",
+    image: "/images/evening-wind-down.svg",
     tags: ["relaxing", "sleep", "restoration"],
   },
   {
@@ -366,7 +366,7 @@ const yogaRoutines = [
     duration: "18 min",
     level: "Intermediate",
     participants: 678,
-    image: "/placeholder.svg?height=200&width=300&text=Core+Strength",
+    image: "/images/energy-boost.svg",
     tags: ["strength", "core", "empowerment"],
   },
 ]
@@ -393,7 +393,7 @@ export function GuidedYogaSection() {
             >
               <div className="relative">
                 <Image
-                  src={routine.image || "/placeholder.svg"}
+                  src={routine.image || "/images/morning-flow.svg"}
                   width={300}
                   height={200}
                   alt={routine.title}

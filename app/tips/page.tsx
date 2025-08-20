@@ -123,7 +123,7 @@ const FloatingSparkles = () => (
 )
 
 export default function Tips() {
-  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab, login } = useAuth()
+  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab } = useAuth()
 
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -371,14 +371,7 @@ export default function Tips() {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={() => {
-          const mockUser = {
-            id: "1",
-            email: "user@example.com",
-            name: "Wellness User",
-          }
-          login(mockUser)
-        }}
+        onSuccess={() => {}}
         defaultTab={authModalTab}
       />
     </div>
