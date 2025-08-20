@@ -1,37 +1,55 @@
-"use client"
+import type React from "react";
 
-import type React from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Heart, Play, Clock, Users } from "lucide-react"
-import Image from "next/image"
-import { ProtectedAction } from "@/components/protected-action"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Heart,
+  Calendar,
+  Flower2,
+  Waves,
+  Sun,
+  Play,
+  Clock,
+  CheckCircle,
+  Plus,
+  Filter,
+} from "lucide-react";
+import { ProtectedAction } from "@/components/protected-action";
 
 interface Pose {
-  id: string
-  name: string
-  benefit: string
-  duration: string
-  difficulty: "Beginner" | "Intermediate" | "Advanced"
-  selected?: boolean
+  id: string;
+  name: string;
+  benefit: string;
+  duration: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  selected?: boolean;
 }
 
 interface Category {
-  id: string
-  title: string
-  description: string
-  icon: React.ReactNode
-  color: string
-  bgGradient: string
-  yoga: Pose[]
-  exercises: Pose[]
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  color: string;
+  bgGradient: string;
+  yoga: Pose[];
+  exercises: Pose[];
 }
 
 const categories: Category[] = [
   {
     id: "overall-health",
     title: "Overall Women's Health",
-    description: "Holistic practices to support your body's natural balance and vitality",
+    description:
+      "Holistic practices to support your body's natural balance and vitality",
     icon: <Heart className="h-6 w-6" />,
     color: "text-pink-600",
     bgGradient: "from-pink-50 to-rose-100",
@@ -92,8 +110,9 @@ const categories: Category[] = [
   {
     id: "irregular-periods",
     title: "Late & Irregular Periods",
-    description: "Gentle movements to support hormonal balance and cycle regulation",
-    icon: <Heart className="h-6 w-6" />,
+    description:
+      "Gentle movements to support hormonal balance and cycle regulation",
+    icon: <Calendar className="h-6 w-6" />,
     color: "text-purple-600",
     bgGradient: "from-purple-50 to-lavender-100",
     yoga: [
@@ -146,8 +165,9 @@ const categories: Category[] = [
   {
     id: "pcos",
     title: "PCOS Support",
-    description: "Targeted practices to manage PCOS symptoms and support metabolic health",
-    icon: <Heart className="h-6 w-6" />,
+    description:
+      "Targeted practices to manage PCOS symptoms and support metabolic health",
+    icon: <Flower2 className="h-6 w-6" />,
     color: "text-green-600",
     bgGradient: "from-green-50 to-mint-100",
     yoga: [
@@ -207,8 +227,9 @@ const categories: Category[] = [
   {
     id: "period-cramps",
     title: "Period Cramps Relief",
-    description: "Soothing poses and gentle movements to ease menstrual discomfort",
-    icon: <Heart className="h-6 w-6" />,
+    description:
+      "Soothing poses and gentle movements to ease menstrual discomfort",
+    icon: <Waves className="h-6 w-6" />,
     color: "text-orange-600",
     bgGradient: "from-orange-50 to-peach-100",
     yoga: [
@@ -269,7 +290,7 @@ const categories: Category[] = [
     id: "mood-pms",
     title: "Mood Swings & PMS",
     description: "Calming practices to balance emotions and ease PMS symptoms",
-    icon: <Heart className="h-6 w-6" />,
+    icon: <Sun className="h-6 w-6" />,
     color: "text-blue-600",
     bgGradient: "from-blue-50 to-sky-100",
     yoga: [
@@ -326,130 +347,333 @@ const categories: Category[] = [
       },
     ],
   },
-]
+];
 
-const yogaRoutines = [
-  {
-    id: 1,
-    title: "Morning Goddess Flow",
-    description: "Start your day with intention and grace",
-    duration: "20 min",
-    level: "Beginner",
-    participants: 1247,
-    image: "/images/morning-flow.svg",
-    tags: ["energizing", "flexibility", "mindfulness"],
-  },
-  {
-    id: 2,
-    title: "Cycle Sync Gentle",
-    description: "Hormone-friendly movement for every phase",
-    duration: "15 min",
-    level: "All Levels",
-    participants: 892,
-    image: "/images/cycle-strength.svg",
-    tags: ["gentle", "hormones", "adaptive"],
-  },
-  {
-    id: 3,
-    title: "Evening Wind Down",
-    description: "Release tension and prepare for rest",
-    duration: "25 min",
-    level: "Beginner",
-    participants: 1534,
-    image: "/images/evening-wind-down.svg",
-    tags: ["relaxing", "sleep", "restoration"],
-  },
-  {
-    id: 4,
-    title: "Core Goddess",
-    description: "Build strength from your center",
-    duration: "18 min",
-    level: "Intermediate",
-    participants: 678,
-    image: "/images/energy-boost.svg",
-    tags: ["strength", "core", "empowerment"],
-  },
-]
+export function GuidedYogaCard() {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
+  const [activeTab, setActiveTab] = useState<"yoga" | "exercises">("yoga");
+  const [selectedPoses, setSelectedPoses] = useState<string[]>([]);
+  const [difficultyFilter, setDifficultyFilter] = useState<
+    "All" | "Beginner" | "Intermediate" | "Advanced"
+  >("All");
+  const [durationFilter, setDurationFilter] = useState<
+    "All" | "Short" | "Medium" | "Long"
+  >("All");
 
-export function GuidedYogaSection() {
+  const handleCardClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCategorySelect = (category: Category) => {
+    setSelectedCategory(category);
+    setSelectedPoses([]);
+    setActiveTab("yoga");
+  };
+
+  const togglePoseSelection = (poseId: string) => {
+    setSelectedPoses((prev) =>
+      prev.includes(poseId)
+        ? prev.filter((id) => id !== poseId)
+        : [...prev, poseId]
+    );
+  };
+
+  const filterPoses = (poses: Pose[]) => {
+    return poses.filter((pose) => {
+      const matchesDifficulty =
+        difficultyFilter === "All" || pose.difficulty === difficultyFilter;
+
+      let matchesDuration = true;
+      if (durationFilter !== "All") {
+        const duration = Number.parseInt(pose.duration);
+        if (durationFilter === "Short") matchesDuration = duration <= 5;
+        else if (durationFilter === "Medium")
+          matchesDuration = duration > 5 && duration <= 10;
+        else if (durationFilter === "Long") matchesDuration = duration > 10;
+      }
+
+      return matchesDifficulty && matchesDuration;
+    });
+  };
+
+  const getDifficultyColor = (difficulty: string) => {
+    const colors = {
+      Beginner: "bg-green-100 text-green-700",
+      Intermediate: "bg-yellow-100 text-yellow-700",
+      Advanced: "bg-red-100 text-red-700",
+    };
+    return (
+      colors[difficulty as keyof typeof colors] || "bg-gray-100 text-gray-700"
+    );
+  };
+
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-white/50">
-      <div className="container px-4 md:px-6 mx-auto">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-          <div className="flex items-center gap-2">
-            <Heart className="h-8 w-8 text-purple-400" />
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-gray-800">Guided Yoga & Workouts</h2>
+    <>
+      {/* Main Feature Card */}
+      <Card
+        className="group hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border-0 bg-gradient-to-br from-purple-100 to-lavender-100 rounded-3xl shadow-lg cursor-pointer h-full"
+        onClick={handleCardClick}
+      >
+        <CardContent className="p-8 text-center h-full flex flex-col justify-between">
+          <div>
+            <div className="w-20 h-20 mx-auto mb-6 bg-white/80 rounded-full flex items-center justify-center group-hover:bg-white transition-colors shadow-lg">
+              <Heart className="h-10 w-10 text-purple-600" />
+            </div>
+            <h3 className="text-xl font-bold mb-4 text-gray-800">
+              Guided Yoga & Workouts
+            </h3>
+            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+              Cycle-specific routines with demos and timers tailored for your
+              wellness journey
+            </p>
           </div>
-          <p className="max-w-[900px] text-gray-600 md:text-lg">
-            Cycle-specific routines with demos and timers, designed to honor your body's natural rhythms
-          </p>
-        </div>
+          <ProtectedAction>
+            <Button className="w-full bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              <Play className="h-4 w-4 mr-2" />
+              Start Flow
+            </Button>
+          </ProtectedAction>
+        </CardContent>
+      </Card>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {yogaRoutines.map((routine) => (
-            <Card
-              key={routine.id}
-              className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-            >
-              <div className="relative">
-                <Image
-                  src={routine.image || "/images/morning-flow.svg"}
-                  width={300}
-                  height={200}
-                  alt={routine.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2">
-                  <Play className="h-4 w-4 text-purple-600" />
+      {/* Modal */}
+      <Dialog open={showModal} onOpenChange={setShowModal}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-purple-50/95 via-pink-50/95 to-orange-50/95 backdrop-blur-xl border-0 rounded-3xl">
+          <DialogHeader>
+            <DialogTitle className="text-center text-3xl text-gray-800 mb-4">
+              Guided Yoga & Workouts 🧘‍♀️
+            </DialogTitle>
+            <p className="text-center text-gray-600 mb-8">
+              Choose your wellness focus and discover gentle practices designed
+              for women's health
+            </p>
+          </DialogHeader>
+
+          {!selectedCategory ? (
+            // Category Selection View
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+              {categories.map((category) => (
+                <Card
+                  key={category.id}
+                  className={`group hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-0 bg-gradient-to-br ${category.bgGradient} rounded-3xl cursor-pointer`}
+                  onClick={() => handleCategorySelect(category)}
+                >
+                  <CardContent className="p-6 text-center">
+                    <div
+                      className={`w-16 h-16 mx-auto mb-4 bg-white/70 rounded-full flex items-center justify-center group-hover:bg-white/90 transition-colors ${category.color}`}
+                    >
+                      {category.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-800">
+                      {category.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                      {category.description}
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="bg-white/70 hover:bg-white border-white/50 text-gray-700 rounded-full"
+                    >
+                      View Routines
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            // Category Detail View
+            <>
+              <div className="flex items-center justify-between mb-6">
+                <Button
+                  variant="ghost"
+                  onClick={() => setSelectedCategory(null)}
+                  className="text-purple-600 hover:text-purple-700"
+                >
+                  ← Back to Categories
+                </Button>
+                <div className="text-center">
+                  <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+                    <div
+                      className={`w-8 h-8 bg-white/70 rounded-full flex items-center justify-center ${selectedCategory.color}`}
+                    >
+                      {selectedCategory.icon}
+                    </div>
+                    {selectedCategory.title}
+                  </h3>
+                </div>
+                <div></div>
+              </div>
+
+              {/* Filters */}
+              <div className="flex flex-wrap gap-4 mb-6 justify-center">
+                <div className="flex gap-2">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">
+                    <Filter className="h-4 w-4 mr-1" />
+                    Level:
+                  </span>
+                  {["All", "Beginner", "Intermediate", "Advanced"].map(
+                    (level) => (
+                      <Button
+                        key={level}
+                        variant={
+                          difficultyFilter === level ? "default" : "outline"
+                        }
+                        size="sm"
+                        onClick={() => setDifficultyFilter(level as any)}
+                        className={`rounded-full text-xs ${
+                          difficultyFilter === level
+                            ? "bg-purple-400 hover:bg-purple-500"
+                            : "border-purple-200 text-purple-600 hover:bg-purple-50 bg-white/70"
+                        }`}
+                      >
+                        {level}
+                      </Button>
+                    )
+                  )}
+                </div>
+
+                <div className="flex gap-2">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">
+                    <Clock className="h-4 w-4 mr-1" />
+                    Duration:
+                  </span>
+                  {["All", "Short", "Medium", "Long"].map((duration) => (
+                    <Button
+                      key={duration}
+                      variant={
+                        durationFilter === duration ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setDurationFilter(duration as any)}
+                      className={`rounded-full text-xs ${
+                        durationFilter === duration
+                          ? "bg-pink-400 hover:bg-pink-500"
+                          : "border-pink-200 text-pink-600 hover:bg-pink-50 bg-white/70"
+                      }`}
+                    >
+                      {duration}
+                    </Button>
+                  ))}
                 </div>
               </div>
 
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{routine.title}</h3>
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed">{routine.description}</p>
+              {/* Tabs */}
+              <div className="flex mb-6 bg-white/50 rounded-2xl p-1">
+                <button
+                  onClick={() => setActiveTab("yoga")}
+                  className={`flex-1 py-3 px-6 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeTab === "yoga"
+                      ? "bg-white text-purple-600 shadow-sm"
+                      : "text-gray-600 hover:text-purple-500"
+                  }`}
+                >
+                  🧘‍♀️ Yoga Poses ({selectedCategory.yoga.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab("exercises")}
+                  className={`flex-1 py-3 px-6 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeTab === "exercises"
+                      ? "bg-white text-purple-600 shadow-sm"
+                      : "text-gray-600 hover:text-purple-500"
+                  }`}
+                >
+                  💪 Exercises ({selectedCategory.exercises.length})
+                </button>
+              </div>
 
-                <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{routine.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="h-4 w-4" />
-                    <span>{routine.participants}</span>
-                  </div>
-                </div>
+              {/* Content */}
+              <div className="grid gap-4 md:grid-cols-2">
+                {filterPoses(
+                  activeTab === "yoga"
+                    ? selectedCategory.yoga
+                    : selectedCategory.exercises
+                ).map((pose) => (
+                  <Card
+                    key={pose.id}
+                    className={`border-2 transition-all duration-200 rounded-2xl cursor-pointer ${
+                      selectedPoses.includes(pose.id)
+                        ? "border-purple-400 bg-purple-50/70"
+                        : "border-gray-200 bg-white/70 hover:border-purple-300"
+                    }`}
+                    onClick={() => togglePoseSelection(pose.id)}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-gray-800 mb-1">
+                            {pose.name}
+                          </h4>
+                          <p className="text-sm text-gray-600 mb-2">
+                            {pose.benefit}
+                          </p>
+                        </div>
+                        <div
+                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                            selectedPoses.includes(pose.id)
+                              ? "border-purple-400 bg-purple-400"
+                              : "border-gray-300"
+                          }`}
+                        >
+                          {selectedPoses.includes(pose.id) && (
+                            <CheckCircle className="h-4 w-4 text-white" />
+                          )}
+                        </div>
+                      </div>
 
-                <div className="flex flex-wrap gap-1 mb-4">
-                  {routine.tags.slice(0, 2).map((tag, index) => (
-                    <span key={index} className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-2">
+                          <Badge
+                            className={getDifficultyColor(pose.difficulty)}
+                          >
+                            {pose.difficulty}
+                          </Badge>
+                          <Badge
+                            variant="outline"
+                            className="bg-gray-50 text-gray-600"
+                          >
+                            <Clock className="h-3 w-3 mr-1" />
+                            {pose.duration}
+                          </Badge>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-purple-600 hover:text-purple-700 p-1"
+                        >
+                          <Play className="h-4 w-4 mr-1" />
+                          Demo
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
 
-                <ProtectedAction>
-                  <Button className="w-full bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white rounded-2xl">
-                    Start Flow
+              {/* Start Routine CTA */}
+              {selectedPoses.length > 0 && (
+                <div className="mt-8 p-6 bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl text-center">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    Ready to start your custom routine?
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    You've selected {selectedPoses.length}{" "}
+                    {selectedPoses.length === 1 ? "pose" : "poses"} for your
+                    personalized flow
+                  </p>
+                  <Button className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Start Custom Routine
                   </Button>
-                </ProtectedAction>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <ProtectedAction>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-purple-200 text-purple-600 hover:bg-purple-50 rounded-full px-8 py-3 transition-all duration-300 bg-transparent"
-            >
-              View All Routines
-            </Button>
-          </ProtectedAction>
-        </div>
-      </div>
-    </section>
-  )
+                </div>
+              )}
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
+  );
 }

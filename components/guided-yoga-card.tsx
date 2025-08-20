@@ -25,8 +25,8 @@ import {
   Filter,
 } from "lucide-react";
 import { ProtectedAction } from "@/components/protected-action";
-import { LottiePlayer } from "@/components/lottie-player";
-import { animations } from "../components/animation";
+// import { LottiePlayer } from "@/components/lottie-player";
+// import { animations } from "../lib/exercise-animations";
 
 interface Pose {
   id: string;
@@ -645,11 +645,14 @@ export function GuidedYogaCard() {
                             {pose.duration}
                           </Badge>
                         </div>
-                        {animations[pose.id] && (
+                        {/* {animations[pose.id] && (
                           <div className="ml-4 w-24 h-24 flex items-center justify-center">
-                            <LottiePlayer src={animations[pose.id]} height={96} />
+                            <LottiePlayer
+                              src={animations[pose.id]}
+                              height={96}
+                            />
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </CardContent>
                   </Card>
