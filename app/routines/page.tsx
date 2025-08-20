@@ -1,41 +1,58 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Heart, Play, Clock, Users, Star, Sparkles, Plus, Filter, Search } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Heart,
+  Play,
+  Clock,
+  Users,
+  Star,
+  Sparkles,
+  Plus,
+  Filter,
+  Search,
+} from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-import { useAuth } from "@/components/auth-context"
-import { AuthModal } from "@/components/auth-modal"
-import { ProtectedAction } from "@/components/protected-action"
-import { LottiePlayer } from "@/components/lottie-player"
-import { getLottieForExercise } from "@/lib/exercise-animations"
+import { useAuth } from "@/components/auth-context";
+import { AuthModal } from "@/components/auth-modal";
+import { ProtectedAction } from "@/components/protected-action";
+// import { LottiePlayer } from "@/components/lottie-player"
+import { getLottieForExercise } from "@/lib/exercise-animations";
 
 interface Routine {
-  id: string
-  name: string
-  description: string
-  duration: string
-  difficulty: "Beginner" | "Intermediate" | "Advanced"
-  category: string
-  exercises: string[]
-  rating: number
-  completions: number
-  image: string
+  id: string;
+  name: string;
+  description: string;
+  duration: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  category: string;
+  exercises: string[];
+  rating: number;
+  completions: number;
+  image: string;
 }
 
 const routines: Routine[] = [
   {
     id: "1",
     name: "Morning Gentle Flow",
-    description: "Start your day with gentle stretches and mindful breathing to awaken your body and center your mind.",
+    description:
+      "Start your day with gentle stretches and mindful breathing to awaken your body and center your mind.",
     duration: "15 min",
     difficulty: "Beginner",
     category: "Yoga",
-    exercises: ["Cat-Cow Stretch", "Child's Pose", "Gentle Twists", "Mountain Pose", "Deep Breathing"],
+    exercises: [
+      "Cat-Cow Stretch",
+      "Child's Pose",
+      "Gentle Twists",
+      "Mountain Pose",
+      "Deep Breathing",
+    ],
     rating: 4.8,
     completions: 1247,
     image: "/images/morning-flow.svg",
@@ -43,11 +60,18 @@ const routines: Routine[] = [
   {
     id: "2",
     name: "Cycle Sync Strength",
-    description: "Hormone-friendly strength training that adapts to your menstrual cycle phases for optimal results.",
+    description:
+      "Hormone-friendly strength training that adapts to your menstrual cycle phases for optimal results.",
     duration: "25 min",
     difficulty: "Intermediate",
     category: "Strength",
-    exercises: ["Bodyweight Squats", "Modified Push-ups", "Glute Bridges", "Wall Sits", "Core Breathing"],
+    exercises: [
+      "Bodyweight Squats",
+      "Modified Push-ups",
+      "Glute Bridges",
+      "Wall Sits",
+      "Core Breathing",
+    ],
     rating: 4.9,
     completions: 892,
     image: "/images/cycle-strength.svg",
@@ -60,7 +84,13 @@ const routines: Routine[] = [
     duration: "20 min",
     difficulty: "Beginner",
     category: "Yoga",
-    exercises: ["Legs Up Wall", "Gentle Hip Circles", "Seated Meditation", "Gratitude Practice", "Savasana"],
+    exercises: [
+      "Legs Up Wall",
+      "Gentle Hip Circles",
+      "Seated Meditation",
+      "Gratitude Practice",
+      "Savasana",
+    ],
     rating: 4.7,
     completions: 1456,
     image: "/images/evening-wind-down.svg",
@@ -68,11 +98,18 @@ const routines: Routine[] = [
   {
     id: "4",
     name: "Mindful Movement",
-    description: "Gentle, flowing movements combined with breathwork to connect mind and body in harmony.",
+    description:
+      "Gentle, flowing movements combined with breathwork to connect mind and body in harmony.",
     duration: "18 min",
     difficulty: "Beginner",
     category: "Mindfulness",
-    exercises: ["Tai Chi Flow", "Walking Meditation", "Breath Awareness", "Body Scan", "Gentle Stretching"],
+    exercises: [
+      "Tai Chi Flow",
+      "Walking Meditation",
+      "Breath Awareness",
+      "Body Scan",
+      "Gentle Stretching",
+    ],
     rating: 4.6,
     completions: 734,
     image: "/images/mindful-movement.svg",
@@ -85,7 +122,13 @@ const routines: Routine[] = [
     duration: "22 min",
     difficulty: "Beginner",
     category: "Therapeutic",
-    exercises: ["Hip Openers", "Gentle Twists", "Supported Child's Pose", "Legs Up Wall", "Breathing Exercises"],
+    exercises: [
+      "Hip Openers",
+      "Gentle Twists",
+      "Supported Child's Pose",
+      "Legs Up Wall",
+      "Breathing Exercises",
+    ],
     rating: 4.9,
     completions: 1123,
     image: "/images/pms-relief.svg",
@@ -93,19 +136,33 @@ const routines: Routine[] = [
   {
     id: "6",
     name: "Energy Boost Flow",
-    description: "Invigorating yet gentle sequence to naturally boost your energy when you're feeling low or tired.",
+    description:
+      "Invigorating yet gentle sequence to naturally boost your energy when you're feeling low or tired.",
     duration: "12 min",
     difficulty: "Intermediate",
     category: "Energizing",
-    exercises: ["Sun Salutations", "Warrior Poses", "Backbends", "Twists", "Energizing Breath"],
+    exercises: [
+      "Sun Salutations",
+      "Warrior Poses",
+      "Backbends",
+      "Twists",
+      "Energizing Breath",
+    ],
     rating: 4.5,
     completions: 567,
     image: "/images/energy-boost.svg",
   },
-]
+];
 
-const categories = ["All", "Yoga", "Strength", "Mindfulness", "Therapeutic", "Energizing"]
-const difficulties = ["All", "Beginner", "Intermediate", "Advanced"]
+const categories = [
+  "All",
+  "Yoga",
+  "Strength",
+  "Mindfulness",
+  "Therapeutic",
+  "Energizing",
+];
+const difficulties = ["All", "Beginner", "Intermediate", "Advanced"];
 
 const FloatingSparkles = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -123,26 +180,35 @@ const FloatingSparkles = () => (
       />
     ))}
   </div>
-)
+);
 
 export default function Routines() {
-  const router = useRouter()
+  const router = useRouter();
 
-  const { isAuthenticated, user, logout, showAuthModal, setShowAuthModal, authModalTab } = useAuth()
+  const {
+    isAuthenticated,
+    user,
+    logout,
+    showAuthModal,
+    setShowAuthModal,
+    authModalTab,
+  } = useAuth();
 
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [selectedDifficulty, setSelectedDifficulty] = useState("All")
-  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredRoutines = routines.filter((routine) => {
     const matchesSearch =
       routine.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      routine.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === "All" || routine.category === selectedCategory
-    const matchesDifficulty = selectedDifficulty === "All" || routine.difficulty === selectedDifficulty
+      routine.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "All" || routine.category === selectedCategory;
+    const matchesDifficulty =
+      selectedDifficulty === "All" || routine.difficulty === selectedDifficulty;
 
-    return matchesSearch && matchesCategory && matchesDifficulty
-  })
+    return matchesSearch && matchesCategory && matchesDifficulty;
+  });
 
   const getCategoryColor = (category: string) => {
     const colors = {
@@ -151,18 +217,23 @@ export default function Routines() {
       Mindfulness: "bg-blue-100 text-blue-700 border-blue-200",
       Therapeutic: "bg-pink-100 text-pink-700 border-pink-200",
       Energizing: "bg-orange-100 text-orange-700 border-orange-200",
-    }
-    return colors[category as keyof typeof colors] || "bg-gray-100 text-gray-700 border-gray-200"
-  }
+    };
+    return (
+      colors[category as keyof typeof colors] ||
+      "bg-gray-100 text-gray-700 border-gray-200"
+    );
+  };
 
   const getDifficultyColor = (difficulty: string) => {
     const colors = {
       Beginner: "bg-green-100 text-green-700",
       Intermediate: "bg-yellow-100 text-yellow-700",
       Advanced: "bg-red-100 text-red-700",
-    }
-    return colors[difficulty as keyof typeof colors] || "bg-gray-100 text-gray-700"
-  }
+    };
+    return (
+      colors[difficulty as keyof typeof colors] || "bg-gray-100 text-gray-700"
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-green-50">
@@ -170,22 +241,39 @@ export default function Routines() {
       <header className="px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-white/70 sticky top-0 z-50">
         <Link href="/" className="flex items-center justify-center">
           <Heart className="h-8 w-8 text-purple-400" />
-          <span className="ml-2 text-xl font-semibold text-gray-800">Bloom</span>
+          <span className="ml-2 text-xl font-semibold text-gray-800">
+            Bloom
+          </span>
         </Link>
         <nav className="ml-auto flex gap-6">
-          <Link href="/" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Home
           </Link>
-          <Link href="/explore" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/explore"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Explore
           </Link>
-          <Link href="/tips" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/tips"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             Tips
           </Link>
-          <Link href="/routines" className="text-sm font-medium text-purple-600 border-b-2 border-purple-400">
+          <Link
+            href="/routines"
+            className="text-sm font-medium text-purple-600 border-b-2 border-purple-400"
+          >
             Routines
           </Link>
-          <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors">
+          <Link
+            href="/about"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
             About
           </Link>
         </nav>
@@ -197,10 +285,13 @@ export default function Routines() {
           <Card className="border-0 bg-gradient-to-r from-purple-100 via-pink-100 to-orange-100 rounded-3xl shadow-lg overflow-hidden">
             <FloatingSparkles />
             <CardContent className="p-8 text-center relative z-10">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Wellness Routines 🧘‍♀️</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                Wellness Routines 🧘‍♀️
+              </h1>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
-                Gentle, cycle-friendly workouts and mindfulness practices designed to honor your body's natural rhythms
-                and support your wellness journey.
+                Gentle, cycle-friendly workouts and mindfulness practices
+                designed to honor your body's natural rhythms and support your
+                wellness journey.
               </p>
               <Button
                 onClick={() => router.push("/routine-builder")}
@@ -235,7 +326,9 @@ export default function Routines() {
               {categories.map((category) => (
                 <Button
                   key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
+                  variant={
+                    selectedCategory === category ? "default" : "outline"
+                  }
                   size="sm"
                   onClick={() => setSelectedCategory(category)}
                   className={`rounded-full ${
@@ -254,7 +347,9 @@ export default function Routines() {
               {difficulties.map((difficulty) => (
                 <Button
                   key={difficulty}
-                  variant={selectedDifficulty === difficulty ? "default" : "outline"}
+                  variant={
+                    selectedDifficulty === difficulty ? "default" : "outline"
+                  }
                   size="sm"
                   onClick={() => setSelectedDifficulty(difficulty)}
                   className={`rounded-full ${
@@ -284,16 +379,22 @@ export default function Routines() {
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute top-4 right-4">
-                  <Badge className={getDifficultyColor(routine.difficulty)}>{routine.difficulty}</Badge>
+                  <Badge className={getDifficultyColor(routine.difficulty)}>
+                    {routine.difficulty}
+                  </Badge>
                 </div>
               </div>
 
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-lg text-gray-800 mb-2">{routine.name}</CardTitle>
+                    <CardTitle className="text-lg text-gray-800 mb-2">
+                      {routine.name}
+                    </CardTitle>
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge className={getCategoryColor(routine.category)}>{routine.category}</Badge>
+                      <Badge className={getCategoryColor(routine.category)}>
+                        {routine.category}
+                      </Badge>
                       <div className="flex items-center gap-1 text-sm text-gray-600">
                         <Clock className="h-3 w-3" />
                         {routine.duration}
@@ -315,26 +416,35 @@ export default function Routines() {
               </CardHeader>
 
               <CardContent>
-                <p className="text-gray-700 mb-4 leading-relaxed">{routine.description}</p>
+                <p className="text-gray-700 mb-4 leading-relaxed">
+                  {routine.description}
+                </p>
 
                 {/* Lottie preview for the first exercise if available */}
-                {getLottieForExercise(routine.exercises[0]) && (
+                {/* {getLottieForExercise(routine.exercises[0]) && (
                   <div className="mb-4 flex justify-center">
                     <LottiePlayer src={getLottieForExercise(routine.exercises[0])!} height={160} />
                   </div>
-                )}
+                )} */}
 
                 <div className="mb-4">
-                  <p className="text-sm font-medium text-gray-700 mb-2">What's included:</p>
+                  <p className="text-sm font-medium text-gray-700 mb-2">
+                    What's included:
+                  </p>
                   <div className="space-y-1">
                     {routine.exercises.slice(0, 3).map((exercise, index) => (
-                      <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 text-sm text-gray-600"
+                      >
                         <div className="w-1.5 h-1.5 bg-purple-300 rounded-full"></div>
                         {exercise}
                       </div>
                     ))}
                     {routine.exercises.length > 3 && (
-                      <div className="text-sm text-gray-500">+{routine.exercises.length - 3} more exercises</div>
+                      <div className="text-sm text-gray-500">
+                        +{routine.exercises.length - 3} more exercises
+                      </div>
                     )}
                   </div>
                 </div>
@@ -354,8 +464,13 @@ export default function Routines() {
           <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
             <CardContent className="p-12 text-center">
               <Sparkles className="h-16 w-16 text-purple-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">No routines found</h3>
-              <p className="text-gray-600">Try adjusting your search or filters to discover new wellness routines.</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                No routines found
+              </h3>
+              <p className="text-gray-600">
+                Try adjusting your search or filters to discover new wellness
+                routines.
+              </p>
             </CardContent>
           </Card>
         )}
@@ -368,5 +483,5 @@ export default function Routines() {
         defaultTab={authModalTab}
       />
     </div>
-  )
+  );
 }
