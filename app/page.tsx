@@ -153,7 +153,7 @@ export default function WellnessLanding() {
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
                   <Image
-                    src="/images/hero-meditation.svg"
+                    src="/images/generated-image.png"
                     width={500}
                     height={500}
                     alt="Woman meditating peacefully"
