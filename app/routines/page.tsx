@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation"
 import { useAuth } from "@/components/auth-context"
 import { AuthModal } from "@/components/auth-modal"
 import { ProtectedAction } from "@/components/protected-action"
+import { LottiePlayer } from "@/components/lottie-player"
+import { getLottieForExercise } from "@/lib/exercise-animations"
 
 interface Routine {
   id: string
@@ -314,6 +316,13 @@ export default function Routines() {
 
               <CardContent>
                 <p className="text-gray-700 mb-4 leading-relaxed">{routine.description}</p>
+
+                {/* Lottie preview for the first exercise if available */}
+                {getLottieForExercise(routine.exercises[0]) && (
+                  <div className="mb-4 flex justify-center">
+                    <LottiePlayer src={getLottieForExercise(routine.exercises[0])!} height={160} />
+                  </div>
+                )}
 
                 <div className="mb-4">
                   <p className="text-sm font-medium text-gray-700 mb-2">What's included:</p>

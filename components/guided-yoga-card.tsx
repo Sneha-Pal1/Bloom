@@ -25,6 +25,8 @@ import {
   Filter,
 } from "lucide-react";
 import { ProtectedAction } from "@/components/protected-action";
+import { LottiePlayer } from "@/components/lottie-player";
+import { animations } from "../components/animation";
 
 interface Pose {
   id: string;
@@ -365,6 +367,8 @@ export function GuidedYogaCard() {
     "All" | "Short" | "Medium" | "Long"
   >("All");
 
+  // Inline Lottie previews will be rendered per pose when available
+
   const handleCardClick = () => {
     setShowModal(true);
   };
@@ -641,14 +645,11 @@ export function GuidedYogaCard() {
                             {pose.duration}
                           </Badge>
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-purple-600 hover:text-purple-700 p-1"
-                        >
-                          <Play className="h-4 w-4 mr-1" />
-                          Demo
-                        </Button>
+                        {animations[pose.id] && (
+                          <div className="ml-4 w-24 h-24 flex items-center justify-center">
+                            <LottiePlayer src={animations[pose.id]} height={96} />
+                          </div>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -676,6 +677,8 @@ export function GuidedYogaCard() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Inline demos are rendered per pose; no separate demo modal */}
     </>
   );
 }
