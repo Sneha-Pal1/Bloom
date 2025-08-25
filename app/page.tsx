@@ -16,6 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
+import DigitalStoreSection from "@/components/digital-store-section";
 
 export default function WellnessLanding() {
   const router = useRouter();
@@ -340,6 +341,8 @@ export default function WellnessLanding() {
             </div>
           </div>
         </section>
+        {/* Digital Store Section */}
+        <DigitalStoreSection />
 
         {/* CTA Section */}
         <section className="w-full py-12 md:py-24 lg:py-32">
