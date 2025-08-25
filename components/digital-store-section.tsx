@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download, BookOpen, FileText } from "lucide-react";
+import Link from "next/link";
 
 const products = [
   {
@@ -41,13 +42,20 @@ export default function DigitalStoreSection() {
   return (
     <section className="py-16 bg-gradient-to-b from-white to-purple-50">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 bg-gradient-to-r from-purple-600 to-pink-400 inline-block text-transparent bg-clip-text">
-          Digital Store
-        </h2>
-        <p className="text-center text-gray-600 mb-10 max-w-2xl mx-auto">
-          Enhance your wellness journey with our carefully crafted digital
-          products
-        </p>
+        <div className="flex flex-col items-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 bg-gradient-to-r from-purple-600 to-pink-400 inline-block text-transparent bg-clip-text">
+            Digital Store
+          </h2>
+          <p className="text-center text-gray-600 mb-6 max-w-2xl mx-auto">
+            Enhance your wellness journey with our carefully crafted digital
+            products
+          </p>
+          <Link href="/shop">
+            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-6 py-2 shadow-md hover:shadow-lg transition-all duration-300">
+              View All Products
+            </Button>
+          </Link>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {products.map((item) => (
             <Card
@@ -69,11 +77,13 @@ export default function DigitalStoreSection() {
                 <p className="text-gray-600">{item.desc}</p>
               </div>
               <CardContent className="p-6 bg-white">
-                <Button
-                  className={`w-full rounded-xl ${item.buttonGradient} text-white border-0`}
-                >
-                  Buy Now
-                </Button>
+                <Link href="/store">
+                  <Button
+                    className={`w-full rounded-xl ${item.buttonGradient} text-white border-0`}
+                  >
+                    Buy Now
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           ))}

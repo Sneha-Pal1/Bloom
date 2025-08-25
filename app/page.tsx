@@ -83,6 +83,12 @@ export default function WellnessLanding() {
             Routines
           </Link>
           <Link
+            href="/shop"
+            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+          >
+            Shop
+          </Link>
+          <Link
             href="/about"
             className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
           >
@@ -341,6 +347,7 @@ export default function WellnessLanding() {
             </div>
           </div>
         </section>
+
         {/* Digital Store Section */}
         <DigitalStoreSection />
 
