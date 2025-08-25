@@ -47,8 +47,7 @@ export default function DigitalStoreSection() {
             Digital Store
           </h2>
           <p className="text-center text-gray-600 mb-6 max-w-2xl mx-auto">
-            Enhance your wellness journey with our carefully crafted digital
-            products
+            Enhance your wellness journey with our carefully crafted products
           </p>
           <Link href="/shop">
             <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-6 py-2 shadow-md hover:shadow-lg transition-all duration-300">
