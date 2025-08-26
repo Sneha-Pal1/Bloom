@@ -50,7 +50,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+    // Get API URL with a fallback to prevent undefined errors
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+    if (!apiUrl) {
+      console.error(
+        "API URL is not defined. Check your environment variables."
+      );
+      throw new Error("API configuration error");
+    }
+
+    const res = await fetch(`${apiUrl}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -69,14 +78,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signup = async (name: string, email: string, password: string) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      }
-    );
+    // Get API URL with a fallback to prevent undefined errors
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+    if (!apiUrl) {
+      console.error(
+        "API URL is not defined. Check your environment variables."
+      );
+      throw new Error("API configuration error");
+    }
+
+    const res = await fetch(`${apiUrl}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
 
     if (!res.ok) {
       throw new Error("Registration failed");

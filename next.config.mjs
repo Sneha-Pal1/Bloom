@@ -9,6 +9,14 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-}
+  // Ensure environment variables are available
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  },
+  // Recommended for production deployments
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
+};
 
-export default nextConfig
+export default nextConfig;
