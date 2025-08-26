@@ -18,12 +18,13 @@ export const poseGifs: Record<string, string> = {
   // "pelvic-tilts": "/gifs/pelvic-tilts.gif",
   // "wall-sits": "/gifs/wall-sits.gif",
   // "glute-bridges": "/gifs/glute-bridges.gif",
-  // "squats": "/gifs/squats.gif",
-  // "mountain-climbers": "/gifs/mountain-climbers.gif",
+  squats: "/gifs/squats.mp4",
+  "mountain-climbers": "/gifs/mountain-climber.mp4",
   // "resistance-band": "/gifs/resistance-band.gif",
   // "pelvic-rocks": "/gifs/pelvic-rocks.gif",
   // "knee-to-chest": "/gifs/knee-to-chest.gif",
   // "heat-therapy": "/gifs/heat-therapy.gif",
+  "gentle-backbend": "/gifs/gentle-heart-opener.mp4",
 };
 
 // Function to get the gif path for a pose/exercise ID
