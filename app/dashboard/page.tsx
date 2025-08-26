@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -104,9 +105,12 @@ export default function Dashboard() {
     })
   }
 
+  const router = useRouter();
+  
   const handleStartRoutine = () => {
     setCompletedToday(true)
-    // Here you would navigate to the actual routine
+    // Navigate to the morning routine with predefined exercises
+    router.push(`/active-routine?name=Morning Wellness&type=yoga&exercises=cat-cow,childs-pose,happy-baby`)
   }
 
   const FloatingSparkles = () => (

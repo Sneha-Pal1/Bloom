@@ -705,8 +705,14 @@ export function GuidedYogaCard() {
                     {selectedPoses.length === 1 ? "pose" : "poses"} for your
                     personalized flow
                   </p>
-                  <Button className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <Plus className="h-4 w-4 mr-2" />
+                  <Button 
+                    onClick={() => {
+                      // Navigate to the active routine page with the selected poses
+                      window.location.href = `/active-routine?name=${selectedCategory?.title || "Custom"} Routine&type=${activeTab}&exercises=${selectedPoses.join(",")}`;
+                    }}
+                    className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Play className="h-4 w-4 mr-2" />
                     Start Custom Routine
                   </Button>
                 </div>

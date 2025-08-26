@@ -20,6 +20,7 @@ import {
   Calendar,
 } from "lucide-react"
 import { ProtectedAction } from "@/components/protected-action"
+import { useRouter } from "next/navigation"
 
 interface WeeklyStats {
   avgMoodScore: number
@@ -101,6 +102,7 @@ const mockWeekData: DayData[] = [
 ]
 
 export function WellnessInsightsCard() {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false)
 
   const handleCardClick = () => {
@@ -258,6 +260,14 @@ export function WellnessInsightsCard() {
                         <Button
                           size="sm"
                           className="w-full bg-white/70 hover:bg-white text-gray-700 border-0 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200"
+                          onClick={() => {
+                            if (suggestion.type === "workout") {
+                              // Navigate to active routine with appropriate exercises
+                              router.push(`/active-routine?name=${suggestion.title}&type=yoga&exercises=cat-cow,childs-pose,happy-baby`);
+                            } else if (suggestion.type === "tip") {
+                              router.push("/tips");
+                            }
+                          }}
                         >
                           {suggestion.type === "workout"
                             ? "Start Routine"
