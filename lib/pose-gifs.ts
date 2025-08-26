@@ -9,9 +9,9 @@ export const poseGifs: Record<string, string> = {
   // These files don't exist yet - uncomment when you add the files
   // "warrior-ii": "/gifs/warrior-ii.gif",
   // "tree-pose": "/gifs/tree-pose.gif",
-  // "childs-pose": "/gifs/childs-pose.gif",
+  "childs-pose": "/gifs/child-pose.mp4",
   // "supine-twist": "/gifs/supine-twist.gif",
-  // "happy-baby": "/gifs/happy-baby.gif",
+  "happy-baby": "/gifs/happy-baby-pose.mp4",
   // "goddess-pose": "/gifs/goddess-pose.gif",
 
   // Exercises - uncomment when you add the files

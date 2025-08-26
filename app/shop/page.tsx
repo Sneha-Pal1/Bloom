@@ -10,7 +10,6 @@ import {
   Shield,
   Sparkles,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
