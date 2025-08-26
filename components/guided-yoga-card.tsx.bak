@@ -27,7 +27,35 @@ import {
 import { ProtectedAction } from "@/components/protected-action";
 import Image from "next/image";
 import { getGifForPose } from "@/lib/pose-gifs";
-import { PoseGifDisplay } from "@/components/pose-gif-display";
+import { PoseGifDisplay } from "@/compon                      {getGifForPose(pose.id) && (
+                          <div 
+                            className="ml-4 w-24 h-24 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDisplayPose({ id: pose.id, name: pose.name });
+                            }}
+                          >
+                            {getGifForPose(pose.id)!.endsWith('.mp4') ? (
+                              <video 
+                                autoPlay 
+                                loop 
+                                muted 
+                                className="w-full h-full object-cover"
+                              >
+                                <source src={getGifForPose(pose.id)!} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            ) : (
+                              <Image 
+                                src={getGifForPose(pose.id)!}
+                                alt={pose.name}
+                                width={96}
+                                height={96}
+                                className="object-cover"
+                              />
+                            )}
+                          </div>
+                        )}play";
 
 interface Pose {
   id: string;
@@ -658,27 +686,13 @@ export function GuidedYogaCard() {
                               setDisplayPose({ id: pose.id, name: pose.name });
                             }}
                           >
-                            {getGifForPose(pose.id)!.endsWith(".mp4") ? (
-                              <video
-                                autoPlay
-                                loop
-                                muted
-                                className="w-full h-full object-cover"
-                              >
-                                <source
-                                  src={getGifForPose(pose.id)!}
-                                  type="video/mp4"
-                                />
-                              </video>
-                            ) : (
-                              <Image
-                                src={getGifForPose(pose.id)!}
-                                alt={pose.name}
-                                width={96}
-                                height={96}
-                                className="object-cover"
-                              />
-                            )}
+                            <Image
+                              src={getGifForPose(pose.id)!}
+                              alt={pose.name}
+                              width={96}
+                              height={96}
+                              className="object-cover"
+                            />
                           </div>
                         )}
                       </div>
