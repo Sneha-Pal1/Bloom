@@ -1,12 +1,17 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   TrendingUp,
   Heart,
@@ -18,35 +23,34 @@ import {
   Sparkles,
   CheckCircle,
   Calendar,
-} from "lucide-react"
-import { ProtectedAction } from "@/components/protected-action"
-import { useRouter } from "next/navigation"
+} from "lucide-react";
+import { ProtectedAction } from "@/components/protected-action";
 
 interface WeeklyStats {
-  avgMoodScore: number
-  avgMoodEmoji: string
-  routinesCompleted: number
-  totalRoutines: number
-  journalEntries: number
+  avgMoodScore: number;
+  avgMoodEmoji: string;
+  routinesCompleted: number;
+  totalRoutines: number;
+  journalEntries: number;
 }
 
 interface Suggestion {
-  id: string
-  type: "workout" | "tip" | "goal"
-  title: string
-  description: string
-  icon: React.ReactNode
-  category: string
-  reason: string
-  color: string
+  id: string;
+  type: "workout" | "tip" | "goal";
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  category: string;
+  reason: string;
+  color: string;
 }
 
 interface DayData {
-  date: string
-  mood: string
-  moodEmoji: string
-  routineCompleted: boolean
-  journalEntry: boolean
+  date: string;
+  mood: string;
+  moodEmoji: string;
+  routineCompleted: boolean;
+  journalEntry: boolean;
 }
 
 // Mock data for demonstration
@@ -56,14 +60,15 @@ const mockWeeklyStats: WeeklyStats = {
   routinesCompleted: 5,
   totalRoutines: 7,
   journalEntries: 4,
-}
+};
 
 const mockSuggestions: Suggestion[] = [
   {
     id: "workout-1",
     type: "workout",
     title: "Gentle Morning Flow",
-    description: "Based on your recent mood patterns, try this calming yoga sequence to start your day centered.",
+    description:
+      "Based on your recent mood patterns, try this calming yoga sequence to start your day centered.",
     icon: <Play className="h-5 w-5" />,
     category: "Yoga",
     reason: "You've been feeling a bit stressed lately",
@@ -73,7 +78,8 @@ const mockSuggestions: Suggestion[] = [
     id: "tip-1",
     type: "tip",
     title: "Evening Wind-Down Ritual",
-    description: "Create a peaceful bedtime routine with chamomile tea and gentle stretching for better sleep quality.",
+    description:
+      "Create a peaceful bedtime routine with chamomile tea and gentle stretching for better sleep quality.",
     icon: <Moon className="h-5 w-5" />,
     category: "Sleep",
     reason: "Your sleep patterns could use some support",
@@ -83,31 +89,73 @@ const mockSuggestions: Suggestion[] = [
     id: "goal-1",
     type: "goal",
     title: "Drink 2L Water Daily",
-    description: "Stay hydrated this week! Small sips throughout the day make a big difference in energy levels.",
+    description:
+      "Stay hydrated this week! Small sips throughout the day make a big difference in energy levels.",
     icon: <Droplets className="h-5 w-5" />,
     category: "Hydration",
     reason: "Boost your energy and skin health",
     color: "from-blue-50 to-cyan-100",
   },
-]
+];
 
 const mockWeekData: DayData[] = [
-  { date: "Mon", mood: "happy", moodEmoji: "😊", routineCompleted: true, journalEntry: true },
-  { date: "Tue", mood: "calm", moodEmoji: "😌", routineCompleted: true, journalEntry: false },
-  { date: "Wed", mood: "neutral", moodEmoji: "😐", routineCompleted: false, journalEntry: true },
-  { date: "Thu", mood: "happy", moodEmoji: "😄", routineCompleted: true, journalEntry: true },
-  { date: "Fri", mood: "stressed", moodEmoji: "😰", routineCompleted: false, journalEntry: false },
-  { date: "Sat", mood: "calm", moodEmoji: "😊", routineCompleted: true, journalEntry: true },
-  { date: "Sun", mood: "happy", moodEmoji: "😄", routineCompleted: true, journalEntry: false },
-]
+  {
+    date: "Mon",
+    mood: "happy",
+    moodEmoji: "😊",
+    routineCompleted: true,
+    journalEntry: true,
+  },
+  {
+    date: "Tue",
+    mood: "calm",
+    moodEmoji: "😌",
+    routineCompleted: true,
+    journalEntry: false,
+  },
+  {
+    date: "Wed",
+    mood: "neutral",
+    moodEmoji: "😐",
+    routineCompleted: false,
+    journalEntry: true,
+  },
+  {
+    date: "Thu",
+    mood: "happy",
+    moodEmoji: "😄",
+    routineCompleted: true,
+    journalEntry: true,
+  },
+  {
+    date: "Fri",
+    mood: "stressed",
+    moodEmoji: "😰",
+    routineCompleted: false,
+    journalEntry: false,
+  },
+  {
+    date: "Sat",
+    mood: "calm",
+    moodEmoji: "😊",
+    routineCompleted: true,
+    journalEntry: true,
+  },
+  {
+    date: "Sun",
+    mood: "happy",
+    moodEmoji: "😄",
+    routineCompleted: true,
+    journalEntry: false,
+  },
+];
 
 export function WellnessInsightsCard() {
-  const router = useRouter();
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   const handleCardClick = () => {
-    setShowModal(true)
-  }
+    setShowModal(true);
+  };
 
   const FloatingSparkles = () => (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -125,7 +173,7 @@ export function WellnessInsightsCard() {
         />
       ))}
     </div>
-  )
+  );
 
   return (
     <>
@@ -139,7 +187,9 @@ export function WellnessInsightsCard() {
             <div className="w-20 h-20 mx-auto mb-6 bg-white/80 rounded-full flex items-center justify-center group-hover:bg-white transition-colors shadow-lg">
               <Calendar className="h-10 w-10 text-orange-600" />
             </div>
-            <h3 className="text-xl font-bold mb-4 text-gray-800">Wellness Insights</h3>
+            <h3 className="text-xl font-bold mb-4 text-gray-800">
+              Wellness Insights
+            </h3>
             <p className="text-gray-600 text-sm leading-relaxed mb-6">
               Smart suggestions based on your cycle patterns and mood analytics
             </p>
@@ -160,9 +210,12 @@ export function WellnessInsightsCard() {
             <FloatingSparkles />
 
             <DialogHeader className="relative z-10">
-              <DialogTitle className="text-center text-3xl text-gray-800 mb-4">Wellness Insights 📊</DialogTitle>
+              <DialogTitle className="text-center text-3xl text-gray-800 mb-4">
+                Wellness Insights 📊
+              </DialogTitle>
               <p className="text-center text-gray-600 mb-8">
-                Your personalized wellness overview and smart suggestions for the week ahead
+                Your personalized wellness overview and smart suggestions for
+                the week ahead
               </p>
             </DialogHeader>
 
@@ -170,7 +223,9 @@ export function WellnessInsightsCard() {
               {/* This Week at a Glance */}
               <Card className="border-0 bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg">
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">This Week at a Glance ✨</h3>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    This Week at a Glance ✨
+                  </h3>
 
                   <div className="grid gap-6 md:grid-cols-3">
                     {/* Average Mood Score */}
@@ -178,10 +233,18 @@ export function WellnessInsightsCard() {
                       <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-full flex items-center justify-center">
                         <Heart className="h-8 w-8 text-purple-600" />
                       </div>
-                      <div className="text-3xl font-bold text-purple-600 mb-2">{mockWeeklyStats.avgMoodScore}/5</div>
-                      <div className="text-2xl mb-2">{mockWeeklyStats.avgMoodEmoji}</div>
-                      <p className="text-sm font-medium text-gray-700">Average Mood</p>
-                      <p className="text-xs text-gray-500 mt-1">Mostly positive this week!</p>
+                      <div className="text-3xl font-bold text-purple-600 mb-2">
+                        {mockWeeklyStats.avgMoodScore}/5
+                      </div>
+                      <div className="text-2xl mb-2">
+                        {mockWeeklyStats.avgMoodEmoji}
+                      </div>
+                      <p className="text-sm font-medium text-gray-700">
+                        Average Mood
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Mostly positive this week!
+                      </p>
                     </div>
 
                     {/* Routines Completed */}
@@ -190,18 +253,27 @@ export function WellnessInsightsCard() {
                         <CheckCircle className="h-8 w-8 text-blue-600" />
                       </div>
                       <div className="text-3xl font-bold text-blue-600 mb-2">
-                        {mockWeeklyStats.routinesCompleted}/{mockWeeklyStats.totalRoutines}
+                        {mockWeeklyStats.routinesCompleted}/
+                        {mockWeeklyStats.totalRoutines}
                       </div>
                       <div className="w-full bg-blue-100 rounded-full h-2 mb-2">
                         <div
                           className="bg-gradient-to-r from-blue-400 to-sky-400 h-2 rounded-full transition-all duration-500"
                           style={{
-                            width: `${(mockWeeklyStats.routinesCompleted / mockWeeklyStats.totalRoutines) * 100}%`,
+                            width: `${
+                              (mockWeeklyStats.routinesCompleted /
+                                mockWeeklyStats.totalRoutines) *
+                              100
+                            }%`,
                           }}
                         />
                       </div>
-                      <p className="text-sm font-medium text-gray-700">Routines Completed</p>
-                      <p className="text-xs text-gray-500 mt-1">Great consistency!</p>
+                      <p className="text-sm font-medium text-gray-700">
+                        Routines Completed
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Great consistency!
+                      </p>
                     </div>
 
                     {/* Journal Entries */}
@@ -209,19 +281,27 @@ export function WellnessInsightsCard() {
                       <div className="w-16 h-16 mx-auto mb-4 bg-pink-100 rounded-full flex items-center justify-center">
                         <BookOpen className="h-8 w-8 text-pink-600" />
                       </div>
-                      <div className="text-3xl font-bold text-pink-600 mb-2">{mockWeeklyStats.journalEntries}</div>
+                      <div className="text-3xl font-bold text-pink-600 mb-2">
+                        {mockWeeklyStats.journalEntries}
+                      </div>
                       <div className="flex justify-center gap-1 mb-2">
                         {[...Array(7)].map((_, i) => (
                           <div
                             key={i}
                             className={`w-2 h-2 rounded-full ${
-                              i < mockWeeklyStats.journalEntries ? "bg-pink-400" : "bg-gray-200"
+                              i < mockWeeklyStats.journalEntries
+                                ? "bg-pink-400"
+                                : "bg-gray-200"
                             }`}
                           />
                         ))}
                       </div>
-                      <p className="text-sm font-medium text-gray-700">Journal Entries</p>
-                      <p className="text-xs text-gray-500 mt-1">Keep reflecting!</p>
+                      <p className="text-sm font-medium text-gray-700">
+                        Journal Entries
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Keep reflecting!
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -230,7 +310,9 @@ export function WellnessInsightsCard() {
               {/* Suggestions for You */}
               <Card className="border-0 bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg">
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Suggestions for You 💡</h3>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    Suggestions for You 💡
+                  </h3>
 
                   <div className="grid gap-6 md:grid-cols-3">
                     {mockSuggestions.map((suggestion) => (
@@ -243,37 +325,40 @@ export function WellnessInsightsCard() {
                             {suggestion.icon}
                           </div>
                           <div>
-                            <Badge variant="outline" className="bg-white/50 text-gray-600 border-gray-200 text-xs">
+                            <Badge
+                              variant="outline"
+                              className="bg-white/50 text-gray-600 border-gray-200 text-xs"
+                            >
                               {suggestion.category}
                             </Badge>
                           </div>
                         </div>
 
-                        <h4 className="text-lg font-semibold text-gray-800 mb-2">{suggestion.title}</h4>
-                        <p className="text-sm text-gray-600 mb-3 leading-relaxed">{suggestion.description}</p>
+                        <h4 className="text-lg font-semibold text-gray-800 mb-2">
+                          {suggestion.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+                          {suggestion.description}
+                        </p>
 
                         <div className="bg-white/50 rounded-2xl p-3 mb-4">
-                          <p className="text-xs text-gray-500 font-medium">Why this suggestion?</p>
-                          <p className="text-xs text-gray-600">{suggestion.reason}</p>
+                          <p className="text-xs text-gray-500 font-medium">
+                            Why this suggestion?
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            {suggestion.reason}
+                          </p>
                         </div>
 
                         <Button
                           size="sm"
                           className="w-full bg-white/70 hover:bg-white text-gray-700 border-0 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200"
-                          onClick={() => {
-                            if (suggestion.type === "workout") {
-                              // Navigate to active routine with appropriate exercises
-                              router.push(`/active-routine?name=${suggestion.title}&type=yoga&exercises=cat-cow,childs-pose,happy-baby`);
-                            } else if (suggestion.type === "tip") {
-                              router.push("/tips");
-                            }
-                          }}
                         >
                           {suggestion.type === "workout"
                             ? "Start Routine"
                             : suggestion.type === "tip"
-                              ? "Learn More"
-                              : "Set Goal"}
+                            ? "Learn More"
+                            : "Set Goal"}
                         </Button>
                       </div>
                     ))}
@@ -284,13 +369,18 @@ export function WellnessInsightsCard() {
               {/* Weekly Timeline */}
               <Card className="border-0 bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg">
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Your Week Timeline 📅</h3>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    Your Week Timeline 📅
+                  </h3>
 
                   <div className="space-y-4">
                     {/* Timeline Header */}
                     <div className="grid grid-cols-7 gap-2 text-center">
                       {mockWeekData.map((day, index) => (
-                        <div key={index} className="text-sm font-medium text-gray-600">
+                        <div
+                          key={index}
+                          className="text-sm font-medium text-gray-600"
+                        >
                           {day.date}
                         </div>
                       ))}
@@ -298,7 +388,9 @@ export function WellnessInsightsCard() {
 
                     {/* Mood Row */}
                     <div>
-                      <p className="text-sm font-medium text-gray-700 mb-2">Daily Mood</p>
+                      <p className="text-sm font-medium text-gray-700 mb-2">
+                        Daily Mood
+                      </p>
                       <div className="grid grid-cols-7 gap-2">
                         {mockWeekData.map((day, index) => (
                           <div
@@ -313,7 +405,9 @@ export function WellnessInsightsCard() {
 
                     {/* Routines Row */}
                     <div>
-                      <p className="text-sm font-medium text-gray-700 mb-2">Routine Completed</p>
+                      <p className="text-sm font-medium text-gray-700 mb-2">
+                        Routine Completed
+                      </p>
                       <div className="grid grid-cols-7 gap-2">
                         {mockWeekData.map((day, index) => (
                           <div
@@ -324,7 +418,11 @@ export function WellnessInsightsCard() {
                                 : "bg-gray-100 text-gray-400"
                             }`}
                           >
-                            {day.routineCompleted ? <CheckCircle className="h-4 w-4" /> : "○"}
+                            {day.routineCompleted ? (
+                              <CheckCircle className="h-4 w-4" />
+                            ) : (
+                              "○"
+                            )}
                           </div>
                         ))}
                       </div>
@@ -332,7 +430,9 @@ export function WellnessInsightsCard() {
 
                     {/* Journal Row */}
                     <div>
-                      <p className="text-sm font-medium text-gray-700 mb-2">Journal Entry</p>
+                      <p className="text-sm font-medium text-gray-700 mb-2">
+                        Journal Entry
+                      </p>
                       <div className="grid grid-cols-7 gap-2">
                         {mockWeekData.map((day, index) => (
                           <div
@@ -343,7 +443,11 @@ export function WellnessInsightsCard() {
                                 : "bg-gray-100 text-gray-400"
                             }`}
                           >
-                            {day.journalEntry ? <BookOpen className="h-4 w-4" /> : "○"}
+                            {day.journalEntry ? (
+                              <BookOpen className="h-4 w-4" />
+                            ) : (
+                              "○"
+                            )}
                           </div>
                         ))}
                       </div>
@@ -352,7 +456,8 @@ export function WellnessInsightsCard() {
 
                   <div className="mt-6 text-center">
                     <p className="text-sm text-gray-600">
-                      Track your patterns to understand what helps you feel your best! 🌟
+                      Track your patterns to understand what helps you feel your
+                      best! 🌟
                     </p>
                   </div>
                 </CardContent>
@@ -377,5 +482,5 @@ export function WellnessInsightsCard() {
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }

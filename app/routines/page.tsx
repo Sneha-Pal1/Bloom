@@ -22,7 +22,6 @@ import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 import { ProtectedAction } from "@/components/protected-action";
 // import { LottiePlayer } from "@/components/lottie-player"
-// Remove reference to non-existent module
 // import { getLottieForExercise } from "@/lib/exercise-animations";
 
 interface Routine {
@@ -451,19 +450,7 @@ export default function Routines() {
                 </div>
 
                 <ProtectedAction>
-                  <Button
-                    onClick={() => {
-                      // Navigate to the active routine page with this routine's exercises
-                      router.push(
-                        `/active-routine?name=${
-                          routine.name
-                        }&type=${routine.category.toLowerCase()}&exercises=${routine.exercises.join(
-                          ","
-                        )}`
-                      );
-                    }}
-                    className="w-full bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-2xl"
-                  >
+                  <Button className="w-full bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-2xl">
                     <Play className="h-4 w-4 mr-2" />
                     Start Routine
                   </Button>
