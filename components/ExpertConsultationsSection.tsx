@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export default function ExpertConsultationsSection() {
   return (
     <section className="w-full py-16 bg-gradient-to-b from-pink-50 to-white text-center">
-      <h2 className="text-3xl font-bold text-pink-700 mb-4">
+      <h2 className="text-3xl font-bold text-pink-500 mb-4">
         Expert Consultations
       </h2>
       <p className="text-gray-600 max-w-2xl mx-auto mb-10">
@@ -59,7 +59,7 @@ export default function ExpertConsultationsSection() {
 
       {/* Sign-up for reminders */}
       <div className="mt-10">
-        <Button className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg shadow-md">
+        <Button className=" bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
           Notify Me When Available
         </Button>
       </div>
