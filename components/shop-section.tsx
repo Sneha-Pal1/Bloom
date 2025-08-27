@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function ShopSection() {
   return (
-    <section className="py-16 px-6 bg-pink-50 text-center">
+    <section className="py-16 px-6 bg-pink-300 text-center">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">
         Explore Our Offerings
       </h2>
@@ -24,7 +24,7 @@ export function ShopSection() {
           </p>
           <Link
             href="/essentials"
-            className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition"
+            className="px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-700 transition"
           >
             Explore Essentials
           </Link>

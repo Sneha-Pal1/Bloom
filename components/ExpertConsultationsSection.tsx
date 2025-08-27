@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 
 export default function ExpertConsultationsSection() {
   return (
-    <section className="w-full py-16 bg-gradient-to-b from-pink-50 to-white text-center">
-      <h2 className="text-3xl font-bold text-pink-500 mb-4">
+    <section className="w-full py-16 bg-gradient-to-b from-pink-100 to-white text-center">
+      <h2 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-pink-400 inline-block text-transparent bg-clip-text">
         Expert Consultations
       </h2>
       <p className="text-gray-600 max-w-2xl mx-auto mb-10">
@@ -16,7 +16,7 @@ export default function ExpertConsultationsSection() {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+        <Card className="border-0 bg-pink-100 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl">
           <CardContent className="p-7">
             <h3 className="text-lg font-semibold text-pink-600">
               Gynecologists
@@ -30,7 +30,7 @@ export default function ExpertConsultationsSection() {
           </CardContent>
         </Card>
 
-        <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+        <Card className="border-0 bg-pink-100 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl">
           <CardContent className="p-7">
             <h3 className="text-lg font-semibold text-pink-600">Therapists</h3>
             <p className="text-gray-500 text-sm mt-2">
@@ -42,7 +42,7 @@ export default function ExpertConsultationsSection() {
           </CardContent>
         </Card>
 
-        <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+        <Card className="border-0 bg-pink-100 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl">
           <CardContent className="p-7">
             <h3 className="text-lg font-semibold text-pink-600">
               Nutritionists

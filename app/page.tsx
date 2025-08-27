@@ -352,7 +352,7 @@ export default function WellnessLanding() {
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:py-20 lg:py-28 bg-gradient-to-b from-pink-50 to-white text-center">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col items-center justify-center space-y-6 text-center">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-gray-800 max-w-3xl">

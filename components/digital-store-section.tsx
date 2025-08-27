@@ -40,7 +40,7 @@ const products = [
 
 export default function DigitalStoreSection() {
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-purple-50">
+    <section className="py-16 bg-gradient-to-b from-pink-50 to-purple-200">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col items-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 bg-gradient-to-r from-purple-600 to-pink-400 inline-block text-transparent bg-clip-text">
@@ -50,7 +50,7 @@ export default function DigitalStoreSection() {
             Enhance your wellness journey with our carefully crafted products
           </p>
           <Link href="/shop">
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-6 py-2 shadow-md hover:shadow-lg transition-all duration-300">
+            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-500 text-white rounded-full px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               View All Products
             </Button>
           </Link>
