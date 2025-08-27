@@ -6,8 +6,8 @@ export const poseGifs: Record<string, string> = {
   "cat-cow": "/gifs/cat-cow-pose.mp4",
   "bridge-pose": "/gifs/bridge-pose.mp4",
 
-  // "warrior-ii": "/gifs/warrior-ii.gif",
-  // "tree-pose": "/gifs/tree-pose.gif",
+  "warrior-ii": "/gifs/warrior-two.jpeg",
+  "tree-pose": "/gifs/tree-pose.jpeg",
   "childs-pose": "/gifs/child-pose.mp4",
   // "supine-twist": "/gifs/supine-twist.gif",
   "happy-baby": "/gifs/happy-baby-pose.mp4",
@@ -16,6 +16,9 @@ export const poseGifs: Record<string, string> = {
   "seated-forward-fold": "/gifs/seated-forward-fold.jpeg",
   "legs-up-wall": "/gifs/legs-up-the-wall.jpeg",
   "camel-pose": "/gifs/camel-pose.jpeg",
+  "cobra-pose": "/gifs/cobra-pose.mp4",
+  "sun-salutation": "/gifs/sun-salutation.mp4",
+  "bow-pose": "/gifs/bow-pose.jpeg",
 
   // Exercises - uncomment when you add the files
   "modified-planks": "/gifs/plank.mp4",
