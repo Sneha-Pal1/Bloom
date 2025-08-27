@@ -16,8 +16,8 @@ export default function ExpertConsultationsSection() {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        <Card className="shadow-md">
-          <CardContent className="p-6">
+        <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+          <CardContent className="p-7">
             <h3 className="text-lg font-semibold text-pink-600">
               Gynecologists
             </h3>
@@ -30,8 +30,8 @@ export default function ExpertConsultationsSection() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-md">
-          <CardContent className="p-6">
+        <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+          <CardContent className="p-7">
             <h3 className="text-lg font-semibold text-pink-600">Therapists</h3>
             <p className="text-gray-500 text-sm mt-2">
               Mental health support to help you feel balanced & resilient.
@@ -42,8 +42,8 @@ export default function ExpertConsultationsSection() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-md">
-          <CardContent className="p-6">
+        <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+          <CardContent className="p-7">
             <h3 className="text-lg font-semibold text-pink-600">
               Nutritionists
             </h3>
@@ -59,7 +59,7 @@ export default function ExpertConsultationsSection() {
 
       {/* Sign-up for reminders */}
       <div className="mt-10">
-        <Button className=" bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+        <Button className=" bg-gradient-to-r from-pink-400 to-pink-300 hover:from-purple-300 hover:to-pink-600 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
           Notify Me When Available
         </Button>
       </div>

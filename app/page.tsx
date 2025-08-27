@@ -8,6 +8,7 @@ import {
   CheckCircle,
   Star,
   X,
+  Youtube,
   Linkedin,
   User,
   LogOut,
@@ -411,12 +412,12 @@ export default function WellnessLanding() {
                 >
                   <X className="h-5 w-5" />
                 </Link>
-                {/* <Link
+                <Link
                   href="#"
                   className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
                 >
                   <Youtube className="h-5 w-5" />
-                </Link> */}
+                </Link>
               </div>
             </div>
 
