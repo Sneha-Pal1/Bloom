@@ -275,13 +275,13 @@ const categories: Category[] = [
       },
     ],
     exercises: [
-      {
-        id: "pelvic-rocks",
-        name: "Pelvic Rocks",
-        benefit: "Relieves cramping and improves circulation",
-        duration: "3-5 mins",
-        difficulty: "Beginner",
-      },
+      // {
+      //   id: "pelvic-rocks",
+      //   name: "Pelvic Rocks",
+      //   benefit: "Relieves cramping and improves circulation",
+      //   duration: "3-5 mins",
+      //   difficulty: "Beginner",
+      // },
       {
         id: "knee-to-chest",
         name: "Knee to Chest Stretches",

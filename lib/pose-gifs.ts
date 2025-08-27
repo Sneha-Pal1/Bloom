@@ -11,7 +11,7 @@ export const poseGifs: Record<string, string> = {
   "childs-pose": "/gifs/child-pose.mp4",
   "supine-twist": "/gifs/gentle-spinal-twists.jpeg",
   "happy-baby": "/gifs/happy-baby-pose.mp4",
-  // "goddess-pose": "/gifs/goddess-pose.gif",
+  "goddess-pose": "/gifs/goddess-pose.jpeg",
   "butterfly-pose": "/gifs/butterfly.jpeg",
   "seated-forward-fold": "/gifs/seated-forward-fold.jpeg",
   "legs-up-wall": "/gifs/legs-up-the-wall.jpeg",
@@ -37,7 +37,7 @@ export const poseGifs: Record<string, string> = {
   "side-leg-raise": "/gifs/side-leg-raises.mp4",
   // "resistance-band": "/gifs/resistance-band.gif",
   // "pelvic-rocks": "/gifs/pelvic-rocks.gif",
-  // "knee-to-chest": "/gifs/knee-to-chest.gif",
+  "knee-to-chest": "/gifs/gentle-stretching.jpeg",
   // "heat-therapy": "/gifs/heat-therapy.gif",
   "gentle-backbend": "/gifs/gentle-heart-opener.mp4",
 };

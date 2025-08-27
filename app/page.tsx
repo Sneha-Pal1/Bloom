@@ -254,6 +254,8 @@ export default function WellnessLanding() {
           </div>
         </section>
         <ExpertConsultationsSection />
+        {/* Digital Store Section */}
+        <DigitalStoreSection />
         {/* Testimonials Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-50 to-pink-50">
           <div className="container px-4 md:px-6 mx-auto">
@@ -348,8 +350,7 @@ export default function WellnessLanding() {
             </div>
           </div>
         </section>
-        {/* Digital Store Section */}
-        <DigitalStoreSection />
+
         {/* CTA Section */}
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6 mx-auto">
