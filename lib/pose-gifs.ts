@@ -25,9 +25,13 @@ export const poseGifs: Record<string, string> = {
   lunges: "/gifs/side-lunges.mp4",
   "pelvic-tilts": "/gifs/bridge-pose.mp4",
   "split-squat": "/gifs/foot-elevated-split-squat.mp4",
+  "hip-circles": "/gifs/hip-circle.jpeg",
+  "gentle-twists": "/gifs/gentle-spinal-twists.jpeg",
+
   // "glute-bridges": "/gifs/glute-bridges.gif",
   squats: "/gifs/squats.mp4",
   "mountain-climbers": "/gifs/mountain-climber.mp4",
+  "side-leg-raise": "/gifs/side-leg-raises.mp4",
   // "resistance-band": "/gifs/resistance-band.gif",
   // "pelvic-rocks": "/gifs/pelvic-rocks.gif",
   // "knee-to-chest": "/gifs/knee-to-chest.gif",
