@@ -59,22 +59,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       throw new Error("API configuration error");
     }
 
-    const res = await fetch(`${apiUrl}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    // Full URL debugging for easier troubleshooting
+    const loginUrl = `${apiUrl}/auth/login`;
+    console.log("Attempting login to:", loginUrl);
 
-    if (!res.ok) {
-      throw new Error("Login failed");
+    try {
+      const res = await fetch(loginUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include", // Include cookies if your API uses them
+      });
+
+      if (!res.ok) {
+        throw new Error("Login failed: " + res.status);
+      }
+
+      const data = await res.json();
+      setToken(data.token);
+      setUser(data.user);
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error;
     }
-
-    const data = await res.json();
-    setToken(data.token);
-    setUser(data.user);
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
   };
 
   const signup = async (name: string, email: string, password: string) => {
@@ -87,22 +97,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       throw new Error("API configuration error");
     }
 
-    const res = await fetch(`${apiUrl}/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    });
+    // Full URL debugging for easier troubleshooting
+    const signupUrl = `${apiUrl}/auth/register`;
+    console.log("Attempting signup to:", signupUrl);
 
-    if (!res.ok) {
-      throw new Error("Registration failed");
+    try {
+      const res = await fetch(signupUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+        credentials: "include", // Include cookies if your API uses them
+      });
+
+      if (!res.ok) {
+        throw new Error("Registration failed: " + res.status);
+      }
+
+      const data = await res.json();
+      setToken(data.token);
+      setUser(data.user);
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+    } catch (error) {
+      console.error("Registration error:", error);
+      throw error;
     }
-
-    const data = await res.json();
-    setToken(data.token);
-    setUser(data.user);
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
   };
 
   const logout = () => {

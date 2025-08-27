@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Heart, Mail, Lock, Eye, EyeOff, Sparkles } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "./auth-context";
@@ -136,6 +136,11 @@ export function AuthModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md p-0 bg-transparent border-0 shadow-none">
+        <DialogTitle className="sr-only">
+          {activeTab === "login"
+            ? "Login to your account"
+            : "Sign up for an account"}
+        </DialogTitle>
         <Card className="border-0 bg-gradient-to-br from-purple-50/95 via-pink-50/95 to-orange-50/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden">
           <div className="relative">
             <FloatingSparkles />
