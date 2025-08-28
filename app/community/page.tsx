@@ -190,19 +190,28 @@ export default function CommunityPage() {
 
       <main className="container mx-auto px-4 py-8">
         {/* Header Section */}
-        <section className="relative mb-8">
-          <Card className="border-0 bg-gradient-to-r from-purple-100 via-pink-100 to-rose-100 rounded-3xl shadow-lg overflow-hidden">
-            <FloatingSparkles />
-            <CardContent className="p-8 text-center relative z-10">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full flex items-center justify-center">
-                  <Users className="h-8 w-8 text-purple-600" />
-                </div>
-              </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                Bloom Community 🌸
+        <section className="py-16 relative overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(6)].map((_, i) => (
+              <Sparkles
+                key={i}
+                className="absolute text-yellow-300 opacity-20 animate-float"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${4 + Math.random() * 2}s`,
+                }}
+                size={14}
+              />
+            ))}
+          </div>
+          <div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
+            <div className="max-w-3xl mx-auto space-y-6">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl text-gray-800">
+                Bloom <span className="gradient-text">Community</span>
               </h1>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+              <p className="text-lg text-gray-600 leading-relaxed">
                 A safe space for women to share experiences, support each other,
                 and grow together on our wellness journeys.
               </p>
@@ -210,7 +219,7 @@ export default function CommunityPage() {
                 <ProtectedAction>
                   <Button
                     onClick={() => setShowCreatePost(true)}
-                    className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 btn-hover-lift"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Share Your Story
@@ -227,8 +236,8 @@ export default function CommunityPage() {
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </section>
 
         {/* Community Stats */}
@@ -263,41 +272,51 @@ export default function CommunityPage() {
           </Card>
         </div>
 
-        {/* Filters and Search */}
-        <div className="mb-8 space-y-4">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              type="text"
-              placeholder="Search posts, topics, or tags..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 border-purple-200 rounded-2xl focus:border-purple-300"
-            />
-          </div>
+        {/* Search and Filters */}
+        <section className="container px-4 md:px-6 mx-auto mb-8">
+          <Card className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6">
+            <div className="space-y-4">
+              {/* Search Bar */}
+              <div className="relative max-w-md mx-auto">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <input
+                  type="text"
+                  placeholder="Search posts, topics, or tags..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-12 pr-4 py-3 w-full border border-purple-200 focus:border-purple-400 rounded-full text-center focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-white transition-all duration-300"
+                />
+              </div>
 
-          <div className="flex flex-wrap gap-2">
-            <span className="text-sm font-medium text-gray-700 flex items-center">
-              <Filter className="h-4 w-4 mr-1" />
-              Topics:
-            </span>
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-                className={`rounded-full ${
-                  selectedCategory === category
-                    ? "bg-purple-400 hover:bg-purple-500"
-                    : "border-purple-200 text-purple-600 hover:bg-purple-50"
-                }`}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
+              {/* Filter Pills */}
+              <div className="flex flex-wrap justify-center gap-3">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
+                  <Filter className="h-4 w-4" />
+                  <span>Topics:</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={
+                        selectedCategory === category ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                      className={`rounded-full transition-all duration-300 ${
+                        selectedCategory === category
+                          ? "bg-purple-500 hover:bg-purple-600 text-white shadow-lg"
+                          : "border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300"
+                      }`}
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Card>
+        </section>
 
         {/* Posts Feed */}
         <div className="space-y-6">

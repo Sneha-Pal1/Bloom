@@ -18,7 +18,7 @@ export default function AboutPage() {
 
       <main className="space-y-0">
         {/* Hero Section */}
-        <section className="py-16 md:py-20 lg:py-24 relative overflow-hidden">
+        <section className="py-16 relative overflow-hidden">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(6)].map((_, i) => (
               <Sparkles
@@ -35,11 +35,11 @@ export default function AboutPage() {
             ))}
           </div>
           <div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
-            <div className="max-w-4xl mx-auto space-y-6">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-gray-800 leading-tight">
+            <div className="max-w-3xl mx-auto space-y-6">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl text-gray-800">
                 About <span className="gradient-text">Bloom</span>
               </h1>
-              <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 leading-relaxed">
                 We believe every woman deserves wellness tools that honor her
                 unique journey and natural rhythms.
               </p>

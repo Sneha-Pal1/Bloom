@@ -338,184 +338,451 @@ export default function ShopPage() {
                 />
               </div>
 
-          <div className="flex flex-wrap gap-4">
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm font-medium text-gray-700 flex items-center">
-                <Filter className="h-4 w-4 mr-1" />
-                Category:
-              </span>
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={
-                    selectedCategory === category ? "default" : "outline"
-                  }
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className={`rounded-full ${
-                    selectedCategory === category
-                      ? "bg-purple-400 hover:bg-purple-500"
-                      : "border-purple-200 text-purple-600 hover:bg-purple-50"
-                  }`}
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm font-medium text-gray-700">Type:</span>
-              {types.map((type) => (
-                <Button
-                  key={type}
-                  variant={selectedType === type ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedType(type)}
-                  className={`rounded-full ${
-                    selectedType === type
-                      ? "bg-pink-400 hover:bg-pink-500"
-                      : "border-pink-200 text-pink-600 hover:bg-pink-50"
-                  }`}
-                >
-                  {type}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Products Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProducts.map((product) => {
-            const TypeIcon = getTypeIcon(product.type);
-            return (
-              <Card
-                key={product.id}
-                className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-              >
-                <div className="relative">
-                  <img
-                    src={product.image || "/images/morning-flow.svg"}
-                    alt={product.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    {product.bestseller && (
-                      <Badge className="bg-orange-100 text-orange-700 border-orange-200">
-                        Bestseller
-                      </Badge>
-                    )}
-                    {product.new && (
-                      <Badge className="bg-green-100 text-green-700 border-green-200">
-                        New
-                      </Badge>
-                    )}
-                  </div>
-                  <div className="absolute top-4 right-4">
-                    <Badge className={getCategoryColor(product.category)}>
-                      {product.category}
-                    </Badge>
-                  </div>
+              {/* Filter Pills */}
+              <div className="flex flex-wrap justify-center gap-3">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
+                  <Filter className="h-4 w-4" />
+                  <span>Filter by:</span>
                 </div>
 
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <TypeIcon className="h-4 w-4 text-purple-600" />
-                        <span className="text-sm text-gray-600">
-                          {product.type}
-                        </span>
-                      </div>
-                      <CardTitle className="text-lg text-gray-800 mb-2">
-                        {product.name}
-                      </CardTitle>
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          <span className="text-sm text-gray-600">
-                            {product.rating}
-                          </span>
-                        </div>
-                        <span className="text-sm text-gray-500">
-                          ({product.reviews} reviews)
-                        </span>
-                      </div>
-                    </div>
+                {/* Category Filters */}
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={
+                        selectedCategory === category ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                      className={`rounded-full transition-all duration-300 ${
+                        selectedCategory === category
+                          ? "bg-purple-500 hover:bg-purple-600 text-white shadow-lg"
+                          : "border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300"
+                      }`}
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+
+                <div className="w-px h-6 bg-gray-300"></div>
+
+                {/* Type Filters */}
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-sm font-medium text-gray-600">
+                    Type:
+                  </span>
+                  {types.map((type) => (
+                    <Button
+                      key={type}
+                      variant={selectedType === type ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSelectedType(type)}
+                      className={`rounded-full transition-all duration-300 ${
+                        selectedType === type
+                          ? "bg-pink-500 hover:bg-pink-600 text-white shadow-lg"
+                          : "border-pink-200 text-pink-600 hover:bg-pink-50 hover:border-pink-300"
+                      }`}
+                    >
+                      {type}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        {/* Category Cards */}
+        <section className="container px-4 md:px-6 mx-auto mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Card className="border-0 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 mx-auto mb-3 bg-white/80 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Zap className="h-8 w-8 text-purple-600" />
+                </div>
+                <h3 className="font-bold text-gray-800 mb-1">Equipment</h3>
+                <p className="text-sm text-gray-600">
+                  Yoga mats, blocks & more
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 mx-auto mb-3 bg-white/80 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Heart className="h-8 w-8 text-green-600" />
+                </div>
+                <h3 className="font-bold text-gray-800 mb-1">Supplements</h3>
+                <p className="text-sm text-gray-600">
+                  Natural wellness support
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 mx-auto mb-3 bg-white/80 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <BookOpen className="h-8 w-8 text-pink-600" />
+                </div>
+                <h3 className="font-bold text-gray-800 mb-1">Digital Guides</h3>
+                <p className="text-sm text-gray-600">Journals & resources</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 mx-auto mb-3 bg-white/80 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Gift className="h-8 w-8 text-orange-600" />
+                </div>
+                <h3 className="font-bold text-gray-800 mb-1">Self-Care</h3>
+                <p className="text-sm text-gray-600">Aromatherapy & rituals</p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Best Sellers Section */}
+        <section className="container px-4 md:px-6 mx-auto mb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+              <Star className="h-6 w-6 text-orange-600" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-800">Best Sellers</h2>
+              <p className="text-gray-600">Most loved by our community</p>
+            </div>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-4">
+            {products
+              .filter((p) => p.bestseller)
+              .map((product) => (
+                <Card
+                  key={product.id}
+                  className="min-w-[280px] border-0 bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-40 object-cover rounded-t-2xl"
+                    />
+                    <Badge className="absolute top-3 left-3 bg-orange-100 text-orange-700">
+                      Bestseller
+                    </Badge>
                   </div>
-                </CardHeader>
-
-                <CardContent>
-                  <p className="text-gray-700 mb-4 leading-relaxed text-sm">
-                    {product.description}
-                  </p>
-
-                  <div className="mb-4">
-                    <p className="text-sm font-medium text-gray-700 mb-2">
-                      Features:
-                    </p>
-                    <div className="space-y-1">
-                      {product.features.slice(0, 3).map((feature, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center gap-2 text-sm text-gray-600"
-                        >
-                          <div className="w-1.5 h-1.5 bg-purple-300 rounded-full"></div>
-                          {feature}
-                        </div>
-                      ))}
-                      {product.features.length > 3 && (
-                        <div className="text-sm text-gray-500">
-                          +{product.features.length - 3} more features
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-gray-800">
-                        ${product.price}
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-gray-800 mb-2">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span className="text-sm text-gray-600">
+                        {product.rating}
                       </span>
-                      {product.originalPrice && (
-                        <span className="text-lg text-gray-500 line-through">
+                      <span className="text-sm text-gray-500">
+                        ({product.reviews})
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold text-gray-800">
+                          ${product.price}
+                        </span>
+                        {product.originalPrice && (
+                          <span className="text-sm text-gray-500 line-through">
+                            ${product.originalPrice}
+                          </span>
+                        )}
+                      </div>
+                      <ProtectedAction>
+                        <Button
+                          size="sm"
+                          className="bg-orange-500 hover:bg-orange-600 text-white rounded-full"
+                        >
+                          <ShoppingCart className="h-4 w-4" />
+                        </Button>
+                      </ProtectedAction>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+          </div>
+        </section>
+
+        {/* Best Deals Section */}
+        <section className="container px-4 md:px-6 mx-auto mb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+              <Gift className="h-6 w-6 text-green-600" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-800">Best Deals</h2>
+              <p className="text-gray-600">Limited time offers</p>
+            </div>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-4">
+            {products
+              .filter((p) => p.originalPrice)
+              .map((product) => (
+                <Card
+                  key={product.id}
+                  className="min-w-[280px] border-0 bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-40 object-cover rounded-t-2xl"
+                    />
+                    <Badge className="absolute top-3 left-3 bg-green-100 text-green-700">
+                      Sale
+                    </Badge>
+                  </div>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-gray-800 mb-2">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span className="text-sm text-gray-600">
+                        {product.rating}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        ({product.reviews})
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold text-green-600">
+                          ${product.price}
+                        </span>
+                        <span className="text-sm text-gray-500 line-through">
                           ${product.originalPrice}
                         </span>
+                      </div>
+                      <ProtectedAction>
+                        <Button
+                          size="sm"
+                          className="bg-green-500 hover:bg-green-600 text-white rounded-full"
+                        >
+                          <ShoppingCart className="h-4 w-4" />
+                        </Button>
+                      </ProtectedAction>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+          </div>
+        </section>
+
+        {/* Limited Stock Section */}
+        <section className="container px-4 md:px-6 mx-auto mb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+              <Zap className="h-6 w-6 text-red-600" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Limited Stock
+              </h2>
+              <p className="text-gray-600">Get them while you can</p>
+            </div>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-4">
+            {products
+              .filter((p) => p.new)
+              .map((product) => (
+                <Card
+                  key={product.id}
+                  className="min-w-[280px] border-0 bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-40 object-cover rounded-t-2xl"
+                    />
+                    <Badge className="absolute top-3 left-3 bg-red-100 text-red-700">
+                      Only 3 left
+                    </Badge>
+                  </div>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-gray-800 mb-2">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span className="text-sm text-gray-600">
+                        {product.rating}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        ({product.reviews})
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-gray-800">
+                        ${product.price}
+                      </span>
+                      <ProtectedAction>
+                        <Button
+                          size="sm"
+                          className="bg-red-500 hover:bg-red-600 text-white rounded-full"
+                        >
+                          <ShoppingCart className="h-4 w-4" />
+                        </Button>
+                      </ProtectedAction>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+          </div>
+        </section>
+
+        {/* All Products Section */}
+        <section className="container px-4 md:px-6 mx-auto mb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+              <Sparkles className="h-6 w-6 text-purple-600" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-800">All Products</h2>
+              <p className="text-gray-600">Complete wellness collection</p>
+            </div>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredProducts.map((product) => {
+              const TypeIcon = getTypeIcon(product.type);
+              return (
+                <Card
+                  key={product.id}
+                  className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                >
+                  <div className="relative">
+                    <img
+                      src={product.image || "/images/morning-flow.svg"}
+                      alt={product.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute top-4 left-4 flex gap-2">
+                      {product.bestseller && (
+                        <Badge className="bg-orange-100 text-orange-700 border-orange-200">
+                          Bestseller
+                        </Badge>
+                      )}
+                      {product.new && (
+                        <Badge className="bg-green-100 text-green-700 border-green-200">
+                          New
+                        </Badge>
                       )}
                     </div>
-                    {product.category === "Subscription" && (
-                      <span className="text-sm text-gray-600">/month</span>
-                    )}
+                    <div className="absolute top-4 right-4">
+                      <Badge className={getCategoryColor(product.category)}>
+                        {product.category}
+                      </Badge>
+                    </div>
                   </div>
 
-                  <ProtectedAction>
-                    <Button className="w-full bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-2xl">
-                      <ShoppingCart className="h-4 w-4 mr-2" />
-                      {product.category === "Subscription"
-                        ? "Subscribe"
-                        : "Add to Cart"}
-                    </Button>
-                  </ProtectedAction>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <TypeIcon className="h-4 w-4 text-purple-600" />
+                          <span className="text-sm text-gray-600">
+                            {product.type}
+                          </span>
+                        </div>
+                        <CardTitle className="text-lg text-gray-800 mb-2">
+                          {product.name}
+                        </CardTitle>
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="flex items-center gap-1">
+                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            <span className="text-sm text-gray-600">
+                              {product.rating}
+                            </span>
+                          </div>
+                          <span className="text-sm text-gray-500">
+                            ({product.reviews} reviews)
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardHeader>
 
-        {filteredProducts.length === 0 && (
-          <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
-            <CardContent className="p-12 text-center">
-              <Sparkles className="h-16 w-16 text-purple-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                No products found
-              </h3>
-              <p className="text-gray-600">
-                Try adjusting your search or filters to discover amazing
-                wellness products.
-              </p>
-            </CardContent>
-          </Card>
-        )}
+                  <CardContent>
+                    <p className="text-gray-700 mb-4 leading-relaxed text-sm">
+                      {product.description}
+                    </p>
+
+                    <div className="mb-4">
+                      <p className="text-sm font-medium text-gray-700 mb-2">
+                        Features:
+                      </p>
+                      <div className="space-y-1">
+                        {product.features.slice(0, 3).map((feature, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center gap-2 text-sm text-gray-600"
+                          >
+                            <div className="w-1.5 h-1.5 bg-purple-300 rounded-full"></div>
+                            {feature}
+                          </div>
+                        ))}
+                        {product.features.length > 3 && (
+                          <div className="text-sm text-gray-500">
+                            +{product.features.length - 3} more features
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl font-bold text-gray-800">
+                          ${product.price}
+                        </span>
+                        {product.originalPrice && (
+                          <span className="text-lg text-gray-500 line-through">
+                            ${product.originalPrice}
+                          </span>
+                        )}
+                      </div>
+                      {product.category === "Subscription" && (
+                        <span className="text-sm text-gray-600">/month</span>
+                      )}
+                    </div>
+
+                    <ProtectedAction>
+                      <Button className="w-full bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-2xl">
+                        <ShoppingCart className="h-4 w-4 mr-2" />
+                        {product.category === "Subscription"
+                          ? "Subscribe"
+                          : "Add to Cart"}
+                      </Button>
+                    </ProtectedAction>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {filteredProducts.length === 0 && (
+            <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+              <CardContent className="p-12 text-center">
+                <Sparkles className="h-16 w-16 text-purple-300 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  No products found
+                </h3>
+                <p className="text-gray-600">
+                  Try adjusting your search or filters to discover amazing
+                  wellness products.
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </section>
       </main>
 
       <Footer />
