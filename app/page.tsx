@@ -316,228 +316,86 @@ export default function WellnessLanding() {
         </section>
 
         {/* How It Works */}
-        <section className="py-20 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-green-50/50 relative overflow-hidden">
-          {/* Background Decorations */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-10 left-20 w-32 h-32 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-2xl opacity-30 animate-pulse-soft"></div>
-            <div
-              className="absolute bottom-20 right-20 w-40 h-40 bg-gradient-to-r from-green-200 to-blue-200 rounded-full blur-2xl opacity-25 animate-pulse-soft"
-              style={{ animationDelay: "1s" }}
-            ></div>
-            {[...Array(6)].map((_, i) => (
-              <Sparkles
-                key={i}
-                className="absolute text-yellow-300 opacity-20 animate-float"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${i * 0.4}s`,
-                  animationDuration: `${3 + Math.random() * 2}s`,
-                }}
-                size={10 + Math.random() * 6}
-              />
-            ))}
-          </div>
-
-          <div className="container px-4 md:px-6 mx-auto relative z-10">
-            {/* Section Header */}
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-purple-100 mb-6">
-                <Zap className="h-4 w-4 text-purple-500" />
-                <span className="text-sm font-medium text-gray-700">
-                  How It Works
-                </span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-                Simple Steps to{" "}
-                <span className="gradient-text">Better Wellness</span>
-              </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Start your personalized wellness journey in just a few clicks
-              </p>
-            </div>
-
-            <div className="grid gap-16 lg:gap-20 lg:grid-cols-2 items-center">
-              {/* Interactive Demo Card */}
-              <div className="relative order-2 lg:order-1">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-200 via-pink-200 to-green-200 rounded-3xl blur-3xl opacity-40 animate-pulse-soft"></div>
-
-                <Card className="relative bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 card-hover overflow-hidden">
-                  {/* Card Header */}
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
-                        <Play className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-800">
-                          Morning Flow
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          Gentle Yoga Session
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 bg-gradient-to-r from-purple-100 to-pink-100 px-4 py-2 rounded-full shadow-sm">
-                      <Clock className="h-4 w-4 text-purple-600" />
-                      <span className="text-sm text-purple-700 font-semibold">
+        <section className="py-16">
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="grid gap-12 lg:grid-cols-2 items-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl blur-2xl opacity-50"></div>
+                <Card className="relative bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 card-hover">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-semibold text-gray-800">
+                      Morning Flow
+                    </h3>
+                    <div className="flex items-center gap-2 bg-purple-100 px-3 py-1 rounded-full">
+                      <Play className="h-4 w-4 text-purple-500" />
+                      <span className="text-sm text-purple-600 font-medium">
                         15 min
                       </span>
                     </div>
                   </div>
-
-                  {/* Main Demo Image */}
-                  <div className="relative mb-8">
-                    <Image
-                      src="/images/morning-flow.svg"
-                      width={500}
-                      height={320}
-                      alt="Workout demo interface"
-                      className="rounded-2xl shadow-xl w-full"
-                    />
-
-                    {/* Floating UI Elements */}
-                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-3 shadow-lg animate-float">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                          <Heart className="h-4 w-4 text-green-600" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-bold text-gray-800">
-                            124 BPM
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            Heart Rate
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl p-3 shadow-lg animate-float"
-                      style={{ animationDelay: "1s" }}
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <Zap className="h-4 w-4 text-blue-600" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-bold text-gray-800">
-                            85 kcal
-                          </div>
-                          <div className="text-xs text-gray-500">Burned</div>
-                        </div>
-                      </div>
-                    </div>
+                  <Image
+                    src="/images/morning-flow.svg"
+                    width={400}
+                    height={250}
+                    alt="Workout demo interface"
+                    className="rounded-2xl mb-4 shadow-lg w-full"
+                  />
+                  <div className="w-full bg-purple-100 rounded-full h-2 overflow-hidden">
+                    <div className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full w-1/3"></div>
                   </div>
-
-                  {/* Progress Section */}
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700">
-                        Progress
-                      </span>
-                      <span className="text-sm font-bold text-purple-600">
-                        5 of 15 poses
-                      </span>
-                    </div>
-                    <div className="w-full bg-gradient-to-r from-purple-100 to-pink-100 rounded-full h-3 overflow-hidden">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-500 h-3 rounded-full w-1/3 shadow-sm animate-pulse"></div>
-                    </div>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>33% Complete</span>
-                      <span>10 min remaining</span>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3 mt-6">
-                    <Button className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl shadow-lg">
-                      <Play className="h-4 w-4 mr-2" />
-                      Continue
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="px-4 border-purple-200 text-purple-600 hover:bg-purple-50 rounded-xl"
-                    >
-                      <Heart className="h-4 w-4" />
-                    </Button>
-                  </div>
+                  <p className="text-xs text-gray-500 mt-2 text-center">
+                    33% Complete
+                  </p>
                 </Card>
               </div>
 
-              {/* Steps Content */}
-              <div className="space-y-8 order-1 lg:order-2">
-                <div className="space-y-8">
-                  {[
-                    {
-                      number: "1",
-                      title: "Choose Your Goal",
-                      description:
-                        "Select from yoga, strength, or mindfulness based on your current needs and energy level",
-                      icon: <Target className="h-6 w-6" />,
-                      color: "from-purple-500 to-purple-600",
-                      bgColor: "bg-purple-100",
-                      textColor: "text-purple-600",
-                    },
-                    {
-                      number: "2",
-                      title: "Follow AI Guidance",
-                      description:
-                        "Get personalized recommendations with gentle guidance, modifications, and real-time feedback",
-                      icon: <Bot className="h-6 w-6" />,
-                      color: "from-pink-500 to-pink-600",
-                      bgColor: "bg-pink-100",
-                      textColor: "text-pink-600",
-                    },
-                    {
-                      number: "3",
-                      title: "Track Progress",
-                      description:
-                        "Monitor your wellness journey, celebrate milestones, and build lasting healthy habits",
-                      icon: <CheckCircle className="h-6 w-6" />,
-                      color: "from-green-500 to-green-600",
-                      bgColor: "bg-green-100",
-                      textColor: "text-green-600",
-                    },
-                  ].map((step, index) => (
-                    <div key={index} className="flex items-start gap-6 group">
-                      <div
-                        className={`w-16 h-16 bg-gradient-to-r ${step.color} rounded-2xl flex items-center justify-center flex-shrink-0 shadow-xl group-hover:scale-110 transition-all duration-300`}
-                      >
-                        <span className="text-white font-bold text-lg">
-                          {step.number}
-                        </span>
-                      </div>
-                      <div className="flex-1 pt-2">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div
-                            className={`w-10 h-10 ${step.bgColor} rounded-xl flex items-center justify-center ${step.textColor}`}
-                          >
-                            {step.icon}
-                          </div>
-                          <h3 className="text-xl font-bold text-gray-800">
-                            {step.title}
-                          </h3>
-                        </div>
-                        <p className="text-gray-600 leading-relaxed">
-                          {step.description}
-                        </p>
-                      </div>
+              <div className="space-y-6">
+                <h2 className="text-3xl font-bold text-gray-800">
+                  Simple Steps to Better Wellness
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-white font-bold">1</span>
                     </div>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <div className="pt-8">
-                  <Button
-                    size="lg"
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-8 py-4 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                    onClick={handleStartToday}
-                  >
-                    <Sparkles className="h-5 w-5 mr-2" />
-                    Try It Free Now
-                  </Button>
+                    <div>
+                      <h3 className="font-semibold text-gray-800 mb-1">
+                        Choose Your Goal
+                      </h3>
+                      <p className="text-gray-600 text-sm">
+                        Select from yoga, strength, or mindfulness based on your
+                        current needs
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-white font-bold">2</span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-800 mb-1">
+                        Follow AI Guidance
+                      </h3>
+                      <p className="text-gray-600 text-sm">
+                        Get personalized recommendations with gentle guidance
+                        and modifications
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <CheckCircle className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-800 mb-1">
+                        Track Progress
+                      </h3>
+                      <p className="text-gray-600 text-sm">
+                        Monitor your wellness journey and celebrate every
+                        milestone
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
