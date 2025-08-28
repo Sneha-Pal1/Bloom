@@ -17,6 +17,7 @@ import {
   Clock,
   Bookmark,
   Filter,
+  Calendar,
 } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -370,6 +371,191 @@ export default function Tips() {
               </CardContent>
             </Card>
           )}
+        </section>
+
+        {/* Expert Advice Section */}
+        <section className="container px-4 md:px-6 mx-auto">
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <Heart className="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Expert Advice
+                </h2>
+                <p className="text-gray-600">
+                  Book appointments with certified professionals
+                </p>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  id: "1",
+                  name: "Dr. Sarah Chen",
+                  specialty: "Gynecologist",
+                  experience: "12+ years",
+                  rating: 4.9,
+                  reviews: 156,
+                  price: 120,
+                  image: "/images/doctor-1.svg",
+                  specialties: ["Hormonal Health", "PCOS", "Fertility"],
+                  nextAvailable: "Tomorrow 2:00 PM",
+                },
+                {
+                  id: "2",
+                  name: "Dr. Maya Patel",
+                  specialty: "Therapist",
+                  experience: "8+ years",
+                  rating: 4.8,
+                  reviews: 203,
+                  price: 95,
+                  image: "/images/therapist-1.svg",
+                  specialties: ["Anxiety", "Women's Mental Health", "Trauma"],
+                  nextAvailable: "Today 4:30 PM",
+                },
+                {
+                  id: "3",
+                  name: "Dr. Lisa Rodriguez",
+                  specialty: "Nutritionist",
+                  experience: "10+ years",
+                  rating: 4.7,
+                  reviews: 89,
+                  price: 85,
+                  image: "/images/nutritionist-1.svg",
+                  specialties: [
+                    "Cycle Nutrition",
+                    "Weight Management",
+                    "Gut Health",
+                  ],
+                  nextAvailable: "Friday 10:00 AM",
+                },
+                {
+                  id: "4",
+                  name: "Dr. Amanda Kim",
+                  specialty: "Endocrinologist",
+                  experience: "15+ years",
+                  rating: 4.9,
+                  reviews: 134,
+                  price: 150,
+                  image: "/images/endocrinologist-1.svg",
+                  specialties: ["Thyroid", "Hormonal Imbalances", "Diabetes"],
+                  nextAvailable: "Monday 9:00 AM",
+                },
+                {
+                  id: "5",
+                  name: "Dr. Jennifer Walsh",
+                  specialty: "Psychiatrist",
+                  experience: "11+ years",
+                  rating: 4.8,
+                  reviews: 178,
+                  price: 140,
+                  image: "/images/psychiatrist-1.svg",
+                  specialties: [
+                    "Depression",
+                    "Postpartum",
+                    "Medication Management",
+                  ],
+                  nextAvailable: "Wednesday 1:00 PM",
+                },
+                {
+                  id: "6",
+                  name: "Dr. Rachel Green",
+                  specialty: "Wellness Coach",
+                  experience: "6+ years",
+                  rating: 4.6,
+                  reviews: 92,
+                  price: 75,
+                  image: "/images/coach-1.svg",
+                  specialties: [
+                    "Lifestyle Changes",
+                    "Stress Management",
+                    "Goal Setting",
+                  ],
+                  nextAvailable: "Tomorrow 11:00 AM",
+                },
+              ].map((expert) => (
+                <Card
+                  key={expert.id}
+                  className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover"
+                >
+                  <div className="relative">
+                    <img
+                      src={expert.image || "/images/doctor-placeholder.svg"}
+                      alt={expert.name}
+                      className="w-full h-48 object-cover rounded-t-2xl"
+                    />
+                    <Badge className="absolute top-4 right-4 bg-blue-100 text-blue-700">
+                      {expert.specialty}
+                    </Badge>
+                  </div>
+
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg text-gray-800 mb-1">
+                      {expert.name}
+                    </CardTitle>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-1">
+                        <Sparkles className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm text-gray-600">
+                          {expert.rating}
+                        </span>
+                      </div>
+                      <span className="text-sm text-gray-500">
+                        ({expert.reviews} reviews)
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        • {expert.experience}
+                      </span>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="space-y-4">
+                    <div>
+                      <p className="text-sm font-medium text-gray-700 mb-2">
+                        Specialties:
+                      </p>
+                      <div className="flex flex-wrap gap-1">
+                        {expert.specialties.map((specialty, index) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="text-xs bg-blue-50 border-blue-200 text-blue-600"
+                          >
+                            {specialty}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                      <div>
+                        <p className="text-sm text-gray-600">Next available:</p>
+                        <p className="text-sm font-medium text-gray-800">
+                          {expert.nextAvailable}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-lg font-bold text-gray-800">
+                          ${expert.price}
+                        </p>
+                        <p className="text-xs text-gray-500">per session</p>
+                      </div>
+                    </div>
+
+                    <ProtectedAction>
+                      <Button className="w-full bg-gradient-to-r from-blue-400 to-purple-400 hover:from-blue-500 hover:to-purple-500 text-white rounded-2xl">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        Book Appointment
+                      </Button>
+                    </ProtectedAction>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* Bookmarked Tips */}
