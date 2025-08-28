@@ -17,7 +17,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 import { ProtectedAction } from "@/components/protected-action";
@@ -237,245 +238,236 @@ export default function Routines() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-green-50">
-      {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-white/70 sticky top-0 z-50">
-        <Link href="/" className="flex items-center justify-center">
-          <Heart className="h-8 w-8 text-purple-400" />
-          <span className="ml-2 text-xl font-semibold text-gray-800">
-            Bloom
-          </span>
-        </Link>
-        <nav className="ml-auto flex gap-6">
-          <Link
-            href="/"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="/explore"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Explore
-          </Link>
-          <Link
-            href="/tips"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Tips
-          </Link>
-          <Link
-            href="/routines"
-            className="text-sm font-medium text-purple-600 border-b-2 border-purple-400"
-          >
-            Routines
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            About
-          </Link>
-        </nav>
-      </header>
+      <Navbar />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="space-y-8">
         {/* Header Section */}
-        <section className="relative mb-8">
-          <Card className="border-0 bg-gradient-to-r from-purple-100 via-pink-100 to-orange-100 rounded-3xl shadow-lg overflow-hidden">
-            <FloatingSparkles />
-            <CardContent className="p-8 text-center relative z-10">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                Wellness Routines 🧘‍♀️
+        <section className="py-16 relative overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(6)].map((_, i) => (
+              <Sparkles
+                key={i}
+                className="absolute text-yellow-300 opacity-20 animate-float"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${4 + Math.random() * 2}s`,
+                }}
+                size={14}
+              />
+            ))}
+          </div>
+          <div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
+            <div className="max-w-3xl mx-auto space-y-6">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl text-gray-800">
+                Wellness <span className="gradient-text">Routines</span>
               </h1>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+              <p className="text-lg text-gray-600 leading-relaxed">
                 Gentle, cycle-friendly workouts and mindfulness practices
                 designed to honor your body's natural rhythms and support your
                 wellness journey.
               </p>
               <Button
                 onClick={() => router.push("/routine-builder")}
-                className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 btn-hover-lift"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Create Custom Routine
               </Button>
-            </CardContent>
+            </div>
+          </div>
+        </section>
+
+        {/* Search and Filters */}
+        <section className="container px-4 md:px-6 mx-auto">
+          <Card className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6">
+            <div className="space-y-4">
+              {/* Search Bar */}
+              <div className="relative max-w-md mx-auto">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <input
+                  type="text"
+                  placeholder="Search wellness routines..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-12 pr-4 py-3 w-full border border-purple-200 focus:border-purple-400 rounded-full text-center focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-white transition-all duration-300"
+                />
+              </div>
+
+              {/* Filter Pills */}
+              <div className="flex flex-wrap justify-center gap-3">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
+                  <Filter className="h-4 w-4" />
+                  <span>Filter by:</span>
+                </div>
+
+                {/* Category Filters */}
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={
+                        selectedCategory === category ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                      className={`rounded-full transition-all duration-300 ${
+                        selectedCategory === category
+                          ? "bg-purple-500 hover:bg-purple-600 text-white shadow-lg"
+                          : "border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300"
+                      }`}
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+
+                <div className="w-px h-6 bg-gray-300"></div>
+
+                {/* Difficulty Filters */}
+                <div className="flex flex-wrap gap-2">
+                  <Clock className="h-4 w-4 text-gray-500 mt-1" />
+                  {difficulties.map((difficulty) => (
+                    <Button
+                      key={difficulty}
+                      variant={
+                        selectedDifficulty === difficulty
+                          ? "default"
+                          : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setSelectedDifficulty(difficulty)}
+                      className={`rounded-full transition-all duration-300 ${
+                        selectedDifficulty === difficulty
+                          ? "bg-pink-500 hover:bg-pink-600 text-white shadow-lg"
+                          : "border-pink-200 text-pink-600 hover:bg-pink-50 hover:border-pink-300"
+                      }`}
+                    >
+                      {difficulty}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </Card>
         </section>
 
-        {/* Filters */}
-        <div className="mb-8 space-y-4">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <input
-              type="text"
-              placeholder="Search routines..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full border border-purple-200 rounded-2xl focus:border-purple-300 focus:outline-none"
-            />
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm font-medium text-gray-700 flex items-center">
-                <Filter className="h-4 w-4 mr-1" />
-                Category:
-              </span>
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={
-                    selectedCategory === category ? "default" : "outline"
-                  }
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className={`rounded-full ${
-                    selectedCategory === category
-                      ? "bg-purple-400 hover:bg-purple-500"
-                      : "border-purple-200 text-purple-600 hover:bg-purple-50"
-                  }`}
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm font-medium text-gray-700">Level:</span>
-              {difficulties.map((difficulty) => (
-                <Button
-                  key={difficulty}
-                  variant={
-                    selectedDifficulty === difficulty ? "default" : "outline"
-                  }
-                  size="sm"
-                  onClick={() => setSelectedDifficulty(difficulty)}
-                  className={`rounded-full ${
-                    selectedDifficulty === difficulty
-                      ? "bg-pink-400 hover:bg-pink-500"
-                      : "border-pink-200 text-pink-600 hover:bg-pink-50"
-                  }`}
-                >
-                  {difficulty}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-
         {/* Routines Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredRoutines.map((routine) => (
-            <Card
-              key={routine.id}
-              className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-            >
-              <div className="relative">
-                <img
-                  src={routine.image || "/images/morning-flow.svg"}
-                  alt={routine.name}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute top-4 right-4">
-                  <Badge className={getDifficultyColor(routine.difficulty)}>
-                    {routine.difficulty}
-                  </Badge>
+        <section className="container px-4 md:px-6 mx-auto">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredRoutines.map((routine) => (
+              <Card
+                key={routine.id}
+                className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+              >
+                <div className="relative">
+                  <img
+                    src={routine.image || "/images/morning-flow.svg"}
+                    alt={routine.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute top-4 right-4">
+                    <Badge className={getDifficultyColor(routine.difficulty)}>
+                      {routine.difficulty}
+                    </Badge>
+                  </div>
                 </div>
-              </div>
 
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-lg text-gray-800 mb-2">
-                      {routine.name}
-                    </CardTitle>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge className={getCategoryColor(routine.category)}>
-                        {routine.category}
-                      </Badge>
-                      <div className="flex items-center gap-1 text-sm text-gray-600">
-                        <Clock className="h-3 w-3" />
-                        {routine.duration}
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-lg text-gray-800 mb-2">
+                        {routine.name}
+                      </CardTitle>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge className={getCategoryColor(routine.category)}>
+                          {routine.category}
+                        </Badge>
+                        <div className="flex items-center gap-1 text-sm text-gray-600">
+                          <Clock className="h-3 w-3" />
+                          {routine.duration}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span>{routine.rating}</span>
+                  <div className="flex items-center gap-4 text-sm text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span>{routine.rating}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Users className="h-4 w-4" />
+                      <span>{routine.completions.toLocaleString()}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="h-4 w-4" />
-                    <span>{routine.completions.toLocaleString()}</span>
-                  </div>
-                </div>
-              </CardHeader>
+                </CardHeader>
 
-              <CardContent>
-                <p className="text-gray-700 mb-4 leading-relaxed">
-                  {routine.description}
-                </p>
+                <CardContent>
+                  <p className="text-gray-700 mb-4 leading-relaxed">
+                    {routine.description}
+                  </p>
 
-                {/* Lottie preview for the first exercise if available */}
-                {/* {getLottieForExercise(routine.exercises[0]) && (
+                  {/* Lottie preview for the first exercise if available */}
+                  {/* {getLottieForExercise(routine.exercises[0]) && (
                   <div className="mb-4 flex justify-center">
                     <LottiePlayer src={getLottieForExercise(routine.exercises[0])!} height={160} />
                   </div>
                 )} */}
 
-                <div className="mb-4">
-                  <p className="text-sm font-medium text-gray-700 mb-2">
-                    What's included:
-                  </p>
-                  <div className="space-y-1">
-                    {routine.exercises.slice(0, 3).map((exercise, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center gap-2 text-sm text-gray-600"
-                      >
-                        <div className="w-1.5 h-1.5 bg-purple-300 rounded-full"></div>
-                        {exercise}
-                      </div>
-                    ))}
-                    {routine.exercises.length > 3 && (
-                      <div className="text-sm text-gray-500">
-                        +{routine.exercises.length - 3} more exercises
-                      </div>
-                    )}
+                  <div className="mb-4">
+                    <p className="text-sm font-medium text-gray-700 mb-2">
+                      What's included:
+                    </p>
+                    <div className="space-y-1">
+                      {routine.exercises.slice(0, 3).map((exercise, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-2 text-sm text-gray-600"
+                        >
+                          <div className="w-1.5 h-1.5 bg-purple-300 rounded-full"></div>
+                          {exercise}
+                        </div>
+                      ))}
+                      {routine.exercises.length > 3 && (
+                        <div className="text-sm text-gray-500">
+                          +{routine.exercises.length - 3} more exercises
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <ProtectedAction>
-                  <Button className="w-full bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-2xl">
-                    <Play className="h-4 w-4 mr-2" />
-                    Start Routine
-                  </Button>
-                </ProtectedAction>
+                  <ProtectedAction>
+                    <Button className="w-full bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-2xl">
+                      <Play className="h-4 w-4 mr-2" />
+                      Start Routine
+                    </Button>
+                  </ProtectedAction>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {filteredRoutines.length === 0 && (
+            <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+              <CardContent className="p-12 text-center">
+                <Sparkles className="h-16 w-16 text-purple-300 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  No routines found
+                </h3>
+                <p className="text-gray-600">
+                  Try adjusting your search or filters to discover new wellness
+                  routines.
+                </p>
               </CardContent>
             </Card>
-          ))}
-        </div>
-
-        {filteredRoutines.length === 0 && (
-          <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
-            <CardContent className="p-12 text-center">
-              <Sparkles className="h-16 w-16 text-purple-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                No routines found
-              </h3>
-              <p className="text-gray-600">
-                Try adjusting your search or filters to discover new wellness
-                routines.
-              </p>
-            </CardContent>
-          </Card>
-        )}
+          )}
+        </section>
       </main>
-      {/* Auth Modal */}
+
+      <Footer />
+
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
