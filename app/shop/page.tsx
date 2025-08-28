@@ -18,6 +18,7 @@ import {
   Zap,
   Gift,
 } from "lucide-react";
+import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
@@ -52,7 +53,7 @@ const products: Product[] = [
     type: "Journal",
     rating: 4.9,
     reviews: 234,
-    image: "/images/cycle-journal.svg",
+    image: "/product1.jpg",
     features: [
       "90+ guided prompts",
       "Cycle tracking templates",
@@ -72,7 +73,7 @@ const products: Product[] = [
     type: "Guide",
     rating: 4.8,
     reviews: 189,
-    image: "/images/morning-guide.svg",
+    image: "/product2.jpg",
     features: [
       "30 morning routines",
       "5-30 minute options",
@@ -92,7 +93,7 @@ const products: Product[] = [
     type: "Monthly",
     rating: 4.7,
     reviews: 456,
-    image: "/images/premium-subscription.svg",
+    image: "/product3.jpg",
     features: [
       "AI-powered routines",
       "Advanced analytics",
@@ -112,7 +113,7 @@ const products: Product[] = [
     type: "Cards",
     rating: 4.6,
     reviews: 167,
-    image: "/images/ritual-cards.svg",
+    image: "/product4.jpg",
     features: [
       "52 unique cards",
       "Weekly themes",
@@ -132,7 +133,7 @@ const products: Product[] = [
     type: "Planner",
     rating: 4.8,
     reviews: 298,
-    image: "/images/meal-planner.svg",
+    image: "/product5.jpg",
     features: [
       "Cycle-synced recipes",
       "Shopping lists",
@@ -151,7 +152,7 @@ const products: Product[] = [
     type: "Audio",
     rating: 4.9,
     reviews: 312,
-    image: "/images/sleep-stories.svg",
+    image: "/product1.jpg",
     features: [
       "25 audio tracks",
       "Various lengths",
@@ -171,7 +172,7 @@ const products: Product[] = [
     type: "Stickers",
     rating: 4.5,
     reviews: 145,
-    image: "/images/wellness-stickers.svg",
+    image: "/product2.jpg",
     features: [
       "200+ stickers",
       "Multiple themes",
@@ -190,7 +191,7 @@ const products: Product[] = [
     type: "Aromatherapy",
     rating: 4.7,
     reviews: 89,
-    image: "/images/essential-oil.svg",
+    image: "/product3.jpg",
     features: [
       "Organic ingredients",
       "Hormone-balancing",
@@ -445,14 +446,11 @@ export default function ShopPage() {
 
         {/* Best Sellers Section */}
         <section className="container px-4 md:px-6 mx-auto mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-              <Star className="h-6 w-6 text-orange-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">Best Sellers</h2>
-              <p className="text-gray-600">Most loved by our community</p>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Best Sellers
+            </h2>
+            <p className="text-lg text-gray-600">Most loved by our community</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {products
@@ -465,10 +463,14 @@ export default function ShopPage() {
                     className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
                     <div className="relative">
-                      <img
-                        src={product.image || "/images/morning-flow.svg"}
+                      <Image
+                        src={product.image || "/product1.jpg"}
                         alt={product.name}
+                        width={400}
+                        height={192}
                         className="w-full h-48 object-cover"
+                        quality={75}
+                        priority={false}
                       />
                       <div className="absolute top-4 left-4 flex gap-2">
                         <Badge className="bg-orange-100 text-orange-700 border-orange-200">
@@ -571,14 +573,11 @@ export default function ShopPage() {
 
         {/* Best Deals Section */}
         <section className="container px-4 md:px-6 mx-auto mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-              <Gift className="h-6 w-6 text-green-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">Best Deals</h2>
-              <p className="text-gray-600">Limited time offers</p>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Best Deals
+            </h2>
+            <p className="text-lg text-gray-600">Limited time offers</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {products
@@ -591,10 +590,14 @@ export default function ShopPage() {
                     className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
                     <div className="relative">
-                      <img
-                        src={product.image || "/images/morning-flow.svg"}
+                      <Image
+                        src={product.image || "/product1.jpg"}
                         alt={product.name}
+                        width={400}
+                        height={192}
                         className="w-full h-48 object-cover"
+                        quality={75}
+                        priority={false}
                       />
                       <div className="absolute top-4 left-4 flex gap-2">
                         <Badge className="bg-green-100 text-green-700 border-green-200">
@@ -697,16 +700,11 @@ export default function ShopPage() {
 
         {/* Limited Stock Section */}
         <section className="container px-4 md:px-6 mx-auto mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-              <Zap className="h-6 w-6 text-red-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">
-                Limited Stock
-              </h2>
-              <p className="text-gray-600">Get them while you can</p>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Limited Stock
+            </h2>
+            <p className="text-lg text-gray-600">Get them while you can</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {products
@@ -719,10 +717,14 @@ export default function ShopPage() {
                     className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
                     <div className="relative">
-                      <img
-                        src={product.image || "/images/morning-flow.svg"}
+                      <Image
+                        src={product.image || "/product1.jpg"}
                         alt={product.name}
+                        width={400}
+                        height={192}
                         className="w-full h-48 object-cover"
+                        quality={75}
+                        priority={false}
                       />
                       <div className="absolute top-4 left-4 flex gap-2">
                         <Badge className="bg-red-100 text-red-700 border-red-200">
@@ -825,14 +827,13 @@ export default function ShopPage() {
 
         {/* All Products Section */}
         <section className="container px-4 md:px-6 mx-auto mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-              <Sparkles className="h-6 w-6 text-purple-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">All Products</h2>
-              <p className="text-gray-600">Complete wellness collection</p>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              All Products
+            </h2>
+            <p className="text-lg text-gray-600">
+              Complete wellness collection
+            </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => {
@@ -843,10 +844,14 @@ export default function ShopPage() {
                   className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                 >
                   <div className="relative">
-                    <img
-                      src={product.image || "/images/morning-flow.svg"}
+                    <Image
+                      src={product.image || "/product1.jpg"}
                       alt={product.name}
+                      width={400}
+                      height={192}
                       className="w-full h-48 object-cover"
+                      quality={75}
+                      priority={false}
                     />
                     <div className="absolute top-4 left-4 flex gap-2">
                       {product.bestseller && (

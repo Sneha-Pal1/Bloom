@@ -1,7 +1,14 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Heart,
   Play,
@@ -23,12 +30,144 @@ import {
   Shield,
   Clock,
   Target,
+  Plus,
+  ShoppingCart,
+  Activity,
+  Moon,
+  Sun,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
+
+// Routine data
+const routineLibrary = [
+  {
+    id: 1,
+    name: "Morning Energizer Flow",
+    duration: "15 min",
+    difficulty: "Beginner",
+    phase: "All Phases",
+    description:
+      "Start your day with gentle stretches and energizing movements to awaken your body and mind.",
+    benefits: [
+      "Increases energy",
+      "Improves flexibility",
+      "Boosts mood",
+      "Enhances focus",
+    ],
+    poses: [
+      "Sun Salutation",
+      "Cat-Cow Stretch",
+      "Warrior I",
+      "Tree Pose",
+      "Child's Pose",
+    ],
+    icon: <Sun className="h-6 w-6" />,
+    color: "from-yellow-400 to-orange-500",
+    price: 0, // Free routine
+  },
+  {
+    id: 2,
+    name: "PMS Relief Sequence",
+    duration: "20 min",
+    difficulty: "Beginner",
+    phase: "Luteal Phase",
+    description:
+      "Soothing poses designed to ease PMS symptoms and provide comfort during your luteal phase.",
+    benefits: [
+      "Reduces cramps",
+      "Relieves bloating",
+      "Calms mind",
+      "Improves circulation",
+    ],
+    poses: [
+      "Child's Pose",
+      "Cat-Cow",
+      "Supine Twist",
+      "Legs Up Wall",
+      "Savasana",
+    ],
+    icon: <Heart className="h-6 w-6" />,
+    color: "from-pink-400 to-rose-500",
+    price: 0,
+  },
+  {
+    id: 3,
+    name: "Power Flow for Ovulation",
+    duration: "25 min",
+    difficulty: "Intermediate",
+    phase: "Ovulation Phase",
+    description:
+      "Dynamic flow to harness your peak energy during ovulation with strength-building poses.",
+    benefits: [
+      "Builds strength",
+      "Increases stamina",
+      "Boosts confidence",
+      "Enhances power",
+    ],
+    poses: [
+      "Warrior II",
+      "Side Plank",
+      "Crow Pose",
+      "Camel Pose",
+      "Wheel Pose",
+    ],
+    icon: <Zap className="h-6 w-6" />,
+    color: "from-purple-500 to-indigo-600",
+    price: 0,
+  },
+  {
+    id: 4,
+    name: "Restorative Evening Wind Down",
+    duration: "30 min",
+    difficulty: "Beginner",
+    phase: "All Phases",
+    description:
+      "Gentle, restorative poses to help you unwind and prepare for restful sleep.",
+    benefits: [
+      "Promotes relaxation",
+      "Improves sleep",
+      "Reduces stress",
+      "Calms nervous system",
+    ],
+    poses: [
+      "Supported Child's Pose",
+      "Gentle Twists",
+      "Legs Up Wall",
+      "Corpse Pose",
+    ],
+    icon: <Moon className="h-6 w-6" />,
+    color: "from-indigo-400 to-purple-500",
+    price: 0,
+  },
+  {
+    id: 5,
+    name: "Cycle Sync Complete Program",
+    duration: "4 weeks",
+    difficulty: "All Levels",
+    phase: "Full Cycle",
+    description:
+      "Comprehensive 4-week program with different routines for each phase of your menstrual cycle.",
+    benefits: [
+      "Complete cycle support",
+      "Personalized routines",
+      "Expert guidance",
+      "Progress tracking",
+    ],
+    poses: [
+      "28 different sequences",
+      "Phase-specific poses",
+      "Breathing exercises",
+      "Meditation",
+    ],
+    icon: <Target className="h-6 w-6" />,
+    color: "from-emerald-400 to-teal-500",
+    price: 29.99, // Premium routine
+  },
+];
 
 export default function WellnessLanding() {
   const router = useRouter();
@@ -41,12 +180,57 @@ export default function WellnessLanding() {
     authModalTab,
   } = useAuth();
 
+  // State management
+  const [showRoutineModal, setShowRoutineModal] = useState(false);
+  const [selectedRoutine, setSelectedRoutine] = useState<
+    (typeof routineLibrary)[0] | null
+  >(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [cart, setCart] = useState<typeof routineLibrary>([]);
+  const [showCartModal, setShowCartModal] = useState(false);
+
+  const handleStartJourney = () => {
+    router.push("/dashboard");
+  };
+
   const handleStartToday = () => {
     if (isAuthenticated) {
       router.push("/dashboard");
     } else {
       setShowAuthModal(true);
     }
+  };
+
+  const handleExploreFeatures = () => {
+    router.push("/explore");
+  };
+
+  const handleStartRoutine = (routine: (typeof routineLibrary)[0]) => {
+    setSelectedRoutine(routine);
+    setShowRoutineModal(true);
+  };
+
+  const handleRoutineStart = () => {
+    setShowRoutineModal(false);
+    setShowSuccessModal(true);
+    setTimeout(() => {
+      setShowSuccessModal(false);
+      router.push("/dashboard");
+    }, 2000);
+  };
+
+  const handleAddToCart = (routine: (typeof routineLibrary)[0]) => {
+    if (!cart.find((item) => item.id === routine.id)) {
+      setCart((prev) => [...prev, routine]);
+    }
+  };
+
+  const removeFromCart = (routineId: number) => {
+    setCart((prev) => prev.filter((item) => item.id !== routineId));
+  };
+
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.price, 0);
   };
 
   const handleSetRoutine = () => {
@@ -161,7 +345,7 @@ export default function WellnessLanding() {
                   <Button
                     size="lg"
                     className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-10 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 btn-hover-lift"
-                    onClick={handleStartToday}
+                    onClick={handleStartJourney}
                   >
                     <Play className="h-5 w-5 mr-2" />
                     Start Your Journey
@@ -170,7 +354,7 @@ export default function WellnessLanding() {
                     variant="outline"
                     size="lg"
                     className="border-2 border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300 rounded-full px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 btn-hover-lift backdrop-blur-sm bg-white/80"
-                    onClick={handleSetRoutine}
+                    onClick={handleExploreFeatures}
                   >
                     <Sparkles className="h-5 w-5 mr-2" />
                     Explore Features
@@ -402,6 +586,99 @@ export default function WellnessLanding() {
           </div>
         </section>
 
+        {/* Featured Routines */}
+        <section className="py-16 bg-white/50">
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Popular Wellness Routines
+              </h2>
+              <p className="text-lg text-gray-600">
+                Discover routines designed for every phase of your cycle
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {routineLibrary.slice(0, 3).map((routine) => (
+                <Card
+                  key={routine.id}
+                  className="border-0 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover"
+                >
+                  <CardContent className="p-6">
+                    <div
+                      className={`w-12 h-12 bg-gradient-to-r ${routine.color} rounded-2xl flex items-center justify-center text-white mb-4 shadow-lg`}
+                    >
+                      {routine.icon}
+                    </div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        {routine.name}
+                      </h3>
+                      {routine.price > 0 && (
+                        <span className="text-sm font-bold text-purple-600">
+                          ${routine.price}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                      {routine.description}
+                    </p>
+                    <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {routine.duration}
+                      </span>
+                      <span
+                        className={`px-2 py-1 rounded-full ${
+                          routine.difficulty === "Beginner"
+                            ? "bg-green-100 text-green-700"
+                            : routine.difficulty === "Intermediate"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {routine.difficulty}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full"
+                        onClick={() => handleStartRoutine(routine)}
+                      >
+                        <Play className="h-4 w-4 mr-1" />
+                        Start Routine
+                      </Button>
+                      {routine.price > 0 && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded-full"
+                          onClick={() => handleAddToCart(routine)}
+                        >
+                          <ShoppingCart className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Cart Button */}
+            {cart.length > 0 && (
+              <div className="text-center">
+                <Button
+                  onClick={() => setShowCartModal(true)}
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-full px-6 py-3 shadow-lg"
+                >
+                  <ShoppingCart className="h-4 w-4 mr-2" />
+                  View Cart ({cart.length})
+                </Button>
+              </div>
+            )}
+          </div>
+        </section>
+
         {/* Testimonials */}
         <section className="py-16 bg-gradient-to-r from-purple-50 to-pink-50">
           <div className="container px-4 md:px-6 mx-auto">
@@ -598,6 +875,191 @@ export default function WellnessLanding() {
           </div>
         </div>
       </footer>
+
+      {/* Routine Details Modal */}
+      <Dialog open={showRoutineModal} onOpenChange={setShowRoutineModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-3">
+              {selectedRoutine && (
+                <div
+                  className={`w-10 h-10 bg-gradient-to-r ${selectedRoutine.color} rounded-xl flex items-center justify-center text-white`}
+                >
+                  {selectedRoutine.icon}
+                </div>
+              )}
+              {selectedRoutine?.name}
+            </DialogTitle>
+          </DialogHeader>
+
+          {selectedRoutine && (
+            <div className="space-y-6">
+              <div className="flex items-center gap-4 text-sm text-gray-600">
+                <span className="flex items-center gap-1">
+                  <Clock className="h-4 w-4" />
+                  {selectedRoutine.duration}
+                </span>
+                <span
+                  className={`px-3 py-1 rounded-full ${
+                    selectedRoutine.difficulty === "Beginner"
+                      ? "bg-green-100 text-green-700"
+                      : selectedRoutine.difficulty === "Intermediate"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+                  {selectedRoutine.difficulty}
+                </span>
+                <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
+                  {selectedRoutine.phase}
+                </span>
+              </div>
+
+              <p className="text-gray-700 leading-relaxed">
+                {selectedRoutine.description}
+              </p>
+
+              <div>
+                <h4 className="font-semibold text-gray-800 mb-3">Benefits:</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {selectedRoutine.benefits.map((benefit, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <span className="text-sm text-gray-600">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-gray-800 mb-3">
+                  What's Included:
+                </h4>
+                <div className="space-y-2">
+                  {selectedRoutine.poses.map((pose, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                      <span className="text-sm text-gray-600">{pose}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowRoutineModal(false)}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleRoutineStart}
+                  className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                >
+                  <Play className="h-4 w-4 mr-2" />
+                  Start Now
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Success Modal */}
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent className="max-w-md text-center">
+          <div className="space-y-4">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle className="h-8 w-8 text-green-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800">
+              Routine Added Successfully!
+            </h3>
+            <p className="text-gray-600">
+              Your routine has been added to your dashboard. Redirecting you
+              now...
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Cart Modal */}
+      <Dialog open={showCartModal} onOpenChange={setShowCartModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <ShoppingCart className="h-5 w-5" />
+              Your Cart ({cart.length} items)
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            {cart.length === 0 ? (
+              <p className="text-gray-500 text-center py-8">
+                Your cart is empty
+              </p>
+            ) : (
+              <>
+                {cart.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg"
+                  >
+                    <div
+                      className={`w-10 h-10 bg-gradient-to-r ${item.color} rounded-lg flex items-center justify-center text-white`}
+                    >
+                      {item.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-800">
+                        {item.name}
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        {item.duration} • {item.difficulty}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-semibold text-gray-800">
+                        ${item.price}
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="border-t pt-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-lg font-semibold">Total:</span>
+                    <span className="text-xl font-bold text-purple-600">
+                      ${getTotalPrice().toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowCartModal(false)}
+                      className="flex-1"
+                    >
+                      Continue Shopping
+                    </Button>
+                    <Button className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
+                      Checkout
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <AuthModal
         isOpen={showAuthModal}

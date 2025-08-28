@@ -81,6 +81,16 @@ html {
   background: linear-gradient(45deg, #9333ea, #db2777);
 }
 
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Bento box layout utilities */
 .bento-grid {
   display: grid;

@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -376,18 +377,13 @@ export default function Tips() {
         {/* Expert Advice Section */}
         <section className="container px-4 md:px-6 mx-auto">
           <div className="mb-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <Heart className="h-6 w-6 text-blue-600" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-gray-800">
-                  Expert Advice
-                </h2>
-                <p className="text-gray-600">
-                  Book appointments with certified professionals
-                </p>
-              </div>
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Expert Advice
+              </h2>
+              <p className="text-lg text-gray-600">
+                Book appointments with certified professionals
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -400,7 +396,7 @@ export default function Tips() {
                   rating: 4.9,
                   reviews: 156,
                   price: 120,
-                  image: "/images/doctor-1.svg",
+                  image: "/doc1.jpg",
                   specialties: ["Hormonal Health", "PCOS", "Fertility"],
                   nextAvailable: "Tomorrow 2:00 PM",
                 },
@@ -412,7 +408,7 @@ export default function Tips() {
                   rating: 4.8,
                   reviews: 203,
                   price: 95,
-                  image: "/images/therapist-1.svg",
+                  image: "/doc2.jpg",
                   specialties: ["Anxiety", "Women's Mental Health", "Trauma"],
                   nextAvailable: "Today 4:30 PM",
                 },
@@ -424,7 +420,7 @@ export default function Tips() {
                   rating: 4.7,
                   reviews: 89,
                   price: 85,
-                  image: "/images/nutritionist-1.svg",
+                  image: "/doc3.jpg",
                   specialties: [
                     "Cycle Nutrition",
                     "Weight Management",
@@ -440,7 +436,7 @@ export default function Tips() {
                   rating: 4.9,
                   reviews: 134,
                   price: 150,
-                  image: "/images/endocrinologist-1.svg",
+                  image: "/doc4.jpg",
                   specialties: ["Thyroid", "Hormonal Imbalances", "Diabetes"],
                   nextAvailable: "Monday 9:00 AM",
                 },
@@ -452,7 +448,7 @@ export default function Tips() {
                   rating: 4.8,
                   reviews: 178,
                   price: 140,
-                  image: "/images/psychiatrist-1.svg",
+                  image: "/doc5.jpg",
                   specialties: [
                     "Depression",
                     "Postpartum",
@@ -468,7 +464,7 @@ export default function Tips() {
                   rating: 4.6,
                   reviews: 92,
                   price: 75,
-                  image: "/images/coach-1.svg",
+                  image: "/doc1.jpg",
                   specialties: [
                     "Lifestyle Changes",
                     "Stress Management",
@@ -482,10 +478,14 @@ export default function Tips() {
                   className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover"
                 >
                   <div className="relative">
-                    <img
-                      src={expert.image || "/images/doctor-placeholder.svg"}
+                    <Image
+                      src={expert.image || "/doc1.jpg"}
                       alt={expert.name}
+                      width={400}
+                      height={192}
                       className="w-full h-48 object-cover rounded-t-2xl"
+                      quality={75}
+                      priority={false}
                     />
                     <Badge className="absolute top-4 right-4 bg-blue-100 text-blue-700">
                       {expert.specialty}
