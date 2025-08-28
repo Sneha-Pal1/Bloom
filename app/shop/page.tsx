@@ -1,145 +1,514 @@
 "use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Heart,
-  User,
-  LogOut,
-  Target,
-  Users,
-  Shield,
+  Star,
+  ShoppingCart,
+  Download,
+  Search,
+  Filter,
   Sparkles,
+  BookOpen,
+  Headphones,
+  Calendar,
+  Zap,
+  Gift,
 } from "lucide-react";
-import Link from "next/link";
+import { Navbar } from "@/components/navbar";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
+import { ProtectedAction } from "@/components/protected-action";
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  originalPrice?: number;
+  category: "Digital" | "Physical" | "Subscription";
+  type: string;
+  rating: number;
+  reviews: number;
+  image: string;
+  features: string[];
+  bestseller?: boolean;
+  new?: boolean;
+}
+
+const products: Product[] = [
+  {
+    id: "1",
+    name: "Cycle Sync Wellness Journal",
+    description:
+      "A beautifully designed digital journal to track your menstrual cycle, mood, and wellness patterns with guided prompts and insights.",
+    price: 19.99,
+    originalPrice: 29.99,
+    category: "Digital",
+    type: "Journal",
+    rating: 4.9,
+    reviews: 234,
+    image: "/images/cycle-journal.svg",
+    features: [
+      "90+ guided prompts",
+      "Cycle tracking templates",
+      "Mood & symptom tracker",
+      "Monthly reflection pages",
+      "Instant PDF download",
+    ],
+    bestseller: true,
+  },
+  {
+    id: "2",
+    name: "Mindful Morning Routine Guide",
+    description:
+      "Transform your mornings with this comprehensive guide featuring 30 gentle routines designed for different energy levels and time constraints.",
+    price: 14.99,
+    category: "Digital",
+    type: "Guide",
+    rating: 4.8,
+    reviews: 189,
+    image: "/images/morning-guide.svg",
+    features: [
+      "30 morning routines",
+      "5-30 minute options",
+      "Seasonal variations",
+      "Printable cards",
+      "Audio affirmations",
+    ],
+    new: true,
+  },
+  {
+    id: "3",
+    name: "Bloom Premium Subscription",
+    description:
+      "Unlock exclusive content, personalized AI routines, advanced tracking, and priority community support.",
+    price: 9.99,
+    category: "Subscription",
+    type: "Monthly",
+    rating: 4.7,
+    reviews: 456,
+    image: "/images/premium-subscription.svg",
+    features: [
+      "AI-powered routines",
+      "Advanced analytics",
+      "Exclusive content",
+      "Priority support",
+      "Ad-free experience",
+    ],
+    bestseller: true,
+  },
+  {
+    id: "4",
+    name: "Self-Care Ritual Cards",
+    description:
+      "52 beautifully illustrated digital cards with self-care activities, affirmations, and mindfulness practices for every week of the year.",
+    price: 12.99,
+    category: "Digital",
+    type: "Cards",
+    rating: 4.6,
+    reviews: 167,
+    image: "/images/ritual-cards.svg",
+    features: [
+      "52 unique cards",
+      "Weekly themes",
+      "Printable format",
+      "Mobile-friendly",
+      "Seasonal activities",
+    ],
+  },
+  {
+    id: "5",
+    name: "Hormone Balance Meal Planner",
+    description:
+      "A comprehensive meal planning system designed to support hormonal health throughout your cycle with recipes and shopping lists.",
+    price: 24.99,
+    originalPrice: 34.99,
+    category: "Digital",
+    type: "Planner",
+    rating: 4.8,
+    reviews: 298,
+    image: "/images/meal-planner.svg",
+    features: [
+      "Cycle-synced recipes",
+      "Shopping lists",
+      "Nutritional guides",
+      "Prep schedules",
+      "Substitution charts",
+    ],
+  },
+  {
+    id: "6",
+    name: "Meditation & Sleep Stories",
+    description:
+      "A collection of 25 guided meditations and bedtime stories specifically created for women's wellness and peaceful sleep.",
+    price: 16.99,
+    category: "Digital",
+    type: "Audio",
+    rating: 4.9,
+    reviews: 312,
+    image: "/images/sleep-stories.svg",
+    features: [
+      "25 audio tracks",
+      "Various lengths",
+      "Sleep stories",
+      "Guided meditations",
+      "High-quality audio",
+    ],
+    new: true,
+  },
+  {
+    id: "7",
+    name: "Wellness Tracker Stickers",
+    description:
+      "Beautiful digital sticker pack for your planner or journal to track habits, moods, and wellness goals with style.",
+    price: 7.99,
+    category: "Digital",
+    type: "Stickers",
+    rating: 4.5,
+    reviews: 145,
+    image: "/images/wellness-stickers.svg",
+    features: [
+      "200+ stickers",
+      "Multiple themes",
+      "High resolution",
+      "Print-ready",
+      "Commercial use OK",
+    ],
+  },
+  {
+    id: "8",
+    name: "Bloom Essential Oil Blend",
+    description:
+      "A carefully crafted essential oil blend designed to promote relaxation, balance hormones, and enhance your wellness routine.",
+    price: 34.99,
+    category: "Physical",
+    type: "Aromatherapy",
+    rating: 4.7,
+    reviews: 89,
+    image: "/images/essential-oil.svg",
+    features: [
+      "Organic ingredients",
+      "Hormone-balancing",
+      "Calming scent",
+      "10ml bottle",
+      "Free shipping",
+    ],
+  },
+];
+
+const categories = ["All", "Digital", "Physical", "Subscription"];
+const types = [
+  "All",
+  "Journal",
+  "Guide",
+  "Cards",
+  "Planner",
+  "Audio",
+  "Stickers",
+  "Aromatherapy",
+];
+
+const FloatingSparkles = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {[...Array(6)].map((_, i) => (
+      <Sparkles
+        key={i}
+        className="absolute text-yellow-300 opacity-40 animate-bounce"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          animationDelay: `${i * 0.5}s`,
+          animationDuration: `${3 + Math.random() * 2}s`,
+        }}
+        size={14}
+      />
+    ))}
+  </div>
+);
 
 export default function ShopPage() {
-  const {
-    isAuthenticated,
-    user,
-    logout,
-    showAuthModal,
-    setShowAuthModal,
-    authModalTab,
-  } = useAuth();
+  const { showAuthModal, setShowAuthModal } = useAuth();
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedType, setSelectedType] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const handleAuthSuccess = () => {};
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "All" || product.category === selectedCategory;
+    const matchesType = selectedType === "All" || product.type === selectedType;
+    return matchesSearch && matchesCategory && matchesType;
+  });
+
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      Digital: "bg-purple-100 text-purple-700 border-purple-200",
+      Physical: "bg-green-100 text-green-700 border-green-200",
+      Subscription: "bg-orange-100 text-orange-700 border-orange-200",
+    };
+    return (
+      colors[category as keyof typeof colors] ||
+      "bg-gray-100 text-gray-700 border-gray-200"
+    );
+  };
+
+  const getTypeIcon = (type: string) => {
+    const icons = {
+      Journal: BookOpen,
+      Guide: BookOpen,
+      Cards: Gift,
+      Planner: Calendar,
+      Audio: Headphones,
+      Stickers: Sparkles,
+      Aromatherapy: Zap,
+      Monthly: Calendar,
+    };
+    return icons[type as keyof typeof icons] || BookOpen;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-green-50">
-      {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-white/70 sticky top-0 z-50">
-        <Link href="/" className="flex items-center justify-center">
-          <Heart className="h-8 w-8 text-purple-400" />
-          <span className="ml-2 text-xl font-semibold text-gray-800">
-            Bloom
-          </span>
-        </Link>
-        <nav className="ml-auto flex items-center gap-6">
-          <Link
-            href="/"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="/explore"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Explore
-          </Link>
-          <Link
-            href="/tips"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Tips
-          </Link>
-          <Link
-            href="/routines"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Routines
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm font-medium text-purple-600 border-b-2 border-purple-400"
-          >
-            About
-          </Link>
-          {isAuthenticated ? (
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full flex items-center justify-center">
-                <User className="h-4 w-4 text-purple-600" />
+      <Navbar />
+
+      <main className="container mx-auto px-4 py-8">
+        {/* Header Section */}
+        <section className="relative mb-8">
+          <Card className="border-0 bg-gradient-to-r from-purple-100 via-pink-100 to-rose-100 rounded-3xl shadow-lg overflow-hidden">
+            <FloatingSparkles />
+            <CardContent className="p-8 text-center relative z-10">
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full flex items-center justify-center">
+                  <ShoppingCart className="h-8 w-8 text-purple-600" />
+                </div>
               </div>
-              <button
-                onClick={logout}
-                className="text-gray-600 hover:text-red-500 transition-colors"
-                title="Logout"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
-            </div>
-          ) : (
-            <Button
-              onClick={() => setShowAuthModal(true)}
-              variant="outline"
-              className="border-purple-200 text-purple-600 hover:bg-purple-50 rounded-full px-6 py-2 text-sm transition-all duration-300 bg-transparent"
-            >
-              Login / Sign Up
-            </Button>
-          )}
-        </nav>
-      </header>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                Bloom Shop 🛍️
+              </h1>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+                Curated wellness products, digital resources, and tools designed
+                specifically for women's health and self-care journey.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center text-sm text-gray-600">
+                <div className="flex items-center gap-1">
+                  <Download className="h-4 w-4" />
+                  <span>Instant downloads</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Heart className="h-4 w-4" />
+                  <span>Made with love</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Star className="h-4 w-4" />
+                  <span>Highly rated</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
 
-      <section className="py-16 px-6 bg-pink-50 text-center">
-        <h1 className="text-4xl font-bold mb-6 text-gray-800">Our Shop</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-10">
-          Explore curated wellness essentials and our digital store to support
-          your health & growth.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* Wellness Essentials */}
-          <div className="p-8 rounded-2xl shadow-lg bg-white hover:shadow-xl transition">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Wellness Essentials
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Handpicked products to support women’s self-care and well-being.
-            </p>
-            <Link
-              href="/essentials"
-              className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition"
-            >
-              Explore Essentials
-            </Link>
+        {/* Filters */}
+        <div className="mb-8 space-y-4">
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 pr-4 py-2 w-full border border-purple-200 rounded-2xl focus:border-purple-300 focus:outline-none"
+            />
           </div>
 
-          {/* Digital Store */}
-          <div className="p-8 rounded-2xl shadow-lg bg-white hover:shadow-xl transition">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Digital Store
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Journals, guides, planners, and more — one-time purchase, instant
-              download.
-            </p>
-            <Link
-              href="/store"
-              className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
-            >
-              Visit Store
-            </Link>
+          <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-2">
+              <span className="text-sm font-medium text-gray-700 flex items-center">
+                <Filter className="h-4 w-4 mr-1" />
+                Category:
+              </span>
+              {categories.map((category) => (
+                <Button
+                  key={category}
+                  variant={
+                    selectedCategory === category ? "default" : "outline"
+                  }
+                  size="sm"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`rounded-full ${
+                    selectedCategory === category
+                      ? "bg-purple-400 hover:bg-purple-500"
+                      : "border-purple-200 text-purple-600 hover:bg-purple-50"
+                  }`}
+                >
+                  {category}
+                </Button>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <span className="text-sm font-medium text-gray-700">Type:</span>
+              {types.map((type) => (
+                <Button
+                  key={type}
+                  variant={selectedType === type ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedType(type)}
+                  className={`rounded-full ${
+                    selectedType === type
+                      ? "bg-pink-400 hover:bg-pink-500"
+                      : "border-pink-200 text-pink-600 hover:bg-pink-50"
+                  }`}
+                >
+                  {type}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
-      {/* Auth Modal */}
+
+        {/* Products Grid */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filteredProducts.map((product) => {
+            const TypeIcon = getTypeIcon(product.type);
+            return (
+              <Card
+                key={product.id}
+                className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+              >
+                <div className="relative">
+                  <img
+                    src={product.image || "/images/morning-flow.svg"}
+                    alt={product.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute top-4 left-4 flex gap-2">
+                    {product.bestseller && (
+                      <Badge className="bg-orange-100 text-orange-700 border-orange-200">
+                        Bestseller
+                      </Badge>
+                    )}
+                    {product.new && (
+                      <Badge className="bg-green-100 text-green-700 border-green-200">
+                        New
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="absolute top-4 right-4">
+                    <Badge className={getCategoryColor(product.category)}>
+                      {product.category}
+                    </Badge>
+                  </div>
+                </div>
+
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <TypeIcon className="h-4 w-4 text-purple-600" />
+                        <span className="text-sm text-gray-600">
+                          {product.type}
+                        </span>
+                      </div>
+                      <CardTitle className="text-lg text-gray-800 mb-2">
+                        {product.name}
+                      </CardTitle>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-1">
+                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm text-gray-600">
+                            {product.rating}
+                          </span>
+                        </div>
+                        <span className="text-sm text-gray-500">
+                          ({product.reviews} reviews)
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent>
+                  <p className="text-gray-700 mb-4 leading-relaxed text-sm">
+                    {product.description}
+                  </p>
+
+                  <div className="mb-4">
+                    <p className="text-sm font-medium text-gray-700 mb-2">
+                      Features:
+                    </p>
+                    <div className="space-y-1">
+                      {product.features.slice(0, 3).map((feature, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-2 text-sm text-gray-600"
+                        >
+                          <div className="w-1.5 h-1.5 bg-purple-300 rounded-full"></div>
+                          {feature}
+                        </div>
+                      ))}
+                      {product.features.length > 3 && (
+                        <div className="text-sm text-gray-500">
+                          +{product.features.length - 3} more features
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-bold text-gray-800">
+                        ${product.price}
+                      </span>
+                      {product.originalPrice && (
+                        <span className="text-lg text-gray-500 line-through">
+                          ${product.originalPrice}
+                        </span>
+                      )}
+                    </div>
+                    {product.category === "Subscription" && (
+                      <span className="text-sm text-gray-600">/month</span>
+                    )}
+                  </div>
+
+                  <ProtectedAction>
+                    <Button className="w-full bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-2xl">
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      {product.category === "Subscription"
+                        ? "Subscribe"
+                        : "Add to Cart"}
+                    </Button>
+                  </ProtectedAction>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {filteredProducts.length === 0 && (
+          <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
+            <CardContent className="p-12 text-center">
+              <Sparkles className="h-16 w-16 text-purple-300 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                No products found
+              </h3>
+              <p className="text-gray-600">
+                Try adjusting your search or filters to discover amazing
+                wellness products.
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </main>
+
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={handleAuthSuccess}
-        defaultTab={authModalTab}
+        onSuccess={() => {}}
       />
     </div>
   );

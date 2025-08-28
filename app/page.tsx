@@ -12,13 +12,21 @@ import {
   Linkedin,
   User,
   LogOut,
+  Sparkles,
+  Calendar,
+  Brain,
+  Users,
+  ShoppingBag,
+  Bot,
+  MessageCircle,
+  Zap,
+  Shield,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Navbar } from "@/components/navbar";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
-import DigitalStoreSection from "@/components/digital-store-section";
-import ExpertConsultationsSection from "@/components/ExpertConsultationsSection";
 
 export default function WellnessLanding() {
   const router = useRouter();
@@ -47,159 +55,198 @@ export default function WellnessLanding() {
     }
   };
 
-  const handleAuthSuccess = () => {};
+  const features = [
+    {
+      icon: <Calendar className="h-6 w-6" />,
+      title: "Cycle-Synced Routines",
+      description: "Workouts that adapt to your menstrual cycle phases",
+    },
+    {
+      icon: <Brain className="h-6 w-6" />,
+      title: "AI-Powered Guidance",
+      description: "Personalized wellness recommendations just for you",
+    },
+    {
+      icon: <Users className="h-6 w-6" />,
+      title: "Supportive Community",
+      description: "Connect with women on similar wellness journeys",
+    },
+    {
+      icon: <ShoppingBag className="h-6 w-6" />,
+      title: "Curated Shop",
+      description: "Premium wellness products and digital resources",
+    },
+    {
+      icon: <MessageCircle className="h-6 w-6" />,
+      title: "Expert Consultations",
+      description: "Access to certified wellness professionals",
+    },
+    {
+      icon: <Shield className="h-6 w-6" />,
+      title: "Privacy First",
+      description: "Your wellness data is secure and private",
+    },
+  ];
+
+  const stats = [
+    { number: "10k+", label: "Women Supported" },
+    { number: "500+", label: "Wellness Routines" },
+    { number: "50+", label: "Expert Partners" },
+    { number: "4.9★", label: "User Rating" },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-green-50">
-      {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-white/70 sticky top-0 z-50">
-        <Link href="/" className="flex items-center justify-center">
-          <Heart className="h-8 w-8 text-purple-400" />
-          <span className="ml-2 text-xl font-semibold text-gray-800">
-            Bloom
-          </span>
-        </Link>
-        <nav className="ml-auto flex items-center gap-6">
-          <Link
-            href="/"
-            className="text-sm font-medium text-purple-600 border-b-2 border-purple-400"
-          >
-            Home
-          </Link>
-          <Link
-            href="/explore"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Explore
-          </Link>
-          <Link
-            href="/tips"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Tips
-          </Link>
-          <Link
-            href="/routines"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Routines
-          </Link>
-          <Link
-            href="/shop"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Shop
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            About
-          </Link>
+      <Navbar />
 
-          {isAuthenticated ? (
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full flex items-center justify-center">
-                <User className="h-4 w-4 text-purple-600" />
-              </div>
-              <button
-                onClick={logout}
-                className="text-gray-600 hover:text-red-500 transition-colors"
-                title="Logout"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
-            </div>
-          ) : (
-            <Button
-              onClick={() => setShowAuthModal(true)}
-              variant="outline"
-              className="border-purple-200 text-purple-600 hover:bg-purple-50 rounded-full px-6 py-2 text-sm transition-all duration-300 bg-transparent"
-            >
-              Login / Sign Up
-            </Button>
-          )}
-        </nav>
-      </header>
-
-      <main>
+      <main className="space-y-0">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px] items-center">
-              <div className="flex flex-col justify-center space-y-6">
+        <section className="py-16 md:py-20 lg:py-24 relative overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(8)].map((_, i) => (
+              <Sparkles
+                key={i}
+                className="absolute text-yellow-300 opacity-20 animate-float"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${4 + Math.random() * 2}s`,
+                }}
+                size={14}
+              />
+            ))}
+          </div>
+          <div className="container px-4 md:px-6 mx-auto relative z-10">
+            <div className="grid gap-8 lg:grid-cols-2 items-center">
+              <div className="space-y-6">
                 <div className="space-y-4">
-                  <h1 className="text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl text-gray-800 leading-tight">
-                    Your Space to{" "}
-                    <span className="text-purple-400">Reset,</span>{" "}
-                    <span className="text-pink-400">Reflect</span> &{" "}
-                    <span className="text-emerald-400">Rise.</span>
+                  <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-gray-800 leading-tight">
+                    Your Space to <span className="gradient-text">Reset,</span>{" "}
+                    <span className="gradient-text">Reflect</span> &{" "}
+                    <span className="gradient-text">Rise</span>
                   </h1>
-                  <p className="max-w-[600px] text-gray-600 md:text-xl leading-relaxed">
-                    Track your mood, follow gentle workouts, and grow through
-                    self-care routines—designed just for you.
+                  <p className="text-lg text-gray-600 leading-relaxed max-w-xl">
+                    AI-powered wellness platform designed specifically for
+                    women. Track your cycle, follow gentle workouts, and grow
+                    through personalized self-care routines.
                   </p>
                 </div>
-                <div className="flex flex-col gap-3 min-[400px]:flex-row">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    className="bg-purple-500 hover:bg-purple-600 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 btn-hover-lift"
                     onClick={handleStartToday}
                   >
-                    Start Today
+                    Start Your Journey
                   </Button>
                   <Button
                     variant="outline"
                     size="lg"
-                    className="border-purple-200 text-purple-600 hover:bg-purple-50 rounded-full px-8 py-3 transition-all duration-300 bg-transparent"
+                    className="border-purple-200 text-purple-600 hover:bg-purple-50 rounded-full px-8 py-3 transition-all duration-300 btn-hover-lift"
                     onClick={handleSetRoutine}
                   >
-                    Set Your Routine
+                    Explore Features
                   </Button>
                 </div>
+
+                {/* Stats */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
+                  {stats.map((stat, index) => (
+                    <div key={index} className="text-center">
+                      <div className="text-2xl font-bold text-purple-600">
+                        {stat.number}
+                      </div>
+                      <div className="text-sm text-gray-600">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="flex justify-center">
+
+              <div className="flex justify-center lg:justify-end">
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-pink-200 rounded-3xl blur-3xl opacity-30 animate-pulse-soft"></div>
                   <Image
                     src="/images/generated-image.png"
-                    width={500}
-                    height={500}
+                    width={450}
+                    height={450}
                     alt="Woman meditating peacefully"
-                    className="relative rounded-3xl shadow-2xl"
+                    className="relative rounded-3xl shadow-2xl animate-float"
                   />
                 </div>
               </div>
             </div>
           </div>
         </section>
-        {/* Preview Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-white/50">
+
+        {/* Features Grid */}
+        <section className="py-16 bg-white/50">
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Everything You Need for Wellness
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Comprehensive tools designed specifically for women's unique
+                wellness needs
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {features.map((feature, index) => (
+                <Card
+                  key={index}
+                  className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover"
+                >
+                  <CardContent className="p-6">
+                    <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 mb-4">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="py-16">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="grid gap-12 lg:grid-cols-2 items-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl blur-2xl opacity-50"></div>
-                <div className="relative bg-white rounded-3xl shadow-2xl p-8">
+                <Card className="relative bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 card-hover">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="text-xl font-semibold text-gray-800">
                       Morning Flow
                     </h3>
-                    <div className="flex items-center gap-2">
-                      <Play className="h-5 w-5 text-purple-500" />
-                      <span className="text-sm text-gray-600">15 min</span>
+                    <div className="flex items-center gap-2 bg-purple-100 px-3 py-1 rounded-full">
+                      <Play className="h-4 w-4 text-purple-500" />
+                      <span className="text-sm text-purple-600 font-medium">
+                        15 min
+                      </span>
                     </div>
                   </div>
                   <Image
                     src="/images/morning-flow.svg"
                     width={400}
-                    height={300}
+                    height={250}
                     alt="Workout demo interface"
-                    className="rounded-2xl mb-4"
+                    className="rounded-2xl mb-4 shadow-lg w-full"
                   />
-                  <div className="w-full bg-purple-100 rounded-full h-2">
+                  <div className="w-full bg-purple-100 rounded-full h-2 overflow-hidden">
                     <div className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full w-1/3"></div>
                   </div>
-                </div>
+                  <p className="text-xs text-gray-500 mt-2 text-center">
+                    33% Complete
+                  </p>
+                </Card>
               </div>
 
               <div className="space-y-6">
@@ -207,44 +254,45 @@ export default function WellnessLanding() {
                   Simple Steps to Better Wellness
                 </h2>
                 <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-purple-200 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-purple-600 font-semibold">1</span>
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-white font-bold">1</span>
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">
                         Choose Your Goal
                       </h3>
-                      <p className="text-gray-600">
-                        Select from yoga, strength, or mindfulness based on how
-                        you feel
+                      <p className="text-gray-600 text-sm">
+                        Select from yoga, strength, or mindfulness based on your
+                        current needs
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-pink-200 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-pink-600 font-semibold">2</span>
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-white font-bold">2</span>
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">
-                        Follow the Workout
+                        Follow AI Guidance
                       </h3>
-                      <p className="text-gray-600">
-                        Gentle guidance with timers and modifications for every
-                        level
+                      <p className="text-gray-600 text-sm">
+                        Get personalized recommendations with gentle guidance
+                        and modifications
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-green-200 rounded-full flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="h-4 w-4 text-green-600" />
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <CheckCircle className="h-5 w-5 text-white" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">
-                        Feel Better
+                        Track Progress
                       </h3>
-                      <p className="text-gray-600">
-                        Track your progress and celebrate small wins every day
+                      <p className="text-gray-600 text-sm">
+                        Monitor your wellness journey and celebrate every
+                        milestone
                       </p>
                     </div>
                   </div>
@@ -253,124 +301,101 @@ export default function WellnessLanding() {
             </div>
           </div>
         </section>
-        <ExpertConsultationsSection />
-        {/* Digital Store Section */}
-        <DigitalStoreSection />
-        {/* Testimonials Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-50 to-pink-50">
+
+        {/* Testimonials */}
+        <section className="py-16 bg-gradient-to-r from-purple-50 to-pink-50">
           <div className="container px-4 md:px-6 mx-auto">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-gray-800">
-                Stories of Transformation
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Loved by Women Everywhere
               </h2>
-              <p className="max-w-[600px] text-gray-600 md:text-lg">
-                Real experiences from women on their wellness journey
+              <p className="text-lg text-gray-600">
+                Real stories from our wellness community
               </p>
             </div>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                      />
-                    ))}
-                  </div>
-                  <p className="text-gray-600 mb-4 italic">
-                    "The cycle-friendly workouts have been a game-changer.
-                    Finally, fitness that works with my body, not against it."
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center">
-                      <span className="text-purple-600 font-semibold">S</span>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800">Sarah M.</p>
-                      <p className="text-sm text-gray-500">Yoga enthusiast</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
-              <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                      />
-                    ))}
-                  </div>
-                  <p className="text-gray-600 mb-4 italic">
-                    "The mood tracking feature helped me understand my patterns.
-                    I feel more in tune with myself than ever."
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-pink-200 rounded-full flex items-center justify-center">
-                      <span className="text-pink-600 font-semibold">M</span>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  name: "Sarah M.",
+                  role: "Yoga enthusiast",
+                  content:
+                    "The cycle-friendly workouts have been a game-changer. Finally, fitness that works with my body.",
+                  avatar: "S",
+                },
+                {
+                  name: "Maya L.",
+                  role: "Working mom",
+                  content:
+                    "The AI recommendations help me find the perfect routine for my energy level each day.",
+                  avatar: "M",
+                },
+                {
+                  name: "Aria K.",
+                  role: "Wellness coach",
+                  content:
+                    "I recommend Bloom to all my clients. It's gentle, effective, and truly understands women.",
+                  avatar: "A",
+                },
+              ].map((testimonial, index) => (
+                <Card
+                  key={index}
+                  className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg card-hover"
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-1 mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                        />
+                      ))}
                     </div>
-                    <div>
-                      <p className="font-semibold text-gray-800">Maya L.</p>
-                      <p className="text-sm text-gray-500">
-                        Mindfulness practitioner
-                      </p>
+                    <p className="text-gray-600 mb-4 italic leading-relaxed">
+                      "{testimonial.content}"
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                        {testimonial.avatar}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-800">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {testimonial.role}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg md:col-span-2 lg:col-span-1">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                      />
-                    ))}
-                  </div>
-                  <p className="text-gray-600 mb-4 italic">
-                    "Simple, gentle, and effective. This app meets me exactly
-                    where I am each day."
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 font-semibold">A</span>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800">Aria K.</p>
-                      <p className="text-sm text-gray-500">Wellness coach</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-20 lg:py-28 bg-gradient-to-b from-pink-50 to-white text-center">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="flex flex-col items-center justify-center space-y-6 text-center">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-gray-800 max-w-3xl">
-                Your Mind and Body Deserve This Care
+        <section className="py-16 bg-gradient-to-b from-pink-50 to-white">
+          <div className="container px-4 md:px-6 mx-auto text-center">
+            <div className="max-w-3xl mx-auto space-y-6">
+              <h2 className="text-3xl font-bold text-gray-800">
+                Ready to Transform Your Wellness Journey?
               </h2>
-              <p className="max-w-[600px] text-gray-600 md:text-lg">
-                Start your wellness journey today with gentle guidance every
-                step of the way
+              <p className="text-lg text-gray-600">
+                Join thousands of women discovering a gentler, more personalized
+                approach to health and happiness
               </p>
-              <div className="flex flex-col gap-4 items-center">
+              <div className="space-y-4">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full px-12 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                  className="bg-purple-500 hover:bg-purple-600 text-white rounded-full px-12 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 btn-hover-lift"
                   onClick={handleStartToday}
                 >
-                  Get Started Free
+                  Start Free Today
                 </Button>
-                <p className="text-sm text-gray-500">No credit card required</p>
+                <p className="text-sm text-gray-500">
+                  No credit card required • 7-day free trial
+                </p>
               </div>
             </div>
           </div>
@@ -378,90 +403,106 @@ export default function WellnessLanding() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full py-16 bg-gradient-to-r from-purple-100 via-pink-100 to-rose-100">
+      <footer className="py-12 bg-gray-50">
         <div className="container px-4 md:px-6 mx-auto">
-          <div className="grid gap-12 md:grid-cols-3 max-w-4xl mx-auto">
-            {/* About Bloom */}
-            <div className="space-y-6 text-center md:text-left">
-              <div className="flex items-center justify-center md:justify-start">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full flex items-center justify-center mr-3 shadow-sm">
-                  <Heart className="h-6 w-6 text-purple-600" />
-                </div>
-                <span className="text-2xl font-semibold text-gray-800">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Heart className="h-6 w-6 text-purple-500" />
+                <span className="text-xl font-semibold text-gray-800">
                   Bloom
                 </span>
               </div>
-              <p className="text-gray-600 leading-relaxed max-w-xs mx-auto md:mx-0">
-                "You are worthy of the love you keep trying to give everyone
-                else."
+              <p className="text-gray-600 text-sm">
+                Empowering women through personalized wellness journeys.
               </p>
             </div>
 
-            {/* Connect */}
-            <div className="space-y-6 text-center">
-              <h3 className="text-lg font-semibold text-gray-800">Connect</h3>
-              <div className="flex justify-center space-x-4">
+            <div className="space-y-4">
+              <h3 className="font-semibold text-gray-800">Product</h3>
+              <div className="space-y-2">
                 <Link
-                  href="#"
-                  className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
+                  href="/routines"
+                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
                 >
-                  <Linkedin className="h-5 w-5" />
+                  Routines
                 </Link>
                 <Link
-                  href="#"
-                  className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
+                  href="/community"
+                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
                 >
-                  <X className="h-5 w-5" />
+                  Community
                 </Link>
                 <Link
-                  href="#"
-                  className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-110"
+                  href="/shop"
+                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
                 >
-                  <Youtube className="h-5 w-5" />
+                  Shop
                 </Link>
               </div>
             </div>
 
-            {/* Support */}
-            <div className="space-y-6 text-center md:text-right">
-              <h3 className="text-lg font-semibold text-gray-800">Support</h3>
-              <nav className="flex flex-col space-y-3">
+            <div className="space-y-4">
+              <h3 className="font-semibold text-gray-800">Resources</h3>
+              <div className="space-y-2">
+                <Link
+                  href="/tips"
+                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
+                >
+                  Wellness Tips
+                </Link>
+                <Link
+                  href="/explore"
+                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
+                >
+                  Explore
+                </Link>
+                <Link
+                  href="/about"
+                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
+                >
+                  About
+                </Link>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-semibold text-gray-800">Connect</h3>
+              <div className="flex gap-3">
                 <Link
                   href="#"
-                  className="text-gray-600 hover:text-purple-600 transition-colors duration-200 text-sm font-medium"
+                  className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-purple-100 transition-colors"
                 >
-                  Help Center
+                  <X className="h-4 w-4" />
                 </Link>
                 <Link
                   href="#"
-                  className="text-gray-600 hover:text-purple-600 transition-colors duration-200 text-sm font-medium"
+                  className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-purple-100 transition-colors"
                 >
-                  Privacy Policy
+                  <Youtube className="h-4 w-4" />
                 </Link>
                 <Link
                   href="#"
-                  className="text-gray-600 hover:text-purple-600 transition-colors duration-200 text-sm font-medium"
+                  className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:text-purple-600 hover:bg-purple-100 transition-colors"
                 >
-                  Terms & Conditions
+                  <Linkedin className="h-4 w-4" />
                 </Link>
-              </nav>
+              </div>
             </div>
           </div>
 
-          {/* Bottom Text */}
-          <div className="mt-12 pt-8 border-t border-white/30">
-            <p className="text-center text-sm text-gray-600 font-medium">
+          <div className="mt-8 pt-8 border-t border-gray-200 text-center">
+            <p className="text-sm text-gray-600">
               © 2025 Bloom. Made with love for your wellness journey.
             </p>
           </div>
         </div>
       </footer>
 
-      {/* Auth Modal */}
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={handleAuthSuccess}
+        onSuccess={() => {}}
         defaultTab={authModalTab}
       />
     </div>

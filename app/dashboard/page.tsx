@@ -27,7 +27,7 @@ import {
   Edit3,
 } from "lucide-react";
 import Link from "next/link";
-
+import { Navbar } from "@/components/navbar";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 
@@ -161,48 +161,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-green-50">
-      {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-white/70 sticky top-0 z-50">
-        <Link href="/" className="flex items-center justify-center">
-          <ArrowLeft className="h-5 w-5 text-purple-400 mr-2" />
-          <Heart className="h-8 w-8 text-purple-400" />
-          <span className="ml-2 text-xl font-semibold text-gray-800">
-            Bloom
-          </span>
-        </Link>
-        <nav className="ml-auto flex gap-6">
-          <Link
-            href="/"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="/explore"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Explore
-          </Link>
-          <Link
-            href="/tips"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Tips
-          </Link>
-          <Link
-            href="/routines"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            Routines
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
-          >
-            About
-          </Link>
-        </nav>
-      </header>
+      <Navbar />
 
       <main className="container mx-auto px-4 py-8 space-y-8">
         {/* Welcome Header */}
