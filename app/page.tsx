@@ -101,78 +101,176 @@ export default function WellnessLanding() {
 
       <main className="space-y-0">
         {/* Hero Section */}
-        <section className="py-16 md:py-20 lg:py-24 relative overflow-hidden">
+        <section className="py-20 md:py-28 lg:py-32 relative overflow-hidden">
+          {/* Background Elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(8)].map((_, i) => (
+            {/* Floating Sparkles */}
+            {[...Array(12)].map((_, i) => (
               <Sparkles
                 key={i}
-                className="absolute text-yellow-300 opacity-20 animate-float"
+                className="absolute text-yellow-300 opacity-30 animate-float"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  animationDelay: `${i * 0.5}s`,
-                  animationDuration: `${4 + Math.random() * 2}s`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: `${3 + Math.random() * 2}s`,
                 }}
-                size={14}
+                size={12 + Math.random() * 8}
               />
             ))}
+
+            {/* Gradient Orbs */}
+            <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-20 animate-pulse-soft"></div>
+            <div
+              className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-green-200 to-blue-200 rounded-full blur-3xl opacity-15 animate-pulse-soft"
+              style={{ animationDelay: "2s" }}
+            ></div>
           </div>
+
           <div className="container px-4 md:px-6 mx-auto relative z-10">
-            <div className="grid gap-8 lg:grid-cols-2 items-center">
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-gray-800 leading-tight">
-                    Your Space to <span className="gradient-text">Reset,</span>{" "}
+            <div className="grid gap-12 lg:gap-16 lg:grid-cols-2 items-center min-h-[600px]">
+              {/* Left Content */}
+              <div className="space-y-8 lg:pr-8">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-purple-100">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-gray-700">
+                    Trusted by 10k+ women
+                  </span>
+                </div>
+
+                {/* Main Heading */}
+                <div className="space-y-6">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-800 leading-[1.1]">
+                    Your Space to{" "}
+                    <span className="gradient-text block">Reset,</span>
                     <span className="gradient-text">Reflect</span> &{" "}
                     <span className="gradient-text">Rise</span>
                   </h1>
-                  <p className="text-lg text-gray-600 leading-relaxed max-w-xl">
+                  <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl font-light">
                     AI-powered wellness platform designed specifically for
                     women. Track your cycle, follow gentle workouts, and grow
                     through personalized self-care routines.
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3">
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <Button
                     size="lg"
-                    className="bg-purple-500 hover:bg-purple-600 text-white rounded-full px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 btn-hover-lift"
+                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-10 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 btn-hover-lift"
                     onClick={handleStartToday}
                   >
+                    <Play className="h-5 w-5 mr-2" />
                     Start Your Journey
                   </Button>
                   <Button
                     variant="outline"
                     size="lg"
-                    className="border-purple-200 text-purple-600 hover:bg-purple-50 rounded-full px-8 py-3 transition-all duration-300 btn-hover-lift"
+                    className="border-2 border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300 rounded-full px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 btn-hover-lift backdrop-blur-sm bg-white/80"
                     onClick={handleSetRoutine}
                   >
+                    <Sparkles className="h-5 w-5 mr-2" />
                     Explore Features
                   </Button>
                 </div>
 
-                {/* Stats */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
-                  {stats.map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className="text-2xl font-bold text-purple-600">
-                        {stat.number}
-                      </div>
-                      <div className="text-sm text-gray-600">{stat.label}</div>
+                {/* Trust Indicators */}
+                <div className="pt-8">
+                  <p className="text-sm text-gray-500 mb-4 font-medium">
+                    Trusted by wellness experts
+                  </p>
+                  <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="h-5 w-5 fill-yellow-400 text-yellow-400"
+                        />
+                      ))}
+                      <span className="ml-2 text-sm font-semibold text-gray-700">
+                        4.9/5
+                      </span>
                     </div>
-                  ))}
+                    <div className="text-sm text-gray-600">
+                      <span className="font-semibold">2,847</span> reviews
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex justify-center lg:justify-end">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-pink-200 rounded-3xl blur-3xl opacity-30 animate-pulse-soft"></div>
-                  <Image
-                    src="/images/generated-image.png"
-                    width={450}
-                    height={450}
-                    alt="Woman meditating peacefully"
-                    className="relative rounded-3xl shadow-2xl animate-float"
-                  />
+              {/* Right Visual */}
+              <div className="flex justify-center lg:justify-end relative">
+                <div className="relative group">
+                  {/* Main Image Container */}
+                  <div className="relative">
+                    {/* Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-300 via-pink-300 to-green-300 rounded-3xl blur-2xl opacity-40 animate-pulse-soft group-hover:opacity-60 transition-opacity duration-500"></div>
+
+                    {/* Image */}
+                    <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
+                      <Image
+                        src="/images/generated-image.png"
+                        width={420}
+                        height={420}
+                        alt="Woman meditating peacefully"
+                        className="rounded-2xl shadow-lg animate-float"
+                        priority
+                      />
+                    </div>
+                  </div>
+
+                  {/* Floating Stats Cards */}
+                  <div
+                    className="absolute -top-6 -left-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl animate-float"
+                    style={{ animationDelay: "1s" }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <CheckCircle className="h-5 w-5 text-green-600" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-gray-800">
+                          500+
+                        </div>
+                        <div className="text-xs text-gray-600">Routines</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl animate-float"
+                    style={{ animationDelay: "2s" }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                        <Users className="h-5 w-5 text-purple-600" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-gray-800">
+                          10k+
+                        </div>
+                        <div className="text-xs text-gray-600">Women</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="absolute top-1/2 -right-12 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl animate-float"
+                    style={{ animationDelay: "0.5s" }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center">
+                        <Heart className="h-5 w-5 text-pink-600" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-gray-800">
+                          4.9★
+                        </div>
+                        <div className="text-xs text-gray-600">Rating</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
