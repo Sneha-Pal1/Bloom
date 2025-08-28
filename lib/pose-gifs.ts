@@ -6,7 +6,9 @@ export const poseGifs: Record<string, string> = {
   "cat-cow": "/gifs/cat-cow-pose.mp4",
   "bridge-pose": "/gifs/bridge-pose.mp4",
 
+  "warrior-flow": "/gifs/warrior-two.jpeg",
   "warrior-ii": "/gifs/warrior-two.jpeg",
+  "downward-dog": "/gifs/forward-fold.jpeg",
   "tree-pose": "/gifs/tree-pose.jpeg",
   "childs-pose": "/gifs/child-pose.mp4",
   "supine-twist": "/gifs/gentle-spinal-twists.jpeg",

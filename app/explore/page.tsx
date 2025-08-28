@@ -31,6 +31,7 @@ import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 import { useState } from "react";
+import { getGifForPose } from "@/lib/pose-gifs";
 
 // Wellness Hub Component
 function WellnessHub() {
@@ -540,8 +541,33 @@ function WellnessHub() {
                         <CardContent className="p-0">
                           {/* Image Section */}
                           <div className="relative">
-                            <div className="w-full h-48 bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center">
-                              <Activity className="h-16 w-16 text-purple-400 opacity-60" />
+                            <div className="w-full h-48 bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center overflow-hidden">
+                              {getGifForPose(pose.video) ? (
+                                getGifForPose(pose.video)?.endsWith(".mp4") ? (
+                                  <video
+                                    autoPlay
+                                    loop
+                                    muted
+                                    className="w-full h-full object-cover"
+                                  >
+                                    <source
+                                      src={getGifForPose(pose.video)}
+                                      type="video/mp4"
+                                    />
+                                    Your browser does not support the video tag.
+                                  </video>
+                                ) : (
+                                  <Image
+                                    src={getGifForPose(pose.video) || ""}
+                                    alt={pose.name}
+                                    fill
+                                    className="object-cover"
+                                    priority
+                                  />
+                                )
+                              ) : (
+                                <Activity className="h-16 w-16 text-purple-400 opacity-60" />
+                              )}
                             </div>
                             <button
                               onClick={() => handleVideoPlay(pose.video)}
@@ -627,7 +653,37 @@ function WellnessHub() {
             <div className="px-6">
               <div className="relative bg-gray-100 rounded-2xl overflow-hidden mb-6">
                 <div className="aspect-video bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center">
-                  <Activity className="h-20 w-20 text-purple-400 opacity-60" />
+                  {videoModal && getGifForPose(videoModal) ? (
+                    getGifForPose(videoModal)?.endsWith(".mp4") ? (
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        className="w-full h-full object-cover"
+                      >
+                        <source
+                          src={getGifForPose(videoModal)}
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <Image
+                        src={getGifForPose(videoModal) || ""}
+                        alt={
+                          yogaPoses[
+                            selectedCategory as keyof typeof yogaPoses
+                          ]?.find((pose) => pose.video === videoModal)?.name ||
+                          "Yoga Pose"
+                        }
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                    )
+                  ) : (
+                    <Activity className="h-20 w-20 text-purple-400 opacity-60" />
+                  )}
                 </div>
 
                 {/* Video Controls Overlay */}
