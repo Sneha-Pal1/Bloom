@@ -17,6 +17,12 @@ import {
   Zap,
   Target,
   TrendingUp,
+  Activity,
+  BarChart3,
+  Lightbulb,
+  TrendingDown,
+  X,
+  ArrowLeft,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,6 +30,600 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
+import { useState } from "react";
+
+// Wellness Hub Component
+function WellnessHub() {
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [videoModal, setVideoModal] = useState<string | null>(null);
+
+  const wellnessCategories = [
+    {
+      id: "guided-yoga",
+      title: "Guided Yoga & Workouts",
+      description: "Personalized yoga routines for your specific needs",
+      icon: <Activity className="h-8 w-8" />,
+      color: "from-purple-100 to-purple-200",
+      textColor: "text-purple-600",
+    },
+    {
+      id: "mood-tracking",
+      title: "Mood Tracking",
+      description: "Monitor and understand your emotional patterns",
+      icon: <BarChart3 className="h-8 w-8" />,
+      color: "from-pink-100 to-pink-200",
+      textColor: "text-pink-600",
+    },
+    {
+      id: "daily-tips",
+      title: "Daily Tips",
+      description: "Expert wellness advice tailored to your cycle",
+      icon: <Lightbulb className="h-8 w-8" />,
+      color: "from-green-100 to-green-200",
+      textColor: "text-green-600",
+    },
+    {
+      id: "wellness-insights",
+      title: "Wellness Insights",
+      description: "Data-driven insights about your health patterns",
+      icon: <TrendingDown className="h-8 w-8" />,
+      color: "from-blue-100 to-blue-200",
+      textColor: "text-blue-600",
+    },
+  ];
+
+  const yogaCategories = [
+    {
+      id: "overall-health",
+      title: "Overall Health Yoga",
+      description:
+        "Boost vitality and flexibility with gentle wellness routines for daily energy.",
+      icon: <Heart className="h-6 w-6" />,
+      color: "from-purple-100 to-purple-200",
+    },
+    {
+      id: "irregular-period",
+      title: "Late Irregular Period Yoga",
+      description:
+        "Gentle poses and breathing techniques to support menstrual regularity.",
+      icon: <Calendar className="h-6 w-6" />,
+      color: "from-pink-100 to-pink-200",
+    },
+    {
+      id: "pcos",
+      title: "PCOS Support Yoga",
+      description:
+        "Targeted sequences to manage PCOS symptoms and support hormonal health.",
+      icon: <Shield className="h-6 w-6" />,
+      color: "from-green-100 to-green-200",
+    },
+    {
+      id: "period-cramps",
+      title: "Period Cramps Relief",
+      description:
+        "Soothing poses to ease menstrual discomfort and provide natural pain relief.",
+      icon: <Heart className="h-6 w-6" />,
+      color: "from-orange-100 to-orange-200",
+    },
+    {
+      id: "mood-swings",
+      title: "Mood Swings Balance",
+      description:
+        "Calming practices to stabilize emotions and promote mental clarity.",
+      icon: <Brain className="h-6 w-6" />,
+      color: "from-indigo-100 to-indigo-200",
+    },
+  ];
+
+  const yogaPoses = {
+    "overall-health": [
+      {
+        name: "Sun Salutation",
+        duration: "5-10 min",
+        difficulty: "Beginner",
+        video: "sun-salutation",
+      },
+      {
+        name: "Warrior Flow",
+        duration: "8-12 min",
+        difficulty: "Intermediate",
+        video: "warrior-flow",
+      },
+      {
+        name: "Tree Pose",
+        duration: "2-3 min",
+        difficulty: "Beginner",
+        video: "tree-pose",
+      },
+      {
+        name: "Downward Dog",
+        duration: "3-5 min",
+        difficulty: "Beginner",
+        video: "downward-dog",
+      },
+    ],
+    "irregular-period": [
+      {
+        name: "Butterfly Pose",
+        duration: "3-5 min",
+        difficulty: "Beginner",
+        video: "butterfly-pose",
+      },
+      {
+        name: "Cobra Pose",
+        duration: "2-4 min",
+        difficulty: "Beginner",
+        video: "cobra-pose",
+      },
+      {
+        name: "Camel Pose",
+        duration: "1-3 min",
+        difficulty: "Intermediate",
+        video: "camel-pose",
+      },
+      {
+        name: "Bridge Pose",
+        duration: "3-5 min",
+        difficulty: "Beginner",
+        video: "bridge-pose",
+      },
+    ],
+    pcos: [
+      {
+        name: "Bharadvajasana",
+        duration: "2-4 min",
+        difficulty: "Beginner",
+        video: "bharadvajasana",
+      },
+      {
+        name: "Dhanurasana",
+        duration: "1-3 min",
+        difficulty: "Intermediate",
+        video: "dhanurasana",
+      },
+      {
+        name: "Malasana",
+        duration: "2-5 min",
+        difficulty: "Beginner",
+        video: "malasana",
+      },
+      {
+        name: "Surya Namaskara",
+        duration: "8-12 min",
+        difficulty: "Beginner",
+        video: "surya-namaskara",
+      },
+    ],
+    "period-cramps": [
+      {
+        name: "Child's Pose",
+        duration: "3-8 min",
+        difficulty: "Beginner",
+        video: "childs-pose",
+      },
+      {
+        name: "Cat-Cow Stretch",
+        duration: "3-5 min",
+        difficulty: "Beginner",
+        video: "cat-cow",
+      },
+      {
+        name: "Supine Twist",
+        duration: "2-4 min",
+        difficulty: "Beginner",
+        video: "supine-twist",
+      },
+      {
+        name: "Legs Up Wall",
+        duration: "5-15 min",
+        difficulty: "Beginner",
+        video: "legs-up-wall",
+      },
+    ],
+    "mood-swings": [
+      {
+        name: "Seated Forward Fold",
+        duration: "3-5 min",
+        difficulty: "Beginner",
+        video: "seated-forward-fold",
+      },
+      {
+        name: "Restorative Fish",
+        duration: "5-10 min",
+        difficulty: "Beginner",
+        video: "restorative-fish",
+      },
+      {
+        name: "Gentle Backbend",
+        duration: "2-4 min",
+        difficulty: "Beginner",
+        video: "gentle-backbend",
+      },
+      {
+        name: "Savasana",
+        duration: "5-20 min",
+        difficulty: "Beginner",
+        video: "savasana",
+      },
+    ],
+  };
+
+  const handleCategoryClick = (categoryId: string) => {
+    if (categoryId === "guided-yoga") {
+      setActiveModal("yoga-menu");
+    } else {
+      // For other categories, you can add different modal types
+      setActiveModal(categoryId);
+    }
+  };
+
+  const handleYogaCategoryClick = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    setActiveModal("yoga-poses");
+  };
+
+  const handleVideoPlay = (videoId: string) => {
+    setVideoModal(videoId);
+  };
+
+  const closeModal = () => {
+    setActiveModal(null);
+    setSelectedCategory(null);
+  };
+
+  const closeVideoModal = () => {
+    setVideoModal(null);
+  };
+
+  return (
+    <>
+      {/* Main Categories Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {wellnessCategories.map((category) => (
+          <Card
+            key={category.id}
+            className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover cursor-pointer"
+            onClick={() => handleCategoryClick(category.id)}
+          >
+            <CardContent className="p-6 text-center">
+              <div
+                className={`w-16 h-16 bg-gradient-to-r ${category.color} rounded-2xl flex items-center justify-center ${category.textColor} mx-auto mb-4`}
+              >
+                {category.icon}
+              </div>
+              <h3 className="font-bold text-gray-800 mb-2">{category.title}</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                {category.description}
+              </p>
+              <Button className="mt-4 bg-purple-500 hover:bg-purple-600 text-white rounded-full px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-300 btn-hover-lift">
+                Explore
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Yoga Categories Modal */}
+      {activeModal === "yoga-menu" && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <Card className="w-full max-w-6xl bg-gradient-to-br from-purple-50 via-pink-50 to-green-50 rounded-3xl shadow-2xl max-h-[90vh] overflow-y-auto border-0">
+            <div className="p-8">
+              {/* Header with centered title and decorative line */}
+              <div className="text-center mb-10 relative">
+                <button
+                  onClick={closeModal}
+                  className="absolute top-0 right-0 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                  Guided Yoga & Workouts
+                </h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                  Choose from our specialized yoga routines designed to support
+                  your unique wellness needs and health goals
+                </p>
+              </div>
+
+              <div className="grid grid-cols-5 gap-4">
+                {yogaCategories.map((category) => (
+                  <Card
+                    key={category.id}
+                    className="border-0 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer card-hover transform hover:scale-105"
+                    onClick={() => handleYogaCategoryClick(category.id)}
+                  >
+                    <CardContent className="p-4 text-center h-72 flex flex-col justify-between">
+                      <div className="flex-1 flex flex-col items-center">
+                        <div
+                          className={`w-14 h-14 bg-gradient-to-r ${category.color} rounded-2xl flex items-center justify-center text-purple-600 mx-auto mb-3 shadow-lg`}
+                        >
+                          {category.icon}
+                        </div>
+                        <h3 className="font-bold text-gray-800 mb-3 text-sm leading-tight">
+                          {category.title}
+                        </h3>
+                        <p className="text-xs text-gray-600 leading-relaxed flex-1">
+                          {category.description}
+                        </p>
+                      </div>
+                      <Button
+                        size="sm"
+                        className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 mt-3 text-xs py-2"
+                      >
+                        View Routines
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Yoga Poses Modal */}
+      {activeModal === "yoga-poses" && selectedCategory && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <Card className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="relative">
+              {/* Header Section */}
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 px-8 py-6">
+                {/* Navigation */}
+                <div className="flex items-center justify-between mb-6">
+                  <button
+                    onClick={() => setActiveModal("yoga-menu")}
+                    className="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-gray-800 hover:bg-white transition-all duration-200 shadow-sm"
+                  >
+                    <ArrowLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={closeModal}
+                    className="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-gray-800 hover:bg-white transition-all duration-200 shadow-sm"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+
+                {/* Category Info */}
+                <div className="text-center mb-6">
+                  <h2 className="text-3xl font-bold text-gray-800 mb-3">
+                    {
+                      yogaCategories.find((cat) => cat.id === selectedCategory)
+                        ?.title
+                    }
+                  </h2>
+                  <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg">
+                    {
+                      yogaCategories.find((cat) => cat.id === selectedCategory)
+                        ?.description
+                    }
+                  </p>
+                </div>
+
+                {/* Difficulty Levels */}
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    Difficulty Levels
+                  </h3>
+                  <div className="flex justify-center gap-4">
+                    <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-green-200">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span className="text-sm font-medium text-green-700">
+                        Beginner
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-yellow-200">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <span className="text-sm font-medium text-yellow-700">
+                        Intermediate
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-red-200">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <span className="text-sm font-medium text-red-700">
+                        Advanced
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="px-8 py-6">
+                {/* Yoga Poses Grid - 2 per row */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {yogaPoses[selectedCategory as keyof typeof yogaPoses]?.map(
+                    (pose, index) => (
+                      <Card
+                        key={index}
+                        className="border border-gray-200 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
+                      >
+                        <CardContent className="p-0">
+                          {/* Image Section */}
+                          <div className="relative">
+                            <div className="w-full h-48 bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center">
+                              <Activity className="h-16 w-16 text-purple-400 opacity-60" />
+                            </div>
+                            <button
+                              onClick={() => handleVideoPlay(pose.video)}
+                              className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                            >
+                              <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+                                <Play className="h-8 w-8 text-purple-600 ml-1" />
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* Content Section */}
+                          <div className="p-4">
+                            <div className="flex items-start justify-between mb-3">
+                              <div className="flex-1">
+                                <h3 className="font-semibold text-gray-800 text-lg mb-1">
+                                  {pose.name}
+                                </h3>
+                                <p className="text-sm text-gray-500">
+                                  Improves spinal flexibility and relieves
+                                  tension
+                                </p>
+                              </div>
+                              <button
+                                onClick={() => handleVideoPlay(pose.video)}
+                                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+                              >
+                                <Play className="h-4 w-4 text-gray-600 ml-0.5" />
+                              </button>
+                            </div>
+
+                            <div className="flex items-center gap-3 mb-4">
+                              <span
+                                className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                  pose.difficulty === "Beginner"
+                                    ? "bg-green-100 text-green-700"
+                                    : pose.difficulty === "Intermediate"
+                                    ? "bg-yellow-100 text-yellow-700"
+                                    : "bg-red-100 text-red-700"
+                                }`}
+                              >
+                                {pose.difficulty}
+                              </span>
+                              <div className="flex items-center gap-1 text-gray-500">
+                                <div className="w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center">
+                                  <div className="w-2 h-2 rounded-full bg-gray-400"></div>
+                                </div>
+                                <span className="text-sm">{pose.duration}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Video Modal */}
+      {videoModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[70] flex items-center justify-center p-4">
+          <Card className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 pb-4">
+              <h2 className="text-xl font-semibold text-gray-800">
+                {yogaPoses[selectedCategory as keyof typeof yogaPoses]?.find(
+                  (pose) => pose.video === videoModal
+                )?.name || "Cat-Cow Pose"}
+              </h2>
+              <button
+                onClick={closeVideoModal}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Video Section */}
+            <div className="px-6">
+              <div className="relative bg-gray-100 rounded-2xl overflow-hidden mb-6">
+                <div className="aspect-video bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center">
+                  <Activity className="h-20 w-20 text-purple-400 opacity-60" />
+                </div>
+
+                {/* Video Controls Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  <div className="flex items-center gap-4 text-white">
+                    <button className="hover:scale-110 transition-transform">
+                      <Play className="h-6 w-6" />
+                    </button>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 text-sm">
+                        <span>0:00</span>
+                        <div className="flex-1 h-1 bg-white/30 rounded-full overflow-hidden">
+                          <div className="w-1/4 h-full bg-white rounded-full"></div>
+                        </div>
+                        <span>0:07</span>
+                      </div>
+                    </div>
+                    <button className="hover:scale-110 transition-transform">
+                      <div className="w-5 h-5 border border-white rounded flex items-center justify-center">
+                        <div className="w-2 h-2 border border-white"></div>
+                      </div>
+                    </button>
+                    <button className="hover:scale-110 transition-transform">
+                      <div className="w-5 h-5 flex flex-col gap-0.5">
+                        <div className="flex gap-0.5">
+                          <div className="w-1 h-1 bg-white"></div>
+                          <div className="w-1 h-1 bg-white"></div>
+                        </div>
+                        <div className="flex gap-0.5">
+                          <div className="w-1 h-1 bg-white"></div>
+                          <div className="w-1 h-1 bg-white"></div>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Start Practice Button */}
+            <div className="p-6 pt-0">
+              <Button
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-2xl py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                onClick={closeVideoModal}
+              >
+                <Play className="h-5 w-5 mr-2" />
+                Start Practice
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Other Category Modals (Placeholder) */}
+      {activeModal && !["yoga-menu", "yoga-poses"].includes(activeModal) && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <Card className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-800">
+                  {
+                    wellnessCategories.find((cat) => cat.id === activeModal)
+                      ?.title
+                  }
+                </h2>
+                <button
+                  onClick={closeModal}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  {
+                    wellnessCategories.find((cat) => cat.id === activeModal)
+                      ?.icon
+                  }
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  Coming Soon!
+                </h3>
+                <p className="text-gray-600">
+                  This feature is under development and will be available soon.
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+    </>
+  );
+}
 
 export default function ExplorePage() {
   const router = useRouter();
@@ -158,41 +758,20 @@ export default function ExplorePage() {
           </div>
         </section>
 
-        {/* Features Grid */}
+        {/* Wellness Hub */}
         <section className="py-16 bg-white/50">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                Comprehensive Wellness Platform
+                Your Wellness Hub
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Every feature is thoughtfully designed to support your unique
-                wellness journey
+              <p className="text-lg text-gray-600">
+                Explore personalized wellness tools designed for your unique
+                needs
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((feature, index) => (
-                <Card
-                  key={index}
-                  className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover"
-                >
-                  <CardContent className="p-6">
-                    <div
-                      className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center ${feature.textColor} mb-4`}
-                    >
-                      {feature.icon}
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <WellnessHub />
           </div>
         </section>
 
@@ -293,8 +872,46 @@ export default function ExplorePage() {
           </div>
         </section>
 
-        {/* Quick Access Cards */}
+        {/* Comprehensive Wellness Platform */}
         <section className="py-16 bg-gradient-to-r from-purple-50 to-pink-50">
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Comprehensive Wellness Platform
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Every feature is thoughtfully designed to support your unique
+                wellness journey
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {features.map((feature, index) => (
+                <Card
+                  key={index}
+                  className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover"
+                >
+                  <CardContent className="p-6">
+                    <div
+                      className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center ${feature.textColor} mb-4`}
+                    >
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Quick Access Cards */}
+        <section className="py-16 bg-white/50">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">
