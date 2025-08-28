@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 import { ProtectedAction } from "@/components/protected-action";
@@ -435,7 +436,9 @@ export default function Routines() {
           </Card>
         )}
       </main>
-      {/* Auth Modal */}
+
+      <Footer />
+
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}

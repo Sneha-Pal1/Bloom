@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 
@@ -474,7 +475,9 @@ export default function Dashboard() {
           </Card>
         </section>
       </main>
-      {/* Auth Modal */}
+
+      <Footer />
+
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}

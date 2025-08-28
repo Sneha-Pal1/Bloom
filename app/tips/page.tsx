@@ -19,6 +19,7 @@ import {
   Filter,
 } from "lucide-react";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 import { ProtectedAction } from "@/components/protected-action";
@@ -413,6 +414,8 @@ export default function Tips() {
           </section>
         )}
       </main>
+
+      <Footer />
 
       <AuthModal
         isOpen={showAuthModal}

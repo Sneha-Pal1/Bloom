@@ -21,6 +21,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 
@@ -400,6 +401,8 @@ export default function ExplorePage() {
           </div>
         </section>
       </main>
+
+      <Footer />
 
       <AuthModal
         isOpen={showAuthModal}

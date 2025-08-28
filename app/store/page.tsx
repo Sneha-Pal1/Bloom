@@ -1,6 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -233,6 +234,8 @@ export default function StorePage() {
           </Card>
         </section>
       </main>
+
+      <Footer />
 
       <AuthModal
         isOpen={showAuthModal}

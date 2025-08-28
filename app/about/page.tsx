@@ -5,6 +5,7 @@ import { Heart, Target, Users, Shield, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
 import { AuthModal } from "@/components/auth-modal";
 
@@ -248,102 +249,7 @@ export default function AboutPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="py-12 bg-gray-50">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Heart className="h-6 w-6 text-purple-500" />
-                <span className="text-xl font-semibold text-gray-800">
-                  Bloom
-                </span>
-              </div>
-              <p className="text-gray-600 text-sm">
-                Empowering women through personalized wellness journeys.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800">Product</h3>
-              <div className="space-y-2">
-                <Link
-                  href="/routines"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  Routines
-                </Link>
-                <Link
-                  href="/community"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  Community
-                </Link>
-                <Link
-                  href="/shop"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  Shop
-                </Link>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800">Resources</h3>
-              <div className="space-y-2">
-                <Link
-                  href="/tips"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  Wellness Tips
-                </Link>
-                <Link
-                  href="/explore"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  Explore
-                </Link>
-                <Link
-                  href="/about"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  About
-                </Link>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800">Support</h3>
-              <div className="space-y-2">
-                <Link
-                  href="#"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  Help Center
-                </Link>
-                <Link
-                  href="#"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  Privacy Policy
-                </Link>
-                <Link
-                  href="#"
-                  className="block text-gray-600 hover:text-purple-600 text-sm transition-colors"
-                >
-                  Terms
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 pt-8 border-t border-gray-200 text-center">
-            <p className="text-sm text-gray-600">
-              © 2025 Bloom. Made with love for your wellness journey.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <AuthModal
         isOpen={showAuthModal}
