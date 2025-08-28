@@ -445,14 +445,11 @@ export default function ShopPage() {
 
         {/* Best Sellers Section */}
         <section className="container px-4 md:px-6 mx-auto mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-              <Star className="h-6 w-6 text-orange-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">Best Sellers</h2>
-              <p className="text-gray-600">Most loved by our community</p>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Best Sellers
+            </h2>
+            <p className="text-lg text-gray-600">Most loved by our community</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {products
@@ -571,14 +568,11 @@ export default function ShopPage() {
 
         {/* Best Deals Section */}
         <section className="container px-4 md:px-6 mx-auto mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-              <Gift className="h-6 w-6 text-green-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">Best Deals</h2>
-              <p className="text-gray-600">Limited time offers</p>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Best Deals
+            </h2>
+            <p className="text-lg text-gray-600">Limited time offers</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {products
@@ -697,16 +691,11 @@ export default function ShopPage() {
 
         {/* Limited Stock Section */}
         <section className="container px-4 md:px-6 mx-auto mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-              <Zap className="h-6 w-6 text-red-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">
-                Limited Stock
-              </h2>
-              <p className="text-gray-600">Get them while you can</p>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Limited Stock
+            </h2>
+            <p className="text-lg text-gray-600">Get them while you can</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {products
@@ -825,14 +814,13 @@ export default function ShopPage() {
 
         {/* All Products Section */}
         <section className="container px-4 md:px-6 mx-auto mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-              <Sparkles className="h-6 w-6 text-purple-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">All Products</h2>
-              <p className="text-gray-600">Complete wellness collection</p>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              All Products
+            </h2>
+            <p className="text-lg text-gray-600">
+              Complete wellness collection
+            </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => {

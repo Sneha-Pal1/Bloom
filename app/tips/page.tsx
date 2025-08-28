@@ -376,18 +376,13 @@ export default function Tips() {
         {/* Expert Advice Section */}
         <section className="container px-4 md:px-6 mx-auto">
           <div className="mb-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <Heart className="h-6 w-6 text-blue-600" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-gray-800">
-                  Expert Advice
-                </h2>
-                <p className="text-gray-600">
-                  Book appointments with certified professionals
-                </p>
-              </div>
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Expert Advice
+              </h2>
+              <p className="text-lg text-gray-600">
+                Book appointments with certified professionals
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
