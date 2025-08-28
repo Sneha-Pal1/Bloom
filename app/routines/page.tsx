@@ -16,6 +16,7 @@ import {
   Search,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -56,7 +57,7 @@ const routines: Routine[] = [
     ],
     rating: 4.8,
     completions: 1247,
-    image: "/images/morning-flow.svg",
+    image: "/wellness1.jpg",
   },
   {
     id: "2",
@@ -75,7 +76,7 @@ const routines: Routine[] = [
     ],
     rating: 4.9,
     completions: 892,
-    image: "/images/cycle-strength.svg",
+    image: "/wellness2.jpg",
   },
   {
     id: "3",
@@ -94,7 +95,7 @@ const routines: Routine[] = [
     ],
     rating: 4.7,
     completions: 1456,
-    image: "/images/evening-wind-down.svg",
+    image: "/wellness3.jpg",
   },
   {
     id: "4",
@@ -113,7 +114,7 @@ const routines: Routine[] = [
     ],
     rating: 4.6,
     completions: 734,
-    image: "/images/mindful-movement.svg",
+    image: "/wellness4.jpg",
   },
   {
     id: "5",
@@ -132,7 +133,7 @@ const routines: Routine[] = [
     ],
     rating: 4.9,
     completions: 1123,
-    image: "/images/pms-relief.svg",
+    image: "/wellness5.jpg",
   },
   {
     id: "6",
@@ -151,7 +152,7 @@ const routines: Routine[] = [
     ],
     rating: 4.5,
     completions: 567,
-    image: "/images/energy-boost.svg",
+    image: "/wellness1.jpg",
   },
 ];
 
@@ -362,10 +363,14 @@ export default function Routines() {
                 className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
               >
                 <div className="relative">
-                  <img
-                    src={routine.image || "/images/morning-flow.svg"}
+                  <Image
+                    src={routine.image || "/wellness1.jpg"}
                     alt={routine.name}
+                    width={400}
+                    height={192}
                     className="w-full h-48 object-cover"
+                    quality={75}
+                    priority={false}
                   />
                   <div className="absolute top-4 right-4">
                     <Badge className={getDifficultyColor(routine.difficulty)}>

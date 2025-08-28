@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -395,7 +396,7 @@ export default function Tips() {
                   rating: 4.9,
                   reviews: 156,
                   price: 120,
-                  image: "/images/doctor-1.svg",
+                  image: "/doc1.jpg",
                   specialties: ["Hormonal Health", "PCOS", "Fertility"],
                   nextAvailable: "Tomorrow 2:00 PM",
                 },
@@ -407,7 +408,7 @@ export default function Tips() {
                   rating: 4.8,
                   reviews: 203,
                   price: 95,
-                  image: "/images/therapist-1.svg",
+                  image: "/doc2.jpg",
                   specialties: ["Anxiety", "Women's Mental Health", "Trauma"],
                   nextAvailable: "Today 4:30 PM",
                 },
@@ -419,7 +420,7 @@ export default function Tips() {
                   rating: 4.7,
                   reviews: 89,
                   price: 85,
-                  image: "/images/nutritionist-1.svg",
+                  image: "/doc3.jpg",
                   specialties: [
                     "Cycle Nutrition",
                     "Weight Management",
@@ -435,7 +436,7 @@ export default function Tips() {
                   rating: 4.9,
                   reviews: 134,
                   price: 150,
-                  image: "/images/endocrinologist-1.svg",
+                  image: "/doc4.jpg",
                   specialties: ["Thyroid", "Hormonal Imbalances", "Diabetes"],
                   nextAvailable: "Monday 9:00 AM",
                 },
@@ -447,7 +448,7 @@ export default function Tips() {
                   rating: 4.8,
                   reviews: 178,
                   price: 140,
-                  image: "/images/psychiatrist-1.svg",
+                  image: "/doc5.jpg",
                   specialties: [
                     "Depression",
                     "Postpartum",
@@ -463,7 +464,7 @@ export default function Tips() {
                   rating: 4.6,
                   reviews: 92,
                   price: 75,
-                  image: "/images/coach-1.svg",
+                  image: "/doc1.jpg",
                   specialties: [
                     "Lifestyle Changes",
                     "Stress Management",
@@ -477,10 +478,14 @@ export default function Tips() {
                   className="border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover"
                 >
                   <div className="relative">
-                    <img
-                      src={expert.image || "/images/doctor-placeholder.svg"}
+                    <Image
+                      src={expert.image || "/doc1.jpg"}
                       alt={expert.name}
+                      width={400}
+                      height={192}
                       className="w-full h-48 object-cover rounded-t-2xl"
+                      quality={75}
+                      priority={false}
                     />
                     <Badge className="absolute top-4 right-4 bg-blue-100 text-blue-700">
                       {expert.specialty}

@@ -18,6 +18,7 @@ import {
   Zap,
   Gift,
 } from "lucide-react";
+import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/auth-context";
@@ -52,7 +53,7 @@ const products: Product[] = [
     type: "Journal",
     rating: 4.9,
     reviews: 234,
-    image: "/images/cycle-journal.svg",
+    image: "/product1.jpg",
     features: [
       "90+ guided prompts",
       "Cycle tracking templates",
@@ -72,7 +73,7 @@ const products: Product[] = [
     type: "Guide",
     rating: 4.8,
     reviews: 189,
-    image: "/images/morning-guide.svg",
+    image: "/product2.jpg",
     features: [
       "30 morning routines",
       "5-30 minute options",
@@ -92,7 +93,7 @@ const products: Product[] = [
     type: "Monthly",
     rating: 4.7,
     reviews: 456,
-    image: "/images/premium-subscription.svg",
+    image: "/product3.jpg",
     features: [
       "AI-powered routines",
       "Advanced analytics",
@@ -112,7 +113,7 @@ const products: Product[] = [
     type: "Cards",
     rating: 4.6,
     reviews: 167,
-    image: "/images/ritual-cards.svg",
+    image: "/product4.jpg",
     features: [
       "52 unique cards",
       "Weekly themes",
@@ -132,7 +133,7 @@ const products: Product[] = [
     type: "Planner",
     rating: 4.8,
     reviews: 298,
-    image: "/images/meal-planner.svg",
+    image: "/product5.jpg",
     features: [
       "Cycle-synced recipes",
       "Shopping lists",
@@ -151,7 +152,7 @@ const products: Product[] = [
     type: "Audio",
     rating: 4.9,
     reviews: 312,
-    image: "/images/sleep-stories.svg",
+    image: "/product1.jpg",
     features: [
       "25 audio tracks",
       "Various lengths",
@@ -171,7 +172,7 @@ const products: Product[] = [
     type: "Stickers",
     rating: 4.5,
     reviews: 145,
-    image: "/images/wellness-stickers.svg",
+    image: "/product2.jpg",
     features: [
       "200+ stickers",
       "Multiple themes",
@@ -190,7 +191,7 @@ const products: Product[] = [
     type: "Aromatherapy",
     rating: 4.7,
     reviews: 89,
-    image: "/images/essential-oil.svg",
+    image: "/product3.jpg",
     features: [
       "Organic ingredients",
       "Hormone-balancing",
@@ -462,10 +463,14 @@ export default function ShopPage() {
                     className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
                     <div className="relative">
-                      <img
-                        src={product.image || "/images/morning-flow.svg"}
+                      <Image
+                        src={product.image || "/product1.jpg"}
                         alt={product.name}
+                        width={400}
+                        height={192}
                         className="w-full h-48 object-cover"
+                        quality={75}
+                        priority={false}
                       />
                       <div className="absolute top-4 left-4 flex gap-2">
                         <Badge className="bg-orange-100 text-orange-700 border-orange-200">
@@ -585,10 +590,14 @@ export default function ShopPage() {
                     className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
                     <div className="relative">
-                      <img
-                        src={product.image || "/images/morning-flow.svg"}
+                      <Image
+                        src={product.image || "/product1.jpg"}
                         alt={product.name}
+                        width={400}
+                        height={192}
                         className="w-full h-48 object-cover"
+                        quality={75}
+                        priority={false}
                       />
                       <div className="absolute top-4 left-4 flex gap-2">
                         <Badge className="bg-green-100 text-green-700 border-green-200">
@@ -708,10 +717,14 @@ export default function ShopPage() {
                     className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
                     <div className="relative">
-                      <img
-                        src={product.image || "/images/morning-flow.svg"}
+                      <Image
+                        src={product.image || "/product1.jpg"}
                         alt={product.name}
+                        width={400}
+                        height={192}
                         className="w-full h-48 object-cover"
+                        quality={75}
+                        priority={false}
                       />
                       <div className="absolute top-4 left-4 flex gap-2">
                         <Badge className="bg-red-100 text-red-700 border-red-200">
@@ -831,10 +844,14 @@ export default function ShopPage() {
                   className="border-0 bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                 >
                   <div className="relative">
-                    <img
-                      src={product.image || "/images/morning-flow.svg"}
+                    <Image
+                      src={product.image || "/product1.jpg"}
                       alt={product.name}
+                      width={400}
+                      height={192}
                       className="w-full h-48 object-cover"
+                      quality={75}
+                      priority={false}
                     />
                     <div className="absolute top-4 left-4 flex gap-2">
                       {product.bestseller && (
